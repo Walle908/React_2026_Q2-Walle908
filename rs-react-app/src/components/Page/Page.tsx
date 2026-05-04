@@ -6,12 +6,10 @@ import SearchSection from '../SearchSection/SearchSection';
 import ResultSection from '../ResultSection/ResultSection';
 import Loader from '../Loader/Loader';
 
-interface PageProps {
-  query?: string;
-}
+interface PageProps {}
 
 interface PageState {
-  chars: Character[] | [];
+  chars: Character[];
   errorMessage: ErrorMessage;
   query: string;
   isLoading: boolean;
