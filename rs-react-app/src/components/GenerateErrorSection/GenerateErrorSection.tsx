@@ -1,6 +1,5 @@
 import { Component, type ReactNode } from 'react';
 import './GenerateErrorSection.css';
-import '../../index.css';
 
 export default class GenerateErrorSection extends Component {
   override render(): ReactNode {

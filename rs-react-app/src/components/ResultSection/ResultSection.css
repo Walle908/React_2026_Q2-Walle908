@@ -8,6 +8,7 @@
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
   gap: 4rem;
   margin: 0 auto;
+  padding: 1rem;
   justify-items: center;
   justify-content: center;
   width: 100%;

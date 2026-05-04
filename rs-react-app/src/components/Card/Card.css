@@ -6,7 +6,6 @@
   outline: 3px solid #8bcf21;
   border-radius: 5px;
   background-color: rgba(139, 207, 33, 0.5);
-  /* margin: 0 auto 30px; */
   font-size: 1.6rem;
   padding: 1rem 1rem 0 1rem;
 }
@@ -24,5 +23,6 @@
 }
 
 .cardTitle {
-  /* align-self: center; */
+  text-align: center;
+  padding-bottom: 1rem;
 }

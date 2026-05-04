@@ -3,7 +3,6 @@ import { type Character } from '../../types/types';
 import { ErrorMessage } from '../../constants/constants';
 import Card from '../Card/Card';
 import './ResultSection.css';
-import '../../index.css';
 
 interface ResultSectionProps {
   chars: Character[];
