@@ -1,0 +1,8 @@
+.errorBlock {
+  margin: auto;
+  align-items: center;
+}
+
+.errorMessage {
+  margin: 3rem;
+}

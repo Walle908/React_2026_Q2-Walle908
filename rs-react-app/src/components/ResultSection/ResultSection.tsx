@@ -2,6 +2,7 @@ import { Component, type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { ErrorMessage } from '../../constants/constants';
 import Card from '../Card/Card';
+import ErrorButton from '../ErrorButton/ErrorButton';
 import './ResultSection.css';
 
 interface ResultSectionProps {
@@ -22,7 +23,7 @@ export default class ResultSection extends Component<ResultSectionProps> {
                 <h2 className="badResult">{errorMessage}</h2>
               )}
         </div>
-        <button className="button error-button">Generate Error</button>
+        <ErrorButton></ErrorButton>
       </section>
     );
   }
