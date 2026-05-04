@@ -14,6 +14,8 @@ interface PageState {
 }
 
 export default class Page extends Component<Record<string, never>, PageState> {
+  private isInitialLoading = false;
+
   constructor(props: Record<string, never>) {
     super(props);
     this.state = {
@@ -49,11 +51,13 @@ export default class Page extends Component<Record<string, never>, PageState> {
   };
 
   setInitialState = async () => {
-    const { query } = this.state;
+    if (this.isInitialLoading) return;
+
+    this.isInitialLoading = true;
     this.setState({ isLoading: true });
 
     try {
-      const data = await getChars(query);
+      const data = await getChars(this.state.query);
       if (data.length === 0) {
         this.setState({ chars: [], errorMessage: ErrorMessage.NOT_FOUND });
       } else {
