@@ -1,0 +1,27 @@
+.cardWrapper {
+  width: 200px;
+  height: 600px;
+  justify-content: flex-start;
+  gap: 20px;
+  outline: 3px solid #8bcf21;
+  border-radius: 5px;
+  background-color: rgba(139, 207, 33, 0.5);
+  margin: 0 auto 30px;
+}
+
+.cardImg {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  background-size: cover;
+}
+
+.cardList {
+  list-style-type: none;
+  text-align: left;
+  padding: 0 1rem;
+}
+
+.cardTitle {
+  padding: 0 1rem;
+}

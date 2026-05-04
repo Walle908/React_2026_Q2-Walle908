@@ -1,0 +1,21 @@
+.inputSearch {
+  height: 40px;
+  padding: 0px 12px;
+  background: #e7e0db;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.4s ease-in-out;
+  border: 3px solid #8bcf21;
+  position: relative;
+  color: rgb(59, 98, 163);
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.inputSearch:focus {
+  border-color: #477385;
+}
+
+.buttonSearch {
+  background: #8bcf21;
+}
