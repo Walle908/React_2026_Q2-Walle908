@@ -47,7 +47,3 @@
   justify-content: center;
   transition: color 0.2s;
 }
-
-.clear-button:hover {
-  color: #83d2e4;
-}

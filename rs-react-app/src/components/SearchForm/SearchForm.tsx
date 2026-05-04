@@ -1,9 +1,9 @@
 import { type ChangeEvent, type SubmitEvent, Component } from 'react';
-import { localStorageKey } from '../../constants/constants';
 import './SearchForm.css';
 
 interface SearchProps {
   onSearch: (query: string) => void;
+  initialValue: string;
 }
 
 interface SearchState {
@@ -14,34 +14,24 @@ export default class SearchForm extends Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {
     super(props);
     this.state = {
-      value: '',
+      value: this.props.initialValue,
     };
-
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
   }
 
   onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.onSearch(this.state.value.trim());
+    const trimmedValue = this.state.value.trim();
+    this.setState({ value: trimmedValue });
+    this.props.onSearch(trimmedValue);
   };
 
-  onChange(e: ChangeEvent<HTMLInputElement>) {
+  onChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: e.target.value });
-  }
+  };
 
   onClear = () => {
     this.setState({ value: '' });
   };
-
-  override componentDidMount(): void {
-    const localStorageValue = localStorage.getItem(localStorageKey);
-    if (localStorageValue) {
-      this.setState({ value: localStorageValue });
-    } else {
-      this.setState({ value: '' });
-    }
-  }
 
   override render() {
     const { value } = this.state;

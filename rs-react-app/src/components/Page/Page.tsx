@@ -12,6 +12,7 @@ interface PageProps {
 interface PageState {
   chars: Character[] | [];
   errorMessage: ErrorMessage;
+  query: string;
 }
 
 export default class Page extends Component<PageProps, PageState> {
@@ -20,16 +21,22 @@ export default class Page extends Component<PageProps, PageState> {
     this.state = {
       chars: [],
       errorMessage: ErrorMessage.NO_ERROR,
+      query: localStorage.getItem(localStorageKey) || '',
     };
-    this.onSearch = this.onSearch.bind(this);
   }
 
-  async onSearch(query: string) {
-    localStorage.setItem(localStorageKey, query);
-    this.setState({ errorMessage: ErrorMessage.NO_ERROR });
+  onSearch = async (query: string) => {
+    const trimmedQuery = query.trim();
+
+    if (trimmedQuery === this.state.query) {
+      return;
+    }
+
+    this.setState({ query: trimmedQuery, errorMessage: ErrorMessage.NO_ERROR });
+    localStorage.setItem(localStorageKey, trimmedQuery);
 
     try {
-      const data = await getChars(query);
+      const data = await getChars(trimmedQuery);
       if (data.length === 0) {
         this.setState({ chars: [], errorMessage: ErrorMessage.NOT_FOUND });
       } else {
@@ -38,23 +45,19 @@ export default class Page extends Component<PageProps, PageState> {
     } catch {
       this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
     }
-  }
+  };
 
-  async setInitialState = () => {
-    const localStorageValue = localStorage.getItem(localStorageKey);
-
-    if (localStorageValue) {
-      this.onSearch(localStorageValue);
+  setInitialState = async () => {
+    const { query } = this.state;
+    if (query) {
+      await this.onSearch(query);
     } else {
       try {
-          const data = await getChars(query); 
-          
-        if (Array.isArray(data)) {
-          this.setState({ chars: data });
-        }
+        const data = await getChars();
+        this.setState({ chars: data });
+      } catch {
+        this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
       }
-      }
-     
     }
   };
 
@@ -65,7 +68,7 @@ export default class Page extends Component<PageProps, PageState> {
   override render(): ReactNode {
     return (
       <>
-        <SearchSection onSearch={this.onSearch}></SearchSection>
+        <SearchSection onSearch={this.onSearch} initialValue={this.state.query}></SearchSection>
         <ResultSection
           chars={this.state.chars}
           errorMessage={this.state.errorMessage}></ResultSection>

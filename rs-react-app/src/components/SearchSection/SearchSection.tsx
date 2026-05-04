@@ -4,6 +4,7 @@ import './SearchSection.css';
 
 interface SearchSectionProps {
   onSearch: (query: string) => void;
+  initialValue: string;
 }
 
 export default class SearchSection extends Component<SearchSectionProps> {
@@ -12,7 +13,9 @@ export default class SearchSection extends Component<SearchSectionProps> {
       <>
         <section className="search-section">
           <h1 className="main-title">Rick and Morty</h1>
-          <SearchForm onSearch={this.props.onSearch}></SearchForm>
+          <SearchForm
+            onSearch={this.props.onSearch}
+            initialValue={this.props.initialValue}></SearchForm>
         </section>
       </>
     );
