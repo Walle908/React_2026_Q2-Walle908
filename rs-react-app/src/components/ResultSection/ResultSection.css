@@ -1,3 +1,20 @@
+.result-section {
+  padding: 6rem 0 0;
+  overflow: hidden;
+}
+
+.cardsWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+  gap: 4rem;
+  margin: 0 auto;
+  justify-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100vw; /* Ограничение по ширине экрана */
+  overflow: hidden;
+}
+
 .badResult {
-  margin: auto;
+  font-size: 3rem;
 }

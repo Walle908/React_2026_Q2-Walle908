@@ -1,27 +1,28 @@
 .cardWrapper {
-  width: 200px;
-  height: 600px;
+  width: 24rem;
+  height: 49rem;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 2rem;
   outline: 3px solid #8bcf21;
   border-radius: 5px;
   background-color: rgba(139, 207, 33, 0.5);
-  margin: 0 auto 30px;
+  /* margin: 0 auto 30px; */
+  font-size: 1.6rem;
+  padding: 1rem 1rem 0 1rem;
 }
 
 .cardImg {
-  width: 200px;
-  height: 200px;
+  width: 20rem;
+  height: 20rem;
   border-radius: 5px;
   background-size: cover;
+  align-self: center;
 }
 
 .cardList {
   list-style-type: none;
-  text-align: left;
-  padding: 0 1rem;
 }
 
 .cardTitle {
-  padding: 0 1rem;
+  /* align-self: center; */
 }

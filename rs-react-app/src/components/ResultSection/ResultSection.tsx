@@ -15,8 +15,8 @@ export default class ResultSection extends Component<ResultSectionProps> {
     const { chars, errorMessage } = this.props;
 
     return (
-      <section>
-        <div className="flexRow">
+      <section className="result-section">
+        <div className="cardsWrapper">
           {chars.length > 0
             ? chars.map((char) => <Card key={char.id} char={char}></Card>)
             : errorMessage !== ErrorMessage.NO_ERROR && (

@@ -1,7 +1,6 @@
 import { Component, type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import './Card.css';
-import '../../index.css';
 
 interface CardProps {
   char: Character;
