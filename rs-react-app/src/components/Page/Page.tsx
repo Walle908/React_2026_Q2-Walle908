@@ -4,6 +4,7 @@ import { getChars } from '../../api/api';
 import { ErrorMessage, localStorageKey } from '../../constants/constants';
 import SearchSection from '../SearchSection/SearchSection';
 import ResultSection from '../ResultSection/ResultSection';
+import Loader from '../Loader/Loader';
 
 interface PageProps {
   query?: string;
@@ -13,6 +14,7 @@ interface PageState {
   chars: Character[] | [];
   errorMessage: ErrorMessage;
   query: string;
+  isLoading: boolean;
 }
 
 export default class Page extends Component<PageProps, PageState> {
@@ -22,17 +24,18 @@ export default class Page extends Component<PageProps, PageState> {
       chars: [],
       errorMessage: ErrorMessage.NO_ERROR,
       query: localStorage.getItem(localStorageKey) || '',
+      isLoading: false,
     };
   }
 
   onSearch = async (query: string) => {
     const trimmedQuery = query.trim();
 
-    if (trimmedQuery === this.state.query) {
+    if (trimmedQuery === this.state.query && this.state.errorMessage === ErrorMessage.NO_ERROR) {
       return;
     }
 
-    this.setState({ query: trimmedQuery, errorMessage: ErrorMessage.NO_ERROR });
+    this.setState({ query: trimmedQuery, isLoading: true, errorMessage: ErrorMessage.NO_ERROR });
     localStorage.setItem(localStorageKey, trimmedQuery);
 
     try {
@@ -40,15 +43,18 @@ export default class Page extends Component<PageProps, PageState> {
       if (data.length === 0) {
         this.setState({ chars: [], errorMessage: ErrorMessage.NOT_FOUND });
       } else {
-        this.setState({ chars: data, errorMessage: ErrorMessage.NO_ERROR });
+        this.setState({ chars: data });
       }
     } catch {
       this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
   setInitialState = async () => {
     const { query } = this.state;
+    this.setState({ isLoading: true });
 
     try {
       const data = await getChars(query);
@@ -59,6 +65,8 @@ export default class Page extends Component<PageProps, PageState> {
       }
     } catch {
       this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
@@ -67,12 +75,16 @@ export default class Page extends Component<PageProps, PageState> {
   }
 
   override render(): ReactNode {
+    const { chars, errorMessage, isLoading } = this.state;
+
     return (
       <>
         <SearchSection onSearch={this.onSearch} initialValue={this.state.query}></SearchSection>
-        <ResultSection
-          chars={this.state.chars}
-          errorMessage={this.state.errorMessage}></ResultSection>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <ResultSection chars={chars} errorMessage={errorMessage}></ResultSection>
+        )}
       </>
     );
   }
