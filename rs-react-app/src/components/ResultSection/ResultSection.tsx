@@ -16,11 +16,11 @@ export default class ResultSection extends Component<ResultSectionProps> {
 
     return (
       <section className="result-section">
-        <div className="cardsWrapper">
+        <div className="cards-wrapper">
           {chars.length > 0
             ? chars.map((char) => <Card key={char.id} char={char}></Card>)
             : errorMessage !== ErrorMessage.NO_ERROR && (
-                <h2 className="badResult">{errorMessage}</h2>
+                <h2 className="bad-result">{errorMessage}</h2>
               )}
         </div>
         <ErrorButton></ErrorButton>

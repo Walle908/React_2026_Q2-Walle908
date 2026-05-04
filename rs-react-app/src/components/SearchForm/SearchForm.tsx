@@ -40,6 +40,8 @@ export default class SearchForm extends Component<SearchProps, SearchState> {
       <form className="search-form" onSubmit={this.onSubmit}>
         <div className="search-wrapper">
           <input
+            id="searchInput"
+            name="search"
             type="search"
             placeholder="Search a character..."
             className="input-search"

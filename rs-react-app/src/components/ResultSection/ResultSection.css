@@ -6,7 +6,7 @@
   overflow: hidden;
 }
 
-.cardsWrapper {
+.cards-wrapper {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
   gap: 4rem;
@@ -15,14 +15,11 @@
   justify-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 100vw; /* Ограничение по ширине экрана */
+  max-width: 100vw;
   overflow: hidden;
 }
 
-.badResult {
+.bad-result {
   font-size: 3rem;
-}
-
-.error-button {
-  margin-top: 4rem;
+  text-align: center;
 }

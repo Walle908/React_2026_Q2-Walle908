@@ -3,13 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://Walle908.github.io/React_2026_Q2-Walle908/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "lint-staged": {
     "*.{ts,js,jsx,tsx}": [
@@ -19,6 +22,7 @@
     "*.{json,md}": "prettier --write"
   },
   "dependencies": {
+    "gh-pages": "^6.3.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },

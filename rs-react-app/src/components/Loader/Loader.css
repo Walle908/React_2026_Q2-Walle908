@@ -1,7 +1,7 @@
 .loader {
   position: relative;
-  margin: 0 auto;
-  width: 150px;
+  margin: auto;
+  width: 16rem;
   aspect-ratio: 1;
   display: grid;
   border-radius: 50%;

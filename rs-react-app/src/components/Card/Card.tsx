@@ -12,12 +12,12 @@ export default class Card extends Component<CardProps> {
 
     return (
       <>
-        <div className="flexColumn cardWrapper">
-          <img className="cardImg" src={char.image} alt={char.name}></img>
+        <div className="card-wrapper">
+          <img className="card-img" src={char.image} alt={char.name}></img>
 
-          <div className="flexColumn">
-            <h2 className="cardTitle">{char.name ? char.name : 'n/a'}</h2>
-            <ul className="cardList">
+          <div className="card-description">
+            <h2 className="card-title">{char.name ? char.name : 'n/a'}</h2>
+            <ul className="card-list">
               <li>
                 <b>Status: </b>
                 {char.status ? char.status : 'n/a'}

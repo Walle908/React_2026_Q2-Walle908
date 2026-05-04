@@ -64,16 +64,3 @@ input[type='search']::-webkit-search-cancel-button {
 .button:hover {
   background-color: #83d2e4;
 }
-
-.flexColumn {
-  display: flex;
-  flex-flow: column wrap;
-}
-
-.flexRow {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 4rem;
-}

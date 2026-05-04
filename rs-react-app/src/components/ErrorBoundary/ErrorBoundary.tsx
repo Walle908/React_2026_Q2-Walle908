@@ -30,9 +30,9 @@ export default class ErrorBoundary extends Component<ErrorProps, ErrorState> {
   override render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="errorBlock flexColumn">
-          <h2 className="errorMessage">Someting went wrong...</h2>
-          <button className="button" onClick={this.onClick}>
+        <div className="error-block">
+          <h2 className="error-message">Someting went wrong...</h2>
+          <button className="button reset-button" onClick={this.onClick}>
             Reset error
           </button>
         </div>
