@@ -1,4 +1,7 @@
 .result-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 6rem 0 0;
   overflow: hidden;
 }
@@ -18,4 +21,8 @@
 
 .badResult {
   font-size: 3rem;
+}
+
+.error-button {
+  margin-top: 4rem;
 }

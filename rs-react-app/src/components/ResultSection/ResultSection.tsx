@@ -22,6 +22,7 @@ export default class ResultSection extends Component<ResultSectionProps> {
                 <h2 className="badResult">{errorMessage}</h2>
               )}
         </div>
+        <button className="button error-button">Generate Error</button>
       </section>
     );
   }

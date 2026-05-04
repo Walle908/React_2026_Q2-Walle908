@@ -4,7 +4,6 @@ import { getChars } from '../../api/api';
 import { ErrorMessage, localStorageKey } from '../../constants/constants';
 import SearchSection from '../SearchSection/SearchSection';
 import ResultSection from '../ResultSection/ResultSection';
-import GenerateErrorSection from '../GenerateErrorSection/GenerateErrorSection';
 
 interface PageProps {
   query?: string;
@@ -41,17 +40,21 @@ export default class Page extends Component<PageProps, PageState> {
     }
   }
 
-  setInitialState = () => {
+  async setInitialState = () => {
     const localStorageValue = localStorage.getItem(localStorageKey);
 
     if (localStorageValue) {
       this.onSearch(localStorageValue);
     } else {
-      getChars().then((data) => {
+      try {
+          const data = await getChars(query); 
+          
         if (Array.isArray(data)) {
           this.setState({ chars: data });
         }
-      });
+      }
+      }
+     
     }
   };
 
@@ -66,7 +69,6 @@ export default class Page extends Component<PageProps, PageState> {
         <ResultSection
           chars={this.state.chars}
           errorMessage={this.state.errorMessage}></ResultSection>
-        <GenerateErrorSection />
       </>
     );
   }
