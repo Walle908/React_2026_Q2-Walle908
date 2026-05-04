@@ -1,0 +1,15 @@
+.error-block {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+}
+
+.error-message {
+  font-size: 3rem;
+  text-align: center;
+}
+
+.reset-button {
+  margin-top: 4rem;
+}
