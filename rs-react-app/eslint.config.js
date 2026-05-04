@@ -13,7 +13,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
     extends: [
       js.configs.recommended,
-      tseslint.configs.recommended,
+      ...tseslint.configs.strict,
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
       reactPlugin.configs.flat.recommended,
@@ -27,6 +27,9 @@ export default defineConfig([
       react: {
         version: 'detect',
       },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
     },
   },
 ]);

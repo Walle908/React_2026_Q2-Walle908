@@ -6,8 +6,6 @@ import SearchSection from '../SearchSection/SearchSection';
 import ResultSection from '../ResultSection/ResultSection';
 import Loader from '../Loader/Loader';
 
-interface PageProps {}
-
 interface PageState {
   chars: Character[];
   errorMessage: ErrorMessage;
@@ -15,8 +13,8 @@ interface PageState {
   isLoading: boolean;
 }
 
-export default class Page extends Component<PageProps, PageState> {
-  constructor(props: PageProps) {
+export default class Page extends Component<Record<string, never>, PageState> {
+  constructor(props: Record<string, never>) {
     super(props);
     this.state = {
       chars: [],

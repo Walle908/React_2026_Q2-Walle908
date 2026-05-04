@@ -34,7 +34,7 @@ h2 {
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 5rem;
   color: #8bcf21;
   text-align: center;
 }
@@ -56,7 +56,7 @@ input[type='search']::-webkit-search-cancel-button {
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 1.6rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.4s;
 }
