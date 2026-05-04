@@ -49,15 +49,16 @@ export default class Page extends Component<PageProps, PageState> {
 
   setInitialState = async () => {
     const { query } = this.state;
-    if (query) {
-      await this.onSearch(query);
-    } else {
-      try {
-        const data = await getChars();
+
+    try {
+      const data = await getChars(query);
+      if (data.length === 0) {
+        this.setState({ chars: [], errorMessage: ErrorMessage.NOT_FOUND });
+      } else {
         this.setState({ chars: data });
-      } catch {
-        this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
       }
+    } catch {
+      this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
     }
   };
 

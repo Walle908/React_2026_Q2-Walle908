@@ -7,7 +7,7 @@ export async function getChars(query?: string): Promise<Character[]> {
   const url = query
     ? `${baseUrl}/?name=${encodeURIComponent(query)}`
     : `${baseUrl}/?page=${activePage}`;
-
+  console.log('запрос' + url);
   const response = await fetch(url);
 
   if (response.status === 404) {
