@@ -181,4 +181,46 @@ describe('Page Component', () => {
     setInitialStateSpy.mockRestore();
     unmount();
   });
+
+  it('should handle case when localStorage is empty on mount', async () => {
+    localStorage.removeItem(localStorageKey);
+    mockGetChars.mockResolvedValueOnce([]);
+
+    const { unmount } = render(<Page />);
+
+    const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
+    expect(input.value).toBe('');
+
+    await waitFor(() => {
+      expect(mockGetChars).toHaveBeenCalledWith('');
+    });
+
+    unmount();
+  });
+
+  it('should update existing value in localStorage when a new search is performed', async () => {
+    const user = userEvent.setup();
+    localStorage.setItem(localStorageKey, 'Morty');
+    mockGetChars.mockResolvedValueOnce([]);
+
+    const { unmount } = render(<Page />);
+    await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
+
+    mockGetChars.mockResolvedValueOnce(mockCharacters);
+
+    const input = screen.getByPlaceholderText('Search a character...');
+    const submitButton = screen.getByRole('button', { name: /search/i });
+
+    await user.clear(input);
+    await user.type(input, 'Summer');
+    await user.click(submitButton);
+
+    await waitFor(() => {
+      expect(mockGetChars).toHaveBeenCalledWith('Summer');
+    });
+
+    expect(localStorage.getItem(localStorageKey)).toBe('Summer');
+
+    unmount();
+  });
 });
