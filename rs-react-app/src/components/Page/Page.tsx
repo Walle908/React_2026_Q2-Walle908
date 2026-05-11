@@ -50,7 +50,7 @@ export default class Page extends Component<Record<string, never>, PageState> {
     }
   };
 
-  setInitialState = async () => {
+  async setInitialState() {
     if (this.isInitialLoading) return;
 
     this.isInitialLoading = true;
@@ -68,7 +68,7 @@ export default class Page extends Component<Record<string, never>, PageState> {
     } finally {
       this.setState({ isLoading: false });
     }
-  };
+  }
 
   override componentDidMount(): void {
     this.setInitialState();
