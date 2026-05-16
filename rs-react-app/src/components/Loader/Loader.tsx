@@ -1,8 +1,6 @@
-import { Component, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import './Loader.css';
 
-export default class Loader extends Component {
-  override render(): ReactNode {
-    return <div className="loader"></div>;
-  }
+export default function Loader(): ReactNode {
+  return <div className="loader"></div>;
 }

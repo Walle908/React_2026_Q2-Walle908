@@ -1,4 +1,4 @@
-import { type ChangeEvent, type SubmitEvent, Component } from 'react';
+import { type ChangeEvent, type ReactNode, type SubmitEvent, useState } from 'react';
 import './SearchForm.css';
 
 interface SearchProps {
@@ -6,59 +6,46 @@ interface SearchProps {
   initialValue: string;
 }
 
-interface SearchState {
-  value: string;
-}
+export default function SearchForm({ onSearch, initialValue }: SearchProps): ReactNode {
+  const [value, setValue] = useState(initialValue);
 
-export default class SearchForm extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    this.state = {
-      value: this.props.initialValue,
-    };
-  }
-
-  onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const trimmedValue = this.state.value.trim();
-    this.setState({ value: trimmedValue });
-    this.props.onSearch(trimmedValue);
+    const trimmedValue = value.trim();
+    onSearch(trimmedValue);
+    setValue(trimmedValue);
   };
 
-  onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value });
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
-  onClear = () => {
-    this.setState({ value: '' });
+  const onClear = () => {
+    setValue('');
   };
 
-  override render() {
-    const { value } = this.state;
+  return (
+    <form className="search-form" onSubmit={onSubmit}>
+      <div className="search-wrapper">
+        <input
+          id="searchInput"
+          name="search"
+          type="search"
+          placeholder="Search a character..."
+          className="input-search"
+          value={value}
+          onChange={onChange}
+        />
+        {value && (
+          <button type="button" className="clear-button" onClick={onClear}>
+            ✖
+          </button>
+        )}
+      </div>
 
-    return (
-      <form className="search-form" onSubmit={this.onSubmit}>
-        <div className="search-wrapper">
-          <input
-            id="searchInput"
-            name="search"
-            type="search"
-            placeholder="Search a character..."
-            className="input-search"
-            value={value}
-            onChange={this.onChange}
-          />
-          {value && (
-            <button type="button" className="clear-button" onClick={this.onClear}>
-              ✖
-            </button>
-          )}
-        </div>
-
-        <button type="submit" className="button buttonSearch">
-          Search
-        </button>
-      </form>
-    );
-  }
+      <button type="submit" className="button buttonSearch">
+        Search
+      </button>
+    </form>
+  );
 }

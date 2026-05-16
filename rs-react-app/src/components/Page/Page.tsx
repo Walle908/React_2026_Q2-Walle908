@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from 'react';
+import { useEffect, useState, useRef, type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { getChars } from '../../api/api';
 import { ErrorMessage, localStorageKey } from '../../constants/constants';
@@ -6,86 +6,56 @@ import SearchSection from '../SearchSection/SearchSection';
 import ResultSection from '../ResultSection/ResultSection';
 import Loader from '../Loader/Loader';
 
-interface PageState {
-  chars: Character[];
-  errorMessage: ErrorMessage;
-  query: string;
-  isLoading: boolean;
-}
+export default function Page(): ReactNode {
+  const [chars, setChars] = useState<Character[]>([]);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage>(ErrorMessage.NO_ERROR);
+  const [query, setQuery] = useState<string>(() => localStorage.getItem(localStorageKey) || '');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-export default class Page extends Component<Record<string, never>, PageState> {
-  private isInitialLoading = false;
+  const isInitialLoading = useRef(false);
 
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = {
-      chars: [],
-      errorMessage: ErrorMessage.NO_ERROR,
-      query: localStorage.getItem(localStorageKey) || '',
-      isLoading: false,
-    };
-  }
-
-  onSearch = async (query: string) => {
-    const trimmedQuery = query.trim();
-
-    if (trimmedQuery === this.state.query && this.state.errorMessage === ErrorMessage.NO_ERROR) {
-      return;
-    }
-
-    this.setState({ query: trimmedQuery, isLoading: true, errorMessage: ErrorMessage.NO_ERROR });
-    localStorage.setItem(localStorageKey, trimmedQuery);
-
+  const fetchCharacters = async (searchQuery: string) => {
+    setIsLoading(true);
     try {
-      const data = await getChars(trimmedQuery);
+      const data = await getChars(searchQuery);
       if (data.length === 0) {
-        this.setState({ chars: [], errorMessage: ErrorMessage.NOT_FOUND });
+        setChars([]);
+        setErrorMessage(ErrorMessage.NOT_FOUND);
       } else {
-        this.setState({ chars: data });
+        setChars(data);
       }
     } catch {
-      this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
+      setChars([]);
+      setErrorMessage(ErrorMessage.ANOTHER_ERROR);
     } finally {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
   };
 
-  async setInitialState() {
-    if (this.isInitialLoading) return;
+  const onSearch = async (newQuery: string) => {
+    const trimmedQuery = newQuery.trim();
 
-    this.isInitialLoading = true;
-    this.setState({ isLoading: true });
-
-    try {
-      const data = await getChars(this.state.query);
-      if (data.length === 0) {
-        this.setState({ chars: [], errorMessage: ErrorMessage.NOT_FOUND });
-      } else {
-        this.setState({ chars: data });
-      }
-    } catch {
-      this.setState({ chars: [], errorMessage: ErrorMessage.ANOTHER_ERROR });
-    } finally {
-      this.setState({ isLoading: false });
+    if (trimmedQuery === query && errorMessage === ErrorMessage.NO_ERROR) {
+      return;
     }
-  }
 
-  override componentDidMount(): void {
-    this.setInitialState();
-  }
+    setQuery(trimmedQuery);
+    localStorage.setItem(localStorageKey, trimmedQuery);
+    setIsLoading(true);
+    await fetchCharacters(trimmedQuery);
+  };
 
-  override render(): ReactNode {
-    const { chars, errorMessage, isLoading } = this.state;
+  useEffect(() => {
+    if (isInitialLoading.current) return;
+    isInitialLoading.current = true;
+    const initialQuery = localStorage.getItem(localStorageKey) || '';
+    fetchCharacters(initialQuery);
+  }, []);
 
-    return (
-      <>
-        <SearchSection onSearch={this.onSearch} initialValue={this.state.query}></SearchSection>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <ResultSection chars={chars} errorMessage={errorMessage}></ResultSection>
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      <SearchSection onSearch={onSearch} initialValue={query} />
+      {isLoading ? <Loader /> : <ResultSection chars={chars} errorMessage={errorMessage} />}
+    </>
+  );
 }
