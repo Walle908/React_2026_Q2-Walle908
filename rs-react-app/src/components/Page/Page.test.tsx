@@ -158,35 +158,26 @@ describe('Page Component', () => {
     });
   });
 
-  it('should early return in setInitialState if isInitialLoading is already true', async () => {
-    const setInitialStateSpy = vi.spyOn(Page.prototype, 'setInitialState');
+  it('should not trigger initial fetch again if already loading / mounted', async () => {
     mockGetChars.mockResolvedValueOnce([]);
 
-    const { unmount } = render(<Page />);
+    const { rerender } = render(<Page />);
 
     await waitFor(() => {
-      expect(setInitialStateSpy).toHaveBeenCalledTimes(1);
+      expect(mockGetChars).toHaveBeenCalledTimes(1);
     });
 
-    const mockContext = {
-      isInitialLoading: true,
-      setState: vi.fn(),
-      state: { query: '' },
-    };
+    mockGetChars.mockClear();
+    rerender(<Page />);
 
-    await Page.prototype.setInitialState.call(mockContext);
-
-    expect(mockContext.setState).not.toHaveBeenCalled();
-
-    setInitialStateSpy.mockRestore();
-    unmount();
+    expect(mockGetChars).not.toHaveBeenCalled();
   });
 
   it('should handle case when localStorage is empty on mount', async () => {
     localStorage.removeItem(localStorageKey);
     mockGetChars.mockResolvedValueOnce([]);
 
-    const { unmount } = render(<Page />);
+    render(<Page />);
 
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
     expect(input.value).toBe('');
@@ -194,8 +185,6 @@ describe('Page Component', () => {
     await waitFor(() => {
       expect(mockGetChars).toHaveBeenCalledWith('');
     });
-
-    unmount();
   });
 
   it('should update existing value in localStorage when a new search is performed', async () => {
@@ -203,7 +192,7 @@ describe('Page Component', () => {
     localStorage.setItem(localStorageKey, 'Morty');
     mockGetChars.mockResolvedValueOnce([]);
 
-    const { unmount } = render(<Page />);
+    render(<Page />);
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
 
     mockGetChars.mockResolvedValueOnce(mockCharacters);
@@ -220,7 +209,5 @@ describe('Page Component', () => {
     });
 
     expect(localStorage.getItem(localStorageKey)).toBe('Summer');
-
-    unmount();
   });
 });
