@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
-import { getChars } from './api';
+import { getChars, getOneChar } from './api';
 
 describe('getChars API Function', () => {
   let fetchSpy: MockInstance;
@@ -95,5 +95,52 @@ describe('getChars API Function', () => {
     const result = await getChars('Rick');
 
     expect(result).toEqual({ results: [], pages: 0 });
+  });
+
+  describe('getOneChar API Function', () => {
+    it('should fetch single character data successfully by ID', async () => {
+      const mockCharResponse = {
+        id: 1,
+        name: 'Rick Sanchez',
+        status: 'Alive',
+      };
+
+      fetchSpy.mockResolvedValueOnce(
+        new Response(JSON.stringify(mockCharResponse), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
+
+      const result = await getOneChar('1');
+
+      expect(fetchSpy).toHaveBeenCalledWith('https://rickandmortyapi.com/api/character/1');
+      expect(result).toEqual(mockCharResponse);
+    });
+
+    it('should return null if server returns 404 Status (Not Found) for character ID', async () => {
+      fetchSpy.mockResolvedValueOnce(
+        new Response(JSON.stringify({ error: 'Character not found' }), {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' },
+        })
+      );
+
+      const result = await getOneChar('99999');
+
+      expect(result).toBeNull();
+      expect(fetchSpy).toHaveBeenCalledWith('https://rickandmortyapi.com/api/character/99999');
+    });
+
+    it('should throw an explicit server error if response status is not ok (e.g. 500) for single character request', async () => {
+      fetchSpy.mockResolvedValueOnce(
+        new Response(null, {
+          status: 500,
+          statusText: 'Internal Server Error',
+        })
+      );
+
+      await expect(getOneChar('1')).rejects.toThrow('Server error while requesting data');
+    });
   });
 });

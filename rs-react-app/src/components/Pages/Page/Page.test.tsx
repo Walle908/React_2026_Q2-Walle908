@@ -16,6 +16,7 @@ import { localStorageKey, initialPage } from '../../../constants/constants';
 import { ErrorMessage } from '../../../constants/constants';
 import { mockCharacters } from '../../../__tests__/mocks';
 import * as apiModule from '../../../api/api';
+import { SearchParams } from '../../../constants/constants';
 
 vi.mock('../../api/api', () => ({
   getChars: vi.fn(),
@@ -218,5 +219,72 @@ describe('Page Component', () => {
     });
 
     expect(localStorage.getItem(localStorageKey)).toBe(JSON.stringify('Summer'));
+  });
+
+  it('should change page and update URL when handlePageChange is triggered via Pagination', async () => {
+    const user = userEvent.setup();
+    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 5 });
+
+    renderWithRouter();
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
+    });
+
+    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 5 });
+
+    const nextButton = screen.getByRole('button', { name: /next/i });
+    await user.click(nextButton);
+
+    await waitFor(() => {
+      expect(mockGetChars).toHaveBeenCalledWith('', 2, expect.any(AbortSignal));
+    });
+  });
+
+  it('should ignore page changes if clicked faster than the allowed Delay threshold', async () => {
+    const user = userEvent.setup();
+    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 5 });
+
+    renderWithRouter();
+    await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
+
+    mockGetChars.mockClear();
+    const nextButton = screen.getByRole('button', { name: /next/i });
+
+    user.click(nextButton);
+    user.click(nextButton);
+
+    await waitFor(() => {
+      expect(mockGetChars).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should remove details parameter from URL when clicking on the left-panel wrapper background', async () => {
+    const user = userEvent.setup();
+    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
+
+    const { container } = render(
+      <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=1&${SearchParams.DETAILS}=1`]}>
+        <Routes>
+          <Route path="/" element={<Page />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
+
+    const leftPanel = container.querySelector('.left-panel');
+    expect(leftPanel).toBeInTheDocument();
+
+    if (leftPanel) {
+      await user.click(leftPanel);
+    }
+
+    await waitFor(() => {
+      const links = container.querySelectorAll('.link');
+      if (links.length > 0) {
+        expect(links[0]?.getAttribute('href')).not.toContain('details=');
+      }
+    });
   });
 });
