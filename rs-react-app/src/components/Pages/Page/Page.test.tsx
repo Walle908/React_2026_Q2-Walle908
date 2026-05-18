@@ -2,10 +2,10 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
 import Page from './Page';
-import { getChars } from '../../api/api';
-import { localStorageKey } from '../../constants/constants';
-import { ErrorMessage } from '../../constants/constants';
-import { mockCharacters } from '../../__tests__/mocks';
+import { getChars } from '../../../api/api';
+import { localStorageKey } from '../../../constants/constants';
+import { ErrorMessage } from '../../../constants/constants';
+import { mockCharacters } from '../../../__tests__/mocks';
 
 vi.mock('../../api/api', () => ({
   getChars: vi.fn(),

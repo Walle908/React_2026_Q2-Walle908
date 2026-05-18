@@ -17,6 +17,10 @@
   font-size: 2rem;
 }
 
+.about-text {
+  font-weight: bold;
+}
+
 .about-link:hover {
   color: #83d2e4;
 }

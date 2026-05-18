@@ -6,11 +6,10 @@
 .main-wrapper {
   position: relative;
   display: flex;
-  flex: 1;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 3rem;
   width: 100%;
-  padding-top: 2rem;
+  padding-top: 3rem;
 }
 
 .left-panel {

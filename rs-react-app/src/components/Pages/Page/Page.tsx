@@ -1,19 +1,20 @@
 import { useEffect, useState, useRef, type ReactNode } from 'react';
-import { type Character } from '../../types/types';
-import { getChars } from '../../api/api';
+import { type Character } from '../../../types/types';
+import { getChars } from '../../../api/api';
 import {
   Delay,
   ErrorMessage,
   initialPage,
   localStorageKey,
   SearchParams,
-} from '../../constants/constants';
-import SearchSection from '../SearchSection/SearchSection';
-import ResultSection from '../ResultSection/ResultSection';
-import Loader from '../Loader/Loader';
-import { Pagination } from '../Pagination/Pagination';
+} from '../../../constants/constants';
+import SearchSection from '../../SearchSection/SearchSection';
+import ResultBlock from '../../ResultBlock/ResultBlock';
+import Loader from '../../Loader/Loader';
+import { Pagination } from '../../Pagination/Pagination';
 import { Outlet, useParams, useNavigate, useSearchParams } from 'react-router';
 import './Page.css';
+import Header from '../../Header/Header';
 
 export default function Page(): ReactNode {
   const [chars, setChars] = useState<Character[]>([]);
@@ -127,6 +128,7 @@ export default function Page(): ReactNode {
 
   return (
     <>
+      <Header />
       <main className="page-wrapper">
         <SearchSection onSearch={onSearch} initialValue={query} />
         <section className="main-wrapper" onClick={handleMainClick}>
@@ -138,7 +140,7 @@ export default function Page(): ReactNode {
                 {showPagination && (
                   <Pagination totalPages={totalPages} onChange={handlePageChange} />
                 )}
-                <ResultSection chars={chars} errorMessage={errorMessage} />
+                <ResultBlock chars={chars} errorMessage={errorMessage} />
               </div>
             )}
           </div>

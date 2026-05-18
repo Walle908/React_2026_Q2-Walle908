@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import ResultSection from './ResultSection';
+import ResultSection from './ResultBlock';
 import { ErrorMessage } from '../../constants/constants';
 import { mockCharacters } from '../../__tests__/mocks';
 

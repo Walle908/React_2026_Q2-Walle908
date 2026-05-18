@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 import App from '../App.tsx';
-import NotFoundPage from '../components/NotFoundPage/NotFoundPage.tsx';
+import NotFoundPage from '../components/Pages/NotFoundPage/NotFoundPage.tsx';
 import CardDetailed from '../components/CardDetailed/CardDetailed.tsx';
-import AboutPage from '../components/About/About.tsx';
+import AboutPage from '../components/Pages/About/About.tsx';
 
 export const router = createBrowserRouter([
   {
