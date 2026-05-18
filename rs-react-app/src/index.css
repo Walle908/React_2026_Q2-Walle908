@@ -64,3 +64,11 @@ input[type='search']::-webkit-search-cancel-button {
 .button:hover {
   background-color: #83d2e4;
 }
+
+.link {
+  text-decoration: none;
+  color: #000;
+  display: block;
+  margin: 0;
+  padding: 0;
+}

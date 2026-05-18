@@ -10,7 +10,7 @@ interface CardProps {
 export default function Card({ char }: CardProps): ReactNode {
   const [searchParams] = useSearchParams();
   return (
-    <Link to={`/character/${char.id}?${searchParams.toString()}`} className="card-link">
+    <Link to={`/character/${char.id}?${searchParams.toString()}`} className="link">
       <div className="main-card-wrapper">
         <img className="card-img" src={char.image} alt={char.name} />
         <h2 className="card-title">{char.name || 'n/a'}</h2>
