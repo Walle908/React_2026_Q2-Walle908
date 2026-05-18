@@ -6,8 +6,8 @@ import './Header.css';
 export default function Header(): ReactNode {
   return (
     <header className="header">
-      <Link className="link" to="/about">
-        <button className="button">About</button>
+      <Link className="link about-link" to="/about">
+        About
       </Link>
       <ErrorButton />
     </header>

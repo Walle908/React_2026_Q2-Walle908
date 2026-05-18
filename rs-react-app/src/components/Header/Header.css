@@ -1,5 +1,16 @@
 .header {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-link {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.about-link:hover {
+  color: #83d2e4;
 }
