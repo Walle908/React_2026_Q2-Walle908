@@ -1,17 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import ResultSection from './ResultBlock';
+import { MemoryRouter } from 'react-router';
+import ResultBlock from './ResultBlock';
 import { ErrorMessage } from '../../constants/constants';
 import { mockCharacters } from '../../__tests__/mocks';
 
-describe('ResultSection Component', () => {
+describe('ResultBlock Component', () => {
   it('should render a list of Card components when chars array is not empty', () => {
-    render(<ResultSection chars={mockCharacters} errorMessage={ErrorMessage.NO_ERROR} />);
+    render(
+      <MemoryRouter>
+        <ResultBlock chars={mockCharacters} errorMessage={ErrorMessage.NO_ERROR} />
+      </MemoryRouter>
+    );
 
-    expect(screen.getByRole('heading', { level: 2, name: 'Rick Sanchez' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2, name: 'Morty Smith' })).toBeInTheDocument();
-
-    expect(screen.getByRole('button', { name: /generate error/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 2, name: mockCharacters[0]?.name })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 2, name: mockCharacters[1]?.name })
+    ).toBeInTheDocument();
 
     const errorHeading = screen.queryByRole('heading', {
       level: 2,
@@ -21,7 +28,11 @@ describe('ResultSection Component', () => {
   });
 
   it('should render an error message when chars array is empty and errorMessage is provided', () => {
-    render(<ResultSection chars={[]} errorMessage={ErrorMessage.NOT_FOUND} />);
+    render(
+      <MemoryRouter>
+        <ResultBlock chars={[]} errorMessage={ErrorMessage.NOT_FOUND} />
+      </MemoryRouter>
+    );
 
     const errorHeading = screen.getByRole('heading', { level: 2 });
     expect(errorHeading).toBeInTheDocument();
@@ -33,10 +44,12 @@ describe('ResultSection Component', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('should render initial empty state with ErrorButton and no error messages before any search', () => {
-    render(<ResultSection chars={[]} errorMessage={ErrorMessage.NO_ERROR} />);
-
-    expect(screen.getByRole('button', { name: /generate error/i })).toBeInTheDocument();
+  it('should render initial empty state and no error messages before any search', () => {
+    render(
+      <MemoryRouter>
+        <ResultBlock chars={[]} errorMessage={ErrorMessage.NO_ERROR} />
+      </MemoryRouter>
+    );
 
     const errorHeading = screen.queryByRole('heading', { level: 2 });
     expect(errorHeading).not.toBeInTheDocument();

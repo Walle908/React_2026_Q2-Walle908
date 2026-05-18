@@ -1,20 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
-import { Component, type ReactNode } from 'react';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import ErrorButton from './ErrorButton';
-
-class TestBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
-  override state = { hasError: false };
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-  override componentDidCatch() {}
-  override render() {
-    if (this.state.hasError) return <span>Caught an error</span>;
-    return this.props.children;
-  }
-}
 
 describe('ErrorButton Component', () => {
   let consoleErrorSpy: MockInstance;
@@ -38,16 +26,16 @@ describe('ErrorButton Component', () => {
     const user = userEvent.setup();
 
     render(
-      <TestBoundary>
+      <ErrorBoundary>
         <ErrorButton />
-      </TestBoundary>
+      </ErrorBoundary>
     );
 
     const button = screen.getByRole('button', { name: /generate error/i });
 
     await user.click(button);
 
-    expect(screen.getByText('Caught an error')).toBeInTheDocument();
+    expect(screen.getByText('Someting went wrong...')).toBeInTheDocument();
     expect(button).not.toBeInTheDocument();
   });
 });

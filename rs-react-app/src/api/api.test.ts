@@ -17,6 +17,7 @@ describe('getChars API Function', () => {
   it('should fetch the default first page when no search query is provided', async () => {
     const mockApiResponse = {
       results: [{ id: 1, name: 'Rick Sanchez' }],
+      info: { pages: 42 },
     };
 
     fetchSpy.mockResolvedValueOnce(
@@ -28,13 +29,18 @@ describe('getChars API Function', () => {
 
     const result = await getChars();
 
-    expect(fetchSpy).toHaveBeenCalledWith('https://rickandmortyapi.com/api/character/?page=1');
-    expect(result).toEqual(mockApiResponse.results);
+    expect(fetchSpy).toHaveBeenCalledWith(
+      'https://rickandmortyapi.com/api/character/?page=1',
+      expect.any(Object)
+    );
+
+    expect(result).toEqual({ results: mockApiResponse.results, pages: 42 });
   });
 
   it('should fetch by name parameter when a query string is provided', async () => {
     const mockApiResponse = {
       results: [{ id: 2, name: 'Morty Smith' }],
+      info: { pages: 4 },
     };
 
     fetchSpy.mockResolvedValueOnce(
@@ -47,9 +53,10 @@ describe('getChars API Function', () => {
     const result = await getChars('Morty Smith');
 
     expect(fetchSpy).toHaveBeenCalledWith(
-      'https://rickandmortyapi.com/api/character/?name=Morty%20Smith'
+      'https://rickandmortyapi.com/api/character/?name=Morty+Smith',
+      expect.any(Object)
     );
-    expect(result).toEqual(mockApiResponse.results);
+    expect(result).toEqual({ results: mockApiResponse.results, pages: 4 });
   });
 
   it('should return an empty array if server returns 404 Status (Not Found)', async () => {
@@ -62,7 +69,7 @@ describe('getChars API Function', () => {
 
     const result = await getChars('NonExistentCharacter');
 
-    expect(result).toEqual([]);
+    expect(result).toEqual({ results: [], pages: 0 });
     expect(fetchSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -87,6 +94,6 @@ describe('getChars API Function', () => {
 
     const result = await getChars('Rick');
 
-    expect(result).toEqual([]);
+    expect(result).toEqual({ results: [], pages: 0 });
   });
 });

@@ -56,7 +56,7 @@ export default function CardDetailed(): ReactNode {
         <Loader />
       ) : pageState.char ? (
         <div className="card-wrapper">
-          <img className="card-img" src={pageState.char.image} alt="pageState.char.name" />
+          <img className="card-img" src={pageState.char.image} alt={pageState.char.name} />
 
           <div className="card-description">
             <h2 className="card-title">{pageState.char.name || 'n/a'}</h2>
