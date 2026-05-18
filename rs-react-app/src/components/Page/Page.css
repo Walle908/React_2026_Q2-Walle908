@@ -10,6 +10,7 @@
   justify-content: space-between;
   gap: 2rem;
   width: 100%;
+  padding-top: 2rem;
 }
 
 .left-panel {
@@ -31,7 +32,7 @@
   top: 0;
   height: 100%;
   animation: slideIn 0.4s ease-in-out;
-  padding: 4rem 0 0;
+  padding: 10rem 0 0;
 }
 
 @keyframes slideIn {
@@ -41,4 +42,11 @@
   to {
     transform: translateX(0);
   }
+}
+
+.results-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }

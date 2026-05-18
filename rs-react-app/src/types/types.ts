@@ -12,3 +12,8 @@ export interface Character {
   url: string;
   created: string;
 }
+
+export interface CharsResponse {
+  results: Character[];
+  pages: number;
+}

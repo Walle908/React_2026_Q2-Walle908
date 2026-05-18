@@ -1,0 +1,9 @@
+.pagination-wrapper {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.pagination-text {
+  font-size: 2rem;
+}

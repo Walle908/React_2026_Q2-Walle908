@@ -1,17 +1,28 @@
-import { type Character } from '../types/types';
+import { type Character, type CharsResponse } from '../types/types';
+import { initialPage, SearchParams } from '../constants/constants';
 
 const baseUrl = 'https://rickandmortyapi.com/api/character';
 
-export async function getChars(query?: string): Promise<Character[]> {
-  const activePage = 1;
-  const url = query
-    ? `${baseUrl}/?name=${encodeURIComponent(query)}`
-    : `${baseUrl}/?page=${activePage}`;
+export async function getChars(
+  query: string = '',
+  page: number = initialPage,
+  signal?: AbortSignal
+): Promise<CharsResponse> {
+  const params = new URLSearchParams();
 
-  const response = await fetch(url);
+  if (query.trim()) {
+    params.append(SearchParams.NAME, query.trim());
+  }
+  if (page > initialPage || !query.trim()) {
+    params.append(SearchParams.PAGE, String(page));
+  }
+
+  const url = `${baseUrl}/?${params.toString()}`;
+
+  const response = await fetch(url, { signal });
 
   if (response.status === 404) {
-    return [];
+    return { results: [], pages: 0 };
   }
 
   if (!response.ok) {
@@ -19,7 +30,7 @@ export async function getChars(query?: string): Promise<Character[]> {
   }
 
   const data = await response.json();
-  return data.results || [];
+  return { results: data.results || [], pages: data.info?.pages || 0 };
 }
 
 export async function getOneChar(id: string): Promise<Character | null> {
