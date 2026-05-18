@@ -71,4 +71,5 @@ input[type='search']::-webkit-search-cancel-button {
   display: block;
   margin: 0;
   padding: 0;
+  transition: 0.4s;
 }

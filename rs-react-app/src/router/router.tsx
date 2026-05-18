@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import App from '../App.tsx';
 import NotFoundPage from '../components/NotFoundPage/NotFoundPage.tsx';
 import CardDetailed from '../components/CardDetailed/CardDetailed.tsx';
+import AboutPage from '../components/About/About.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -16,4 +17,5 @@ export const router = createBrowserRouter([
     ],
   },
   { path: '*', element: <NotFoundPage /> },
+  { path: 'about', element: <AboutPage /> },
 ]);

@@ -126,25 +126,29 @@ export default function Page(): ReactNode {
   const showPagination = !isLoading && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
 
   return (
-    <div className="page-wrapper">
-      <SearchSection onSearch={onSearch} initialValue={query} />
-      <div className="main-wrapper" onClick={handleMainClick}>
-        <div className={`left-panel ${id ? 'split' : ''}`}>
-          {isLoading ? (
-            <Loader />
-          ) : (
-            <div className="results-wrapper">
-              {showPagination && <Pagination totalPages={totalPages} onChange={handlePageChange} />}
-              <ResultSection chars={chars} errorMessage={errorMessage} />
-            </div>
+    <>
+      <main className="page-wrapper">
+        <SearchSection onSearch={onSearch} initialValue={query} />
+        <section className="main-wrapper" onClick={handleMainClick}>
+          <div className={`left-panel ${id ? 'split' : ''}`}>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <div className="results-wrapper">
+                {showPagination && (
+                  <Pagination totalPages={totalPages} onChange={handlePageChange} />
+                )}
+                <ResultSection chars={chars} errorMessage={errorMessage} />
+              </div>
+            )}
+          </div>
+          {id && (
+            <aside className="right-panel-details" onClick={(e) => e.stopPropagation()}>
+              <Outlet context={chars} />
+            </aside>
           )}
-        </div>
-        {id && (
-          <aside className="right-panel-details" onClick={(e) => e.stopPropagation()}>
-            <Outlet context={chars} />
-          </aside>
-        )}
-      </div>
-    </div>
+        </section>
+      </main>
+    </>
   );
 }

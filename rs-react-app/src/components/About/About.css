@@ -1,0 +1,22 @@
+.about-wrapper {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+.about-title {
+  font-size: 4rem;
+}
+
+.about-author,
+.about-course {
+  display: flex;
+  gap: 1rem;
+  font-size: 2rem;
+}
+
+.about-link:hover {
+  color: #83d2e4;
+}
