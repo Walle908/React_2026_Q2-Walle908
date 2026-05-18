@@ -1,21 +1,19 @@
-.main-card-wrapper {
+.card-wrapper {
   display: flex;
   flex-direction: column;
-  width: 24rem;
-  height: 34rem;
-  gap: 4rem;
-  align-items: center;
+  width: 25rem;
+  justify-content: flex-start;
+  gap: 2rem;
   border: 3px solid #8bcf21;
   border-radius: 5px;
   background-color: rgba(139, 207, 33, 0.5);
   font-size: 1.6rem;
-  padding: 1rem;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
+  padding: 2rem;
 }
 
-.main-card-wrapper:hover {
-  transform: scale(1.05);
+.card-description {
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .card-img {
@@ -26,15 +24,15 @@
   align-self: center;
 }
 
+.card-list {
+  list-style-type: none;
+}
+
 .card-title {
   text-align: center;
   padding-bottom: 1rem;
 }
 
-.card-link {
-  text-decoration: none;
-  color: #000;
-  display: block;
-  margin: 0;
-  padding: 0;
+.close-button {
+  align-self: center;
 }

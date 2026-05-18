@@ -5,14 +5,19 @@ import { ErrorMessage, localStorageKey } from '../../constants/constants';
 import SearchSection from '../SearchSection/SearchSection';
 import ResultSection from '../ResultSection/ResultSection';
 import Loader from '../Loader/Loader';
+import { Outlet, useParams, useNavigate, useSearchParams } from 'react-router';
+import './Page.css';
 
 export default function Page(): ReactNode {
   const [chars, setChars] = useState<Character[]>([]);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>(ErrorMessage.NO_ERROR);
   const [query, setQuery] = useState<string>(() => localStorage.getItem(localStorageKey) || '');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const isInitialLoading = useRef(false);
+
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const fetchCharacters = async (searchQuery: string) => {
     setIsLoading(true);
@@ -52,10 +57,31 @@ export default function Page(): ReactNode {
     fetchCharacters(initialQuery);
   }, []);
 
+  const handleMainClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+
+    if (
+      target.classList.contains('left-panel') ||
+      target.classList.contains('main-wrapper') ||
+      target.classList.contains('cards-wrapper')
+    ) {
+      navigate(`/?${searchParams.toString()}`);
+    }
+  };
+
   return (
-    <>
+    <div className="page-wrapper">
       <SearchSection onSearch={onSearch} initialValue={query} />
-      {isLoading ? <Loader /> : <ResultSection chars={chars} errorMessage={errorMessage} />}
-    </>
+      <div className="main-wrapper" onClick={handleMainClick}>
+        <div className={`left-panel ${id ? 'split' : ''}`}>
+          {isLoading ? <Loader /> : <ResultSection chars={chars} errorMessage={errorMessage} />}
+        </div>
+        {id && (
+          <aside className="right-panel-details" onClick={(e) => e.stopPropagation()}>
+            <Outlet context={chars} />
+          </aside>
+        )}
+      </div>
+    </div>
   );
 }

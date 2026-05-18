@@ -1,0 +1,44 @@
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 100%;
+}
+
+.left-panel {
+  flex: 1;
+  height: 100%;
+  transition: flex 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.left-panel.split {
+  flex: 0 0 70%;
+  cursor: pointer;
+  /* border-right: 3px solid #8bcf21; */
+}
+
+.right-panel-details {
+  position: sticky;
+  flex: 0 0 20%;
+  top: 0;
+  height: 100%;
+  animation: slideIn 0.4s ease-in-out;
+  padding: 4rem 0 0;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
