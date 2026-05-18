@@ -1,7 +1,7 @@
 import { useState, useEffect, type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import Loader from '../Loader/Loader';
-import { useParams, useNavigate, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import { getOneChar } from '../../api/api';
 import './CardDetailed.css';
 
@@ -16,9 +16,8 @@ export default function CardDetailed(): ReactNode {
     isLoading: false,
   });
 
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const { id } = useParams<{ id: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const id = searchParams.get('character');
 
   useEffect(() => {
     if (!id) return;
@@ -45,7 +44,10 @@ export default function CardDetailed(): ReactNode {
   }, [id]);
 
   function closeCard() {
-    navigate(`/?${searchParams.toString()}`);
+    // navigate(`/?${searchParams.toString()}`);
+    const newParams = new URLSearchParams(searchParams);
+    newParams.delete('character');
+    setSearchParams(newParams);
   }
 
   return (

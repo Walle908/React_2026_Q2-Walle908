@@ -12,7 +12,7 @@ import SearchSection from '../../SearchSection/SearchSection';
 import ResultBlock from '../../ResultBlock/ResultBlock';
 import Loader from '../../Loader/Loader';
 import { Pagination } from '../../Pagination/Pagination';
-import { Outlet, useParams, useNavigate, useSearchParams } from 'react-router';
+import { Outlet, useSearchParams } from 'react-router';
 import './Page.css';
 import Header from '../../Header/Header';
 
@@ -25,11 +25,9 @@ export default function Page(): ReactNode {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const lastClickRef = useRef(0);
 
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-
   const pageParam = searchParams.get(SearchParams.PAGE);
   const currentPage = Number(pageParam);
+  const characterId = searchParams.get('character');
 
   const fetchCharacters = async (
     searchQuery: string,
@@ -120,7 +118,9 @@ export default function Page(): ReactNode {
       target.classList.contains('main-wrapper') ||
       target.classList.contains('cards-wrapper')
     ) {
-      navigate(`/?${searchParams.toString()}`);
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('character');
+      setSearchParams(newParams);
     }
   };
 
@@ -132,7 +132,7 @@ export default function Page(): ReactNode {
       <main className="page-wrapper">
         <SearchSection onSearch={onSearch} initialValue={query} />
         <section className="main-wrapper" onClick={handleMainClick}>
-          <div className={`left-panel ${id ? 'split' : ''}`}>
+          <div className={`left-panel ${characterId ? 'split' : ''}`}>
             {isLoading ? (
               <Loader />
             ) : (
@@ -144,7 +144,8 @@ export default function Page(): ReactNode {
               </div>
             )}
           </div>
-          {id && (
+
+          {characterId && (
             <aside className="right-panel-details" onClick={(e) => e.stopPropagation()}>
               <Outlet context={chars} />
             </aside>

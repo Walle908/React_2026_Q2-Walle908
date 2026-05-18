@@ -11,7 +11,7 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
-        path: 'character/:id',
+        path: '',
         element: <CardDetailed />,
       },
     ],

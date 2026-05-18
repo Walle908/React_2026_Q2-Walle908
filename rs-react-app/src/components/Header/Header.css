@@ -1,4 +1,5 @@
 .header {
   display: flex;
   gap: 2rem;
+  align-self: flex-end;
 }
