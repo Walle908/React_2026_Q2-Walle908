@@ -3,6 +3,7 @@ import { type Character } from '../../types/types';
 import Loader from '../Loader/Loader';
 import { useSearchParams } from 'react-router';
 import { getOneChar } from '../../api/api';
+import { SearchParams } from '../../constants/constants';
 import './CardDetailed.css';
 
 interface CardDetailedState {
@@ -17,7 +18,7 @@ export default function CardDetailed(): ReactNode {
   });
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get('character');
+  const id = searchParams.get(SearchParams.DETAILS);
 
   useEffect(() => {
     if (!id) return;
@@ -44,9 +45,8 @@ export default function CardDetailed(): ReactNode {
   }, [id]);
 
   function closeCard() {
-    // navigate(`/?${searchParams.toString()}`);
     const newParams = new URLSearchParams(searchParams);
-    newParams.delete('character');
+    newParams.delete(SearchParams.DETAILS);
     setSearchParams(newParams);
   }
 

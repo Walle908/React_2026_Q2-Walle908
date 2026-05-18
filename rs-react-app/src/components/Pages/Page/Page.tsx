@@ -28,7 +28,7 @@ export default function Page(): ReactNode {
 
   const pageParam = searchParams.get(SearchParams.PAGE);
   const currentPage = Number(pageParam);
-  const characterId = searchParams.get('character');
+  const characterId = searchParams.get(SearchParams.DETAILS);
 
   const fetchCharacters = async (
     searchQuery: string,
@@ -119,7 +119,7 @@ export default function Page(): ReactNode {
       target.classList.contains('cards-wrapper')
     ) {
       const newParams = new URLSearchParams(searchParams);
-      newParams.delete('character');
+      newParams.delete(SearchParams.DETAILS);
       setSearchParams(newParams);
     }
   };

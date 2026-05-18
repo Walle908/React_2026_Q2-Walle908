@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { Link, useSearchParams } from 'react-router';
+import { SearchParams } from '../../constants/constants';
 import './Card.css';
 
 interface CardProps {
@@ -10,7 +11,7 @@ interface CardProps {
 export default function Card({ char }: CardProps): ReactNode {
   const [searchParams] = useSearchParams();
   const newParams = new URLSearchParams(searchParams);
-  newParams.set('character', String(char.id));
+  newParams.set(SearchParams.DETAILS, String(char.id));
 
   return (
     <Link to={`/?${newParams.toString()}`} className="link">
