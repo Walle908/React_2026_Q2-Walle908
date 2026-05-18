@@ -4,9 +4,8 @@
   width: 25rem;
   justify-content: flex-start;
   gap: 2rem;
-  border: 3px solid #8bcf21;
   border-radius: 5px;
-  background-color: rgba(139, 207, 33, 0.5);
+  background-color: #8bcf21;
   font-size: 1.6rem;
   padding: 2rem;
 }

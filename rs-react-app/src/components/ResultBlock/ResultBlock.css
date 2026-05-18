@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 0;
+  padding: 3rem 0;
 }
 
 .cards-wrapper {
@@ -15,6 +15,7 @@
   justify-content: center;
   width: 100%;
   max-width: 70vw;
+  padding: 1rem;
 }
 
 .bad-result {
