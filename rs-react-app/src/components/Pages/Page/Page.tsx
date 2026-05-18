@@ -13,13 +13,14 @@ import ResultBlock from '../../ResultBlock/ResultBlock';
 import Loader from '../../Loader/Loader';
 import { Pagination } from '../../Pagination/Pagination';
 import { Outlet, useSearchParams } from 'react-router';
-import './Page.css';
 import Header from '../../Header/Header';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import './Page.css';
 
 export default function Page(): ReactNode {
   const [chars, setChars] = useState<Character[]>([]);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>(ErrorMessage.NO_ERROR);
-  const [query, setQuery] = useState<string>(() => localStorage.getItem(localStorageKey) || '');
+  const [query, setQuery] = useLocalStorage<string>(localStorageKey, '');
   const [totalPages, setTotalPages] = useState<number>(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -91,7 +92,6 @@ export default function Page(): ReactNode {
 
     setQuery(trimmedQuery);
     setTotalPages(0);
-    localStorage.setItem(localStorageKey, trimmedQuery);
 
     const newParams = new URLSearchParams(searchParams);
     newParams.set(SearchParams.PAGE, String(initialPage));
