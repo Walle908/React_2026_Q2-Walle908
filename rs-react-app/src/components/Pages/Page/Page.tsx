@@ -15,7 +15,7 @@ import { Pagination } from '../../Pagination/Pagination';
 import { Outlet, useSearchParams } from 'react-router';
 import Header from '../../Header/Header';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
-import './Page.css';
+import styles from './Page.module.css';
 
 export default function Page(): ReactNode {
   const [chars, setChars] = useState<Character[]>([]);
@@ -113,11 +113,13 @@ export default function Page(): ReactNode {
   const handleMainClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
 
-    if (
-      target.classList.contains('left-panel') ||
-      target.classList.contains('main-wrapper') ||
-      target.classList.contains('cards-wrapper')
-    ) {
+    const isLeftPanel = styles.leftPanel && target.classList.contains(styles.leftPanel);
+    const isMainWrapper = styles.mainWrapper && target.classList.contains(styles.mainWrapper);
+    const isCardsWrapper = Array.from(target.classList).some(
+      (className) => className.startsWith('cardsWrapper_') || className.includes('_cardsWrapper_')
+    );
+
+    if (isLeftPanel || isMainWrapper || isCardsWrapper) {
       const newParams = new URLSearchParams(searchParams);
       newParams.delete(SearchParams.DETAILS);
       setSearchParams(newParams);
@@ -129,14 +131,14 @@ export default function Page(): ReactNode {
   return (
     <>
       <Header />
-      <main className="page-wrapper">
+      <main className={styles.pageWrapper}>
         <SearchSection onSearch={onSearch} initialValue={query} />
-        <section className="main-wrapper" onClick={handleMainClick}>
-          <div className={`left-panel ${characterId ? 'split' : ''}`}>
+        <section className={styles.mainWrapper} onClick={handleMainClick}>
+          <div className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}>
             {isLoading ? (
               <Loader />
             ) : (
-              <div className="results-wrapper">
+              <div className={styles.resultsWrapper}>
                 {showPagination && (
                   <Pagination totalPages={totalPages} onChange={handlePageChange} />
                 )}
@@ -146,7 +148,7 @@ export default function Page(): ReactNode {
           </div>
 
           {characterId && (
-            <aside className="right-panel-details" onClick={(e) => e.stopPropagation()}>
+            <aside className={styles.rightPanelDetails} onClick={(e) => e.stopPropagation()}>
               <Outlet context={chars} />
             </aside>
           )}

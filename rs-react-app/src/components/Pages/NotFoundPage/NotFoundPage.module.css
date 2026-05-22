@@ -1,4 +1,4 @@
-.not-found {
+.notFoundWrapper {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -6,6 +6,6 @@
   gap: 4rem;
 }
 
-.error-page-title {
+.errorPageTitle {
   font-size: 4rem;
 }

@@ -1,15 +1,15 @@
-.error-block {
+.errorBlock {
   display: flex;
   flex-direction: column;
   margin: auto;
   align-items: center;
 }
 
-.error-message {
+.errorMessage {
   font-size: 3rem;
   text-align: center;
 }
 
-.reset-button {
+.resetButton {
   margin-top: 4rem;
 }

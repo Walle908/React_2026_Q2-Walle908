@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { Link, useSearchParams } from 'react-router';
 import { SearchParams } from '../../constants/constants';
-import './Card.css';
+import styles from './Card.module.css';
 
 interface CardProps {
   char: Character;
@@ -15,9 +15,9 @@ export default function Card({ char }: CardProps): ReactNode {
 
   return (
     <Link to={`/?${newParams.toString()}`} className="link">
-      <div className="main-card-wrapper">
-        <img className="card-img" src={char.image} alt={char.name} />
-        <h2 className="card-title">{char.name || 'n/a'}</h2>
+      <div className={styles.cardWrapper}>
+        <img className={styles.cardImg} src={char.image} alt={char.name} />
+        <h2 className={styles.cardTitle}>{char.name || 'n/a'}</h2>
       </div>
     </Link>
   );

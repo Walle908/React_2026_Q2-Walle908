@@ -6,11 +6,11 @@
   align-items: center;
 }
 
-.about-link {
+.aboutLink {
   font-size: 2rem;
   font-weight: 600;
 }
 
-.about-link:hover {
+.aboutLink:hover {
   color: var(--color-light-blue);
 }

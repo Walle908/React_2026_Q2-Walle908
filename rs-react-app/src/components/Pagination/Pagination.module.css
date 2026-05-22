@@ -1,9 +1,9 @@
-.pagination-wrapper {
+.paginationWrapper {
   display: flex;
   gap: 2rem;
   align-items: center;
 }
 
-.pagination-text {
+.paginationText {
   font-size: 2rem;
 }

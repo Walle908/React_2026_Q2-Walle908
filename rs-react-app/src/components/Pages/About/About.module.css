@@ -1,4 +1,4 @@
-.about-wrapper {
+.aboutWrapper {
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -6,21 +6,21 @@
   gap: 4rem;
 }
 
-.about-title {
+.aboutTitle {
   font-size: 4rem;
 }
 
-.about-author,
-.about-course {
+.aboutAuthor,
+.aboutCourse {
   display: flex;
   gap: 1rem;
   font-size: 2rem;
 }
 
-.about-text {
+.aboutText {
   font-weight: bold;
 }
 
-.about-link:hover {
+.aboutLink:hover {
   color: var(--color-light-blue);
 }

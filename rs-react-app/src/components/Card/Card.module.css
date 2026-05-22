@@ -1,4 +1,4 @@
-.main-card-wrapper {
+.cardWrapper {
   display: flex;
   flex-direction: column;
   width: 24rem;
@@ -14,11 +14,11 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.main-card-wrapper:hover {
+.cardWrapper:hover {
   transform: scale(1.05);
 }
 
-.card-img {
+.cardImg {
   width: 20rem;
   height: 20rem;
   border-radius: 5px;
@@ -26,7 +26,7 @@
   align-self: center;
 }
 
-.card-title {
+.cardTitle {
   text-align: center;
   padding-bottom: 1rem;
 }

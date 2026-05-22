@@ -4,7 +4,7 @@ import Loader from '../Loader/Loader';
 import { useSearchParams } from 'react-router';
 import { getOneChar } from '../../api/api';
 import { SearchParams } from '../../constants/constants';
-import './CardDetailed.css';
+import styles from './CardDetailed.module.css';
 
 interface CardDetailedState {
   char: Character | null;
@@ -55,12 +55,12 @@ export default function CardDetailed(): ReactNode {
       {pageState.isLoading ? (
         <Loader />
       ) : pageState.char ? (
-        <div className="card-wrapper">
-          <img className="card-img" src={pageState.char.image} alt={pageState.char.name} />
+        <div className={styles.cardWrapper}>
+          <img className={styles.cardImg} src={pageState.char.image} alt={pageState.char.name} />
 
-          <div className="card-description">
-            <h2 className="card-title">{pageState.char.name || 'n/a'}</h2>
-            <ul className="card-list">
+          <div className={styles.cardDescription}>
+            <h2 className={styles.cardTitle}>{pageState.char.name || 'n/a'}</h2>
+            <ul className={styles.cardList}>
               <li>
                 <b>Status: </b>
                 {pageState.char.status || 'n/a'}
@@ -87,7 +87,7 @@ export default function CardDetailed(): ReactNode {
               </li>
             </ul>
           </div>
-          <button className="button close-button" onClick={closeCard}>
+          <button className={`button ${styles.closeButton}`} onClick={closeCard}>
             Close
           </button>
         </div>

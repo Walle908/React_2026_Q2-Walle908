@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import './ErrorButton.css';
+import styles from './ErrorButton.module.css';
 
 interface ErrorBtnProps {
   children?: ReactNode;
@@ -17,7 +17,7 @@ export default function ErrorButton({ children }: ErrorBtnProps): ReactNode {
   }
 
   return (
-    <button className="button error-button" onClick={onClick}>
+    <button className={`button ${styles.errorButton}`} onClick={onClick}>
       {children || 'Generate Error'}
     </button>
   );

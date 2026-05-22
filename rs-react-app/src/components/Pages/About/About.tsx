@@ -1,20 +1,20 @@
 import { type ReactNode } from 'react';
 import { Link } from 'react-router';
-import './About.css';
+import styles from './About.module.css';
 
 export default function AboutPage(): ReactNode {
   return (
-    <div className="about-wrapper">
-      <h2 className="about-title">About App</h2>
-      <p className="about-author">
-        <span className="about-text">Author:</span>
-        <a className="link about-link" href="https://github.com/Walle908">
+    <div className={styles.aboutWrapper}>
+      <h2 className={styles.aboutTitle}>About App</h2>
+      <p className={styles.aboutAuthor}>
+        <span className={styles.aboutText}>Author:</span>
+        <a className={`link ${styles.aboutLink}`} href="https://github.com/Walle908">
           Elena Valiullina
         </a>
       </p>
-      <p className="about-course">
-        <span className="about-text">Link to the course:</span>
-        <a className="link about-link" href="https://rs.school/courses/reactjs">
+      <p className={styles.aboutCourse}>
+        <span className={styles.aboutText}>Link to the course:</span>
+        <a className={`link ${styles.aboutLink}`} href="https://rs.school/courses/reactjs">
           RS School React course
         </a>
       </p>

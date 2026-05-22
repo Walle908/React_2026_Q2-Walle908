@@ -1,4 +1,4 @@
-.card-wrapper {
+.cardWrapper {
   display: flex;
   flex-direction: column;
   width: 25rem;
@@ -10,12 +10,12 @@
   padding: 2rem;
 }
 
-.card-description {
+.cardDescription {
   display: flex;
   flex-flow: column wrap;
 }
 
-.card-img {
+.cardImg {
   width: 20rem;
   height: 20rem;
   border-radius: 5px;
@@ -23,15 +23,15 @@
   align-self: center;
 }
 
-.card-list {
+.cardList {
   list-style-type: none;
 }
 
-.card-title {
+.cardTitle {
   text-align: center;
   padding-bottom: 1rem;
 }
 
-.close-button {
+.closeButton {
   align-self: center;
 }

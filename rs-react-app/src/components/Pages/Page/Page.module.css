@@ -1,9 +1,9 @@
-.page-wrapper {
+.pageWrapper {
   display: flex;
   flex-direction: column;
 }
 
-.main-wrapper {
+.mainWrapper {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -12,18 +12,18 @@
   padding-top: 3rem;
 }
 
-.left-panel {
+.leftPanel {
   flex: 1;
   height: 100%;
   transition: flex 0.5s ease-in-out;
   overflow: hidden;
 }
 
-.left-panel.split {
+.leftPanel.split {
   cursor: pointer;
 }
 
-.right-panel-details {
+.rightPanelDetails {
   position: sticky;
   top: 0;
   height: 100%;
@@ -40,7 +40,7 @@
   }
 }
 
-.results-wrapper {
+.resultsWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
