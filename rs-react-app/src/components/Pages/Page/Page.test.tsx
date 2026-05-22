@@ -50,15 +50,17 @@ describe('Page Component', () => {
   it('should render Loader during mount and then show results on successful API response', async () => {
     mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
 
-    const { container } = renderWithRouter();
+    renderWithRouter();
 
-    expect(container.querySelector('.loader')).toBeInTheDocument();
+    const loaderElement = screen.getByTestId('loader-element');
+
+    expect(loaderElement).toBeInTheDocument();
 
     await waitFor(() => {
       expect(mockGetChars).toHaveBeenCalledWith('', initialPage, expect.any(AbortSignal));
     });
 
-    expect(container.querySelector('.loader')).not.toBeInTheDocument();
+    expect(loaderElement).not.toBeInTheDocument();
     expect(
       screen.getByRole('heading', { level: 2, name: mockCharacters[0]?.name })
     ).toBeInTheDocument();
@@ -273,7 +275,7 @@ describe('Page Component', () => {
 
     await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
 
-    const leftPanel = container.querySelector('.left-panel');
+    const leftPanel = screen.getByTestId('left-panel');
     expect(leftPanel).toBeInTheDocument();
 
     if (leftPanel) {

@@ -1,12 +1,12 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import Loader from './Loader';
 
 describe('Loader Component', () => {
   it('should render the loader element with correct classname', () => {
-    const { container } = render(<Loader />);
+    render(<Loader />);
 
-    const loaderElement = container.querySelector('.loader');
+    const loaderElement = screen.getByTestId('loader-element');
 
     expect(loaderElement).toBeInTheDocument();
   });

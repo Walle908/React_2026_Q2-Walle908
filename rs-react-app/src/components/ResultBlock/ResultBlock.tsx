@@ -16,7 +16,9 @@ export default function ResultBlock({ chars, errorMessage }: ResultSectionProps)
         {chars.length > 0
           ? chars.map((char) => <Card key={char.id} char={char} />)
           : errorMessage !== ErrorMessage.NO_ERROR && (
-              <h2 className={styles.badResult}>{errorMessage}</h2>
+              <h2 className={styles.badResult} data-testid="bad-result">
+                {errorMessage}
+              </h2>
             )}
       </div>
     </div>

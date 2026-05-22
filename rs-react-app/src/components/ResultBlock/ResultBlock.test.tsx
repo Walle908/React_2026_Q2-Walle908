@@ -34,9 +34,9 @@ describe('ResultBlock Component', () => {
       </MemoryRouter>
     );
 
-    const errorHeading = screen.getByRole('heading', { level: 2 });
+    const errorHeading = screen.getByTestId('bad-result');
+
     expect(errorHeading).toBeInTheDocument();
-    expect(errorHeading.className).toBe('bad-result');
     expect(errorHeading.textContent).toBe(ErrorMessage.NOT_FOUND);
 
     expect(

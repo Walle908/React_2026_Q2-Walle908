@@ -134,7 +134,9 @@ export default function Page(): ReactNode {
       <main className={styles.pageWrapper}>
         <SearchSection onSearch={onSearch} initialValue={query} />
         <section className={styles.mainWrapper} onClick={handleMainClick}>
-          <div className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}>
+          <div
+            className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}
+            data-testid="left-panel">
             {isLoading ? (
               <Loader />
             ) : (

@@ -5,7 +5,7 @@ import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 export default function App(): ReactNode {
   return (
     <ErrorBoundary>
-      <Page />;
+      <Page />
     </ErrorBoundary>
   );
 }
