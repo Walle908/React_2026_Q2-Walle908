@@ -16,21 +16,21 @@
   width: 100%;
   height: 4rem;
   padding: 10px 40px 10px 15px;
-  background: #e7e0db;
+  background: var(--color-light);
   border-radius: 5px;
   outline: none;
   transition: all 0.4s ease-in-out;
-  border: 2px solid #477385;
+  border: 2px solid var(--color-dark-blue);
   font-weight: 500;
   font-size: 1.6rem;
 }
 
 .input-search:hover {
-  border-color: #83d2e4;
+  border-color: var(--color-light-blue);
 }
 
 .input-search:focus {
-  border-color: #477385;
+  border-color: var(--color-dark-blue);
 }
 
 .clear-button {
@@ -39,7 +39,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #477385;
+  color: var(--color-dark-blue);
   font-size: 1.8rem;
   padding: 0;
   display: flex;

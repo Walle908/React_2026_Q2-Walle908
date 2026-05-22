@@ -5,7 +5,7 @@
   justify-content: flex-start;
   gap: 2rem;
   border-radius: 5px;
-  background-color: #8bcf21;
+  background-color: var(--color-light-green);
   font-size: 1.6rem;
   padding: 2rem;
 }

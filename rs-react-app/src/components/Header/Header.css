@@ -12,5 +12,5 @@
 }
 
 .about-link:hover {
-  color: #83d2e4;
+  color: var(--color-light-blue);
 }
