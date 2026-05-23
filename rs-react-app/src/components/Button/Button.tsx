@@ -7,7 +7,7 @@ interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   variant?: 'error' | 'reset' | 'close' | 'clear';
 }
 
-export function Button({
+export default function Button({
   children,
   className,
   variant,

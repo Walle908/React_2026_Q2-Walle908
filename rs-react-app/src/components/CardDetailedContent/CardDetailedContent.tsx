@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { type Character } from '../../types/types';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import Button from '../Button/Button';
+import Text from '../Text/Text';
 import styles from './CardDetailedContent.module.css';
 
 interface CardDetailsContentProps {

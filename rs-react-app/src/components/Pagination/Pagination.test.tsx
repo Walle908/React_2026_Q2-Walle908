@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { MemoryRouter } from 'react-router'; // Импорт из react-router
 import userEvent from '@testing-library/user-event';
-import { Pagination } from './Pagination';
+import Pagination from './Pagination';
 import { SearchParams } from '../../constants/constants';
 
 describe('Pagination Component', () => {

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Button } from '../Button/Button';
+import Button from '../Button/Button';
 import { ErrorMessage } from '../../constants/constants';
 
 export default function ErrorButton(): ReactNode {

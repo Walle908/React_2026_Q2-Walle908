@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
-import { Text } from '../Text/Text';
+import Text from '../Text/Text';
 import styles from './SearchSection.module.css';
 
 interface SearchSectionProps {

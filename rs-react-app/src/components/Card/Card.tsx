@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { Link, useSearchParams } from 'react-router';
 import { SearchParams } from '../../constants/constants';
-import { Text } from '../Text/Text';
+import Text from '../Text/Text';
 import styles from './Card.module.css';
 
 interface CardProps {

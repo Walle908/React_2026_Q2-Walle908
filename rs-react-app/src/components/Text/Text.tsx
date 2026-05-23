@@ -6,7 +6,7 @@ interface TextProps extends HTMLAttributes<HTMLElement> {
   className?: string;
 }
 
-export function Text({ children, as = 'p', className, ...props }: TextProps): ReactNode {
+export default function Text({ children, as = 'p', className, ...props }: TextProps): ReactNode {
   const Tag = as;
 
   return (

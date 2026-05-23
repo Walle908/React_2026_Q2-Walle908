@@ -1,5 +1,5 @@
 import { type ChangeEvent, type ReactNode, type SubmitEvent, useState } from 'react';
-import { Button } from '../Button/Button';
+import Button from '../Button/Button';
 import styles from './SearchForm.module.css';
 import SearchInput from '../SearchInput/SearchInput';
 

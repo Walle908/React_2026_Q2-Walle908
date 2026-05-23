@@ -11,10 +11,10 @@ import {
 import SearchSection from '../../SearchSection/SearchSection';
 import ResultBlock from '../../ResultBlock/ResultBlock';
 import Loader from '../../Loader/Loader';
-import { Pagination } from '../../Pagination/Pagination';
+import Pagination from '../../Pagination/Pagination';
 import { Outlet, useSearchParams } from 'react-router';
 import Header from '../../Header/Header';
-import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import useLocalStorage from '../../../hooks/useLocalStorage';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {

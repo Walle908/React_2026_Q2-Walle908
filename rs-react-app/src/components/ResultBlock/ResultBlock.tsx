@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { ErrorMessage } from '../../constants/constants';
 import Card from '../Card/Card';
-import { Text } from '../Text/Text';
+import Text from '../Text/Text';
 import styles from './ResultBlock.module.css';
 
 interface ResultSectionProps {

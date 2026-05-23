@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import Loader from '../Loader/Loader';
-import { Text } from '../Text/Text';
+import Text from '../Text/Text';
 import useCharacterDetails from '../../hooks/useCharactersDetails';
 import CardDetailsContent from '../CardDetailedContent/CardDetailedContent';
 import styles from './CardDetailed.module.css';

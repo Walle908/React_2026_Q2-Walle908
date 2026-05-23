@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { Button } from '../Button/Button';
-import { Text } from '../Text/Text';
+import Button from '../Button/Button';
+import Text from '../Text/Text';
 import { ErrorMessage } from '../../constants/constants';
 import styles from './ErrorBoundary.module.css';
 
