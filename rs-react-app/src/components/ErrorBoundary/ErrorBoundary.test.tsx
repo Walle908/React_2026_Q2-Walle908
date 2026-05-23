@@ -16,22 +16,22 @@ describe('ErrorBoundary Component', () => {
   });
 
   it('should render children normally when no error occurs', () => {
-    const { unmount } = render(
+    render(
       <ErrorBoundary>
         <ErrorButton />
       </ErrorBoundary>
     );
 
     expect(screen.getByRole('button', { name: /generate error/i })).toBeInTheDocument();
-    expect(screen.queryByText('Someting went wrong...')).not.toBeInTheDocument();
 
-    unmount();
+    expect(
+      screen.queryByRole('heading', { level: 1, name: /something went wrong.../i })
+    ).not.toBeInTheDocument();
   });
 
   it('should catch error and display fallback UI when real ErrorButton is clicked', async () => {
     const user = userEvent.setup();
-
-    const { unmount } = render(
+    render(
       <ErrorBoundary>
         <ErrorButton />
       </ErrorBoundary>
@@ -42,7 +42,7 @@ describe('ErrorBoundary Component', () => {
     await user.click(generateErrorBtn);
 
     expect(
-      screen.getByRole('heading', { level: 2, name: 'Someting went wrong...' })
+      screen.getByRole('heading', { level: 1, name: /something went wrong.../i })
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset error/i })).toBeInTheDocument();
 
@@ -51,14 +51,12 @@ describe('ErrorBoundary Component', () => {
       expect.any(Error),
       expect.any(Object)
     );
-
-    unmount();
   });
 
   it('should clear error state and recover when click on Reset error button', async () => {
     const user = userEvent.setup();
 
-    const { unmount } = render(
+    render(
       <ErrorBoundary>
         <ErrorButton />
       </ErrorBoundary>
@@ -67,7 +65,7 @@ describe('ErrorBoundary Component', () => {
     const generateErrorBtn = screen.getByRole('button', { name: /generate error/i });
     await user.click(generateErrorBtn);
     expect(
-      screen.getByRole('heading', { level: 2, name: 'Someting went wrong...' })
+      screen.getByRole('heading', { level: 1, name: /something went wrong.../i })
     ).toBeInTheDocument();
 
     const resetButton = screen.getByRole('button', { name: /reset error/i });
@@ -75,9 +73,7 @@ describe('ErrorBoundary Component', () => {
 
     expect(screen.getByRole('button', { name: /generate error/i })).toBeInTheDocument();
     expect(
-      screen.queryByRole('heading', { level: 2, name: 'Someting went wrong...' })
+      screen.queryByRole('heading', { level: 1, name: /something went wrong.../i })
     ).not.toBeInTheDocument();
-
-    unmount();
   });
 });

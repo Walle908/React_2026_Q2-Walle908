@@ -6,6 +6,7 @@
   gap: 4rem;
 }
 
-.errorPageTitle {
+.errorPageSubTitle {
   font-size: 4rem;
+  font-weight: bold;
 }

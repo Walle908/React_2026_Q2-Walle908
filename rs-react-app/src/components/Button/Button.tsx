@@ -1,5 +1,5 @@
-import { type ComponentPropsWithoutRef, type ReactNode } from 'react';
-import styles from './Buton.module.css';
+import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+import styles from './Button.module.css';
 
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children: ReactNode;

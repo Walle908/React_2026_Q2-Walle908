@@ -50,13 +50,14 @@ h2 {
 }
 
 h1 {
-  font-size: 5rem;
-  color: var(--color-light-green);
+  font-size: 4rem;
   text-align: center;
+  color: var(--color-light-green);
 }
 
 h2 {
   font-size: 2rem;
+  text-align: center;
 }
 
 input[type='search']::-webkit-search-cancel-button {

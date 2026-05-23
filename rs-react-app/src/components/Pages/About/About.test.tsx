@@ -11,7 +11,7 @@ describe('AboutPage Component', () => {
       </MemoryRouter>
     );
 
-    const title = screen.getByRole('heading', { level: 2, name: /about app/i });
+    const title = screen.getByRole('heading', { level: 1, name: /about app/i });
     expect(title).toBeInTheDocument();
 
     expect(screen.getByText(/author:/i)).toBeInTheDocument();
@@ -34,7 +34,6 @@ describe('AboutPage Component', () => {
       </MemoryRouter>
     );
 
-    // 4. Находим внутреннюю ссылку перехода на главную страницу (тег <a> в DOM)
     const backToMainLink = screen.getByRole('link', {
       name: /go to main page/i,
     }) as HTMLAnchorElement;

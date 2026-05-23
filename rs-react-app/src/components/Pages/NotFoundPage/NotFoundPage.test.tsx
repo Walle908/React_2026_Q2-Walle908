@@ -11,8 +11,8 @@ describe('NotFoundPage Component', () => {
       </MemoryRouter>
     );
 
-    const errorTitle = screen.getByRole('heading', { level: 2, name: /error 404/i });
-    const notFoundTitle = screen.getByRole('heading', { level: 2, name: /page not found/i });
+    const errorTitle = screen.getByText(/error 404/i);
+    const notFoundTitle = screen.getByRole('heading', { level: 1, name: /page not found/i });
 
     expect(errorTitle).toBeInTheDocument();
     expect(notFoundTitle).toBeInTheDocument();
@@ -25,7 +25,6 @@ describe('NotFoundPage Component', () => {
       </MemoryRouter>
     );
 
-    // Находим ссылку Link (в DOM она превращается в тег <a>)
     const linkElement = screen.getByRole('link') as HTMLAnchorElement;
     expect(linkElement).toBeInTheDocument();
 

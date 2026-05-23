@@ -35,7 +35,9 @@ describe('ErrorButton Component', () => {
 
     await user.click(button);
 
-    expect(screen.getByText('Someting went wrong...')).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 1, name: /something went wrong.../i })
+    ).toBeInTheDocument();
     expect(button).not.toBeInTheDocument();
   });
 });

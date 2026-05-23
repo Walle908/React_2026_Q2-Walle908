@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import { ErrorMessage } from '../../constants/constants';
 import Card from '../Card/Card';
+import { Text } from '../Text/Text';
 import styles from './ResultBlock.module.css';
 
 interface ResultSectionProps {
@@ -16,9 +17,9 @@ export default function ResultBlock({ chars, errorMessage }: ResultSectionProps)
         {chars.length > 0
           ? chars.map((char) => <Card key={char.id} char={char} />)
           : errorMessage !== ErrorMessage.NO_ERROR && (
-              <h2 className={styles.badResult} data-testid="bad-result">
+              <Text as="h2" className={styles.badResult} data-testid="bad-result">
                 {errorMessage}
-              </h2>
+              </Text>
             )}
       </div>
     </div>

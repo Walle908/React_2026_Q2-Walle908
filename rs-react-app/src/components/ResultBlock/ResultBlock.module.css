@@ -20,6 +20,5 @@
 
 .badResult {
   font-size: 3rem;
-  text-align: center;
   grid-column: 1 / -1;
 }

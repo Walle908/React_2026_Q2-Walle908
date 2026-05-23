@@ -28,6 +28,8 @@
 }
 
 .cardTitle {
+  font-size: 2rem;
+  font-weight: bold;
   text-align: center;
   padding-bottom: 1rem;
 }

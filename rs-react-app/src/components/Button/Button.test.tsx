@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest'; // или из 'jest'
 import { Button } from './Button';
-import styles from './Buton.module.css';
+import styles from './Button.module.css';
 
 describe('Button Component', () => {
   it('should render basic button when variant is not provided', () => {

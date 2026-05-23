@@ -2,6 +2,7 @@ import { useState, useEffect, type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import Loader from '../Loader/Loader';
 import { Button } from '../Button/Button';
+import { Text } from '../Text/Text';
 import { useSearchParams } from 'react-router';
 import { getOneChar } from '../../api/api';
 import { SearchParams } from '../../constants/constants';
@@ -60,7 +61,9 @@ export default function CardDetailed(): ReactNode {
           <img className={styles.cardImg} src={pageState.char.image} alt={pageState.char.name} />
 
           <div className={styles.cardDescription}>
-            <h2 className={styles.cardTitle}>{pageState.char.name || 'n/a'}</h2>
+            <Text as="h2" className={styles.cardTitle}>
+              {pageState.char.name || 'n/a'}
+            </Text>
             <ul className={styles.cardList}>
               <li>
                 <b>Status: </b>
@@ -93,7 +96,7 @@ export default function CardDetailed(): ReactNode {
           </Button>
         </div>
       ) : (
-        <h2>The character&apos;s info is not found</h2>
+        <Text as="h2">The character&apos;s info is not found</Text>
       )}
     </>
   );
