@@ -19,10 +19,6 @@
   overflow: hidden;
 }
 
-.leftPanel.split {
-  cursor: pointer;
-}
-
 .rightPanelDetails {
   position: sticky;
   top: 0;

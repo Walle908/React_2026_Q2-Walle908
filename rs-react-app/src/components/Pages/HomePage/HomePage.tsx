@@ -111,22 +111,6 @@ export default function HomePage(): ReactNode {
     setSearchParams(newParams);
   };
 
-  const handleMainClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.target as HTMLElement;
-
-    const isLeftPanel = styles.leftPanel && target.classList.contains(styles.leftPanel);
-    const isMainWrapper = styles.mainWrapper && target.classList.contains(styles.mainWrapper);
-    const isCardsWrapper = Array.from(target.classList).some(
-      (className) => className.startsWith('cardsWrapper_') || className.includes('_cardsWrapper_')
-    );
-
-    if (isLeftPanel || isMainWrapper || isCardsWrapper) {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.delete(SearchParams.DETAILS);
-      setSearchParams(newParams);
-    }
-  };
-
   const showPagination = !isLoading && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
 
   return (
@@ -134,7 +118,7 @@ export default function HomePage(): ReactNode {
       <Header />
       <main className={styles.pageWrapper}>
         <SearchSection onSearch={onSearch} initialValue={query} />
-        <section className={styles.mainWrapper} onClick={handleMainClick}>
+        <section className={styles.mainWrapper}>
           <div
             className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}
             data-testid="left-panel">
