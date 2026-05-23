@@ -1,13 +1,13 @@
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
 import SearchForm from './SearchForm';
 
 describe('SearchForm Component', () => {
   const mockOnSearch = vi.fn();
 
   it('should render correctly with the initial value', () => {
-    render(<SearchForm onSearch={mockOnSearch} initialValue="Rick" />);
+    render(<SearchForm initialValue="Rick" onSearch={mockOnSearch} />);
 
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
     expect(input).toBeInTheDocument();
@@ -21,14 +21,14 @@ describe('SearchForm Component', () => {
   });
 
   it('should not show clear button if field is empty', () => {
-    render(<SearchForm onSearch={mockOnSearch} initialValue="" />);
+    render(<SearchForm initialValue="" onSearch={mockOnSearch} />);
 
     const clearButton = screen.queryByRole('button', { name: '✖' });
     expect(clearButton).not.toBeInTheDocument();
   });
 
   it('should change the value when entering text', async () => {
-    render(<SearchForm onSearch={mockOnSearch} initialValue="" />);
+    render(<SearchForm initialValue="" onSearch={mockOnSearch} />);
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
 
     await userEvent.type(input, 'Morty');
@@ -37,7 +37,7 @@ describe('SearchForm Component', () => {
   });
 
   it('should clear the field when the clear button is clicked', async () => {
-    render(<SearchForm onSearch={mockOnSearch} initialValue="Rick" />);
+    render(<SearchForm initialValue="Rick" onSearch={mockOnSearch} />);
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
     const clearButton = screen.getByRole('button', { name: '✖' });
 
@@ -48,7 +48,7 @@ describe('SearchForm Component', () => {
   });
 
   it('should call onSearch with spaces trimmed when submitting the form', async () => {
-    render(<SearchForm onSearch={mockOnSearch} initialValue="  Morty  " />);
+    render(<SearchForm initialValue="  Morty  " onSearch={mockOnSearch} />);
     const submitButton = screen.getByRole('button', { name: 'Search' });
 
     await userEvent.click(submitButton);

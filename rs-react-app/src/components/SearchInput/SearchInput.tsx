@@ -3,14 +3,14 @@ import styles from './SearchInput.module.css';
 
 type SearchInputProps = ComponentPropsWithoutRef<'input'>;
 
-export default function SearchInput({ className, value, onChange, ...props }: SearchInputProps) {
+export default function SearchInput({ className, onChange, value, ...props }: SearchInputProps) {
   return (
     <input
-      type="search"
-      placeholder="Search a character..."
       className={`${styles.inputSearch} ${className || ''}`}
-      value={value}
       onChange={onChange}
+      placeholder="Search a character..."
+      type="search"
+      value={value}
       {...props}
     />
   );

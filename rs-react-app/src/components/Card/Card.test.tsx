@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { describe, expect, it } from 'vitest';
+import { SearchParams } from '@constants/constants';
+import { emptyMockCharacter, mockCharacter } from '@test-utils/mocks';
+import { render, screen } from '@testing-library/react';
 import Card from './Card';
-import { SearchParams } from '../../constants/constants';
-import { mockCharacter, emptyMockCharacter } from '../../__tests__/mocks';
 
 describe('Card Component', () => {
   it('should render character details correctly when all data is provided', () => {

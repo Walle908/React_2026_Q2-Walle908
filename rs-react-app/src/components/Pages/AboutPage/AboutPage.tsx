@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import { Link } from 'react-router';
-import Text from '../../Text/Text';
-import Button from '../../Button/Button';
+import Button from '@components/Button/Button';
+import Text from '@components/Text/Text';
 import styles from './AboutPage.module.css';
 
 export default function AboutPage(): ReactNode {

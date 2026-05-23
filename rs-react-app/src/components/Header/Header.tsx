@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import { Link } from 'react-router';
-import ErrorButton from '../ErrorButton/ErrorButton';
+import ErrorButton from '@components/ErrorButton/ErrorButton';
 import styles from './Header.module.css';
 
 export default function Header(): ReactNode {

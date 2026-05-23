@@ -1,6 +1,6 @@
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
 import Button from './Button';
 import styles from './Button.module.css';
 
@@ -33,7 +33,7 @@ describe('Button Component', () => {
 
   it('should combine custom className and respect type attribute', () => {
     render(
-      <Button type="submit" className="custom-external-class">
+      <Button className="custom-external-class" type="submit">
         Submit Form
       </Button>
     );
@@ -49,7 +49,7 @@ describe('Button Component', () => {
     const handleClick = vi.fn();
 
     const { rerender } = render(
-      <Button onClick={handleClick} disabled>
+      <Button disabled onClick={handleClick}>
         Disabled
       </Button>
     );

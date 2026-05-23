@@ -1,24 +1,24 @@
 import { createBrowserRouter } from 'react-router';
+import CardDetailed from '@components/CardDetailed/CardDetailed.tsx';
+import AboutPage from '@components/Pages/AboutPage/AboutPage.tsx';
+import NotFoundPage from '@components/Pages/NotFoundPage/NotFoundPage.tsx';
 import App from '../App.tsx';
-import NotFoundPage from '../components/Pages/NotFoundPage/NotFoundPage.tsx';
-import CardDetailed from '../components/CardDetailed/CardDetailed.tsx';
-import AboutPage from '../components/Pages/AboutPage/AboutPage.tsx';
 
 export const router = createBrowserRouter(
   [
     {
-      path: '/',
-      element: <App />,
-      errorElement: <NotFoundPage />,
       children: [
         {
-          path: '',
           element: <CardDetailed />,
+          path: '',
         },
       ],
+      element: <App />,
+      errorElement: <NotFoundPage />,
+      path: '/',
     },
-    { path: '*', element: <NotFoundPage /> },
-    { path: 'about', element: <AboutPage /> },
+    { element: <NotFoundPage />, path: '*' },
+    { element: <AboutPage />, path: 'about' },
   ],
   {
     basename: import.meta.env.BASE_URL,

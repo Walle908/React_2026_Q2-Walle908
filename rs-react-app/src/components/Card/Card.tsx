@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react';
-import { type Character } from '../../types/types';
 import { Link, useSearchParams } from 'react-router';
-import { SearchParams } from '../../constants/constants';
-import Text from '../Text/Text';
+import { type Character } from '@appTypes/types';
+import Text from '@components/Text/Text';
+import { SearchParams } from '@constants/constants';
 import styles from './Card.module.css';
 
 interface CardProps {
@@ -15,9 +15,9 @@ export default function Card({ char }: CardProps): ReactNode {
   newParams.set(SearchParams.DETAILS, String(char.id));
 
   return (
-    <Link to={`/?${newParams.toString()}`} className="link">
+    <Link className="link" to={`/?${newParams.toString()}`}>
       <div className={styles.cardWrapper}>
-        <img className={styles.cardImg} src={char.image} alt={char.name} />
+        <img alt={char.name} className={styles.cardImg} src={char.image} />
         <Text as="h2" className={styles.cardTitle}>
           {char.name || 'n/a'}
         </Text>

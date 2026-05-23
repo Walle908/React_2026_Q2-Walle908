@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
+import { act, renderHook } from '@testing-library/react';
 import useLocalStorage from './useLocalStorage';
 
 const TEST_KEY = 'test_key';

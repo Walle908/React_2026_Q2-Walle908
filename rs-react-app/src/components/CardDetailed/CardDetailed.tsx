@@ -1,12 +1,12 @@
 import { type ReactNode } from 'react';
-import Loader from '../Loader/Loader';
-import Text from '../Text/Text';
-import useCharacterDetails from '../../hooks/useCharactersDetails';
+import Loader from '@components/Loader/Loader';
+import Text from '@components/Text/Text';
+import useCharacterDetails from '@hooks/useCharactersDetails';
 import CardDetailsContent from '../CardDetailedContent/CardDetailedContent';
 import styles from './CardDetailed.module.css';
 
 export default function CardDetailed(): ReactNode {
-  const { char, isLoading, errorMessage, closeCard } = useCharacterDetails();
+  const { char, closeCard, errorMessage, isLoading } = useCharacterDetails();
 
   if (isLoading) {
     return <Loader />;

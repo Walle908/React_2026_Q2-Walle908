@@ -1,8 +1,8 @@
 import { type ReactNode } from 'react';
-import { type Character } from '../../types/types';
-import { ErrorMessage } from '../../constants/constants';
-import Card from '../Card/Card';
-import Text from '../Text/Text';
+import { type Character } from '@appTypes/types';
+import Card from '@components/Card/Card';
+import Text from '@components/Text/Text';
+import { ErrorMessage } from '@constants/constants';
 import styles from './ResultBlock.module.css';
 
 interface ResultSectionProps {
@@ -25,7 +25,7 @@ export default function ResultBlock({ chars, errorMessage }: ResultSectionProps)
     <div className={styles.resultBlock}>
       <div className={styles.cardsWrapper}>
         {chars.map((char) => (
-          <Card key={char.id} char={char} />
+          <Card char={char} key={char.id} />
         ))}
       </div>
     </div>

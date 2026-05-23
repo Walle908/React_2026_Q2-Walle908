@@ -1,15 +1,15 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
 import { MemoryRouter } from 'react-router'; // Импорт из react-router
+import { describe, expect, it, vi } from 'vitest';
+import { SearchParams } from '@constants/constants';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Pagination from './Pagination';
-import { SearchParams } from '../../constants/constants';
 
 describe('Pagination Component', () => {
   it('should render current page and total pages correctly based on URL', () => {
     render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=3`]}>
-        <Pagination totalPages={42} onChange={vi.fn()} />
+        <Pagination onChange={vi.fn()} totalPages={42} />
       </MemoryRouter>
     );
 
@@ -19,7 +19,7 @@ describe('Pagination Component', () => {
   it('should disable Prev button and enable Next button on the first page', () => {
     render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=1`]}>
-        <Pagination totalPages={42} onChange={vi.fn()} />
+        <Pagination onChange={vi.fn()} totalPages={42} />
       </MemoryRouter>
     );
 
@@ -33,7 +33,7 @@ describe('Pagination Component', () => {
   it('should enable Prev button and disable Next button on the last page', () => {
     render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=42`]}>
-        <Pagination totalPages={42} onChange={vi.fn()} />
+        <Pagination onChange={vi.fn()} totalPages={42} />
       </MemoryRouter>
     );
 
@@ -47,7 +47,7 @@ describe('Pagination Component', () => {
   it('should disable both buttons if totalPages is 0', () => {
     render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=1`]}>
-        <Pagination totalPages={0} onChange={vi.fn()} />
+        <Pagination onChange={vi.fn()} totalPages={0} />
       </MemoryRouter>
     );
 
@@ -61,7 +61,7 @@ describe('Pagination Component', () => {
 
     render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=2`]}>
-        <Pagination totalPages={42} onChange={onChangeMock} />
+        <Pagination onChange={onChangeMock} totalPages={42} />
       </MemoryRouter>
     );
 
@@ -77,7 +77,7 @@ describe('Pagination Component', () => {
 
     render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=5`]}>
-        <Pagination totalPages={42} onChange={onChangeMock} />
+        <Pagination onChange={onChangeMock} totalPages={42} />
       </MemoryRouter>
     );
 

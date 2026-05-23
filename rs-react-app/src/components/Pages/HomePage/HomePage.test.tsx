@@ -1,21 +1,20 @@
+import { MemoryRouter, Route, Routes } from 'react-router';
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  type Mock,
+  type MockInstance,
+  vi,
+} from 'vitest';
+import * as apiModule from '@api/api';
+import { ErrorMessage, initialPage, localStorageKey } from '@constants/constants';
+import { mockCharacters } from '@test-utils/mocks';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  describe,
-  it,
-  expect,
-  vi,
-  beforeEach,
-  afterEach,
-  type MockInstance,
-  type Mock,
-} from 'vitest';
-import { MemoryRouter, Routes, Route } from 'react-router';
 import HomePage from './HomePage';
-import { localStorageKey, initialPage } from '../../../constants/constants';
-import { ErrorMessage } from '../../../constants/constants';
-import { mockCharacters } from '../../../__tests__/mocks';
-import * as apiModule from '../../../api/api';
 
 vi.mock('../../api/api', () => ({
   getChars: vi.fn(),
@@ -40,14 +39,14 @@ describe('HomePage Component', () => {
     return render(
       <MemoryRouter initialEntries={initialEntries}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route element={<HomePage />} path="/" />
         </Routes>
       </MemoryRouter>
     );
   };
 
   it('should render Loader during mount and then show results on successful API response', async () => {
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
+    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
     renderWithRouter();
 
@@ -67,7 +66,7 @@ describe('HomePage Component', () => {
 
   it('should read initial query from localStorage on initialization', async () => {
     localStorage.setItem(localStorageKey, JSON.stringify('Morty'));
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
 
     renderWithRouter();
 
@@ -106,12 +105,12 @@ describe('HomePage Component', () => {
   it('should trigger new search, update localStorage, and handle trimming on form submit', async () => {
     const user = userEvent.setup();
 
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
 
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
 
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
+    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
     const input = screen.getByPlaceholderText('Search a character...');
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -128,7 +127,7 @@ describe('HomePage Component', () => {
 
   it('should prevent duplicate API requests if query has not changed', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
+    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
@@ -142,7 +141,7 @@ describe('HomePage Component', () => {
 
   it('should handle empty API response (NOT_FOUND) during manual search submit', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
+    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
@@ -164,7 +163,7 @@ describe('HomePage Component', () => {
 
   it('should handle API failure (SERVER_ERROR) during manual search submit', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
+    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
@@ -206,7 +205,7 @@ describe('HomePage Component', () => {
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
 
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 1 });
+    mockGetChars.mockResolvedValueOnce({ pages: 1, results: mockCharacters });
 
     const input = screen.getByPlaceholderText('Search a character...');
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -224,7 +223,7 @@ describe('HomePage Component', () => {
 
   it('should change page and update URL when handlePageChange is triggered via Pagination', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 5 });
+    mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
 
     renderWithRouter();
 
@@ -232,7 +231,7 @@ describe('HomePage Component', () => {
       expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
     });
 
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 5 });
+    mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
 
     const nextButton = screen.getByRole('button', { name: /next/i });
     await user.click(nextButton);
@@ -244,7 +243,7 @@ describe('HomePage Component', () => {
 
   it('should ignore page changes if clicked faster than the allowed Delay threshold', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 5 });
+    mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
 
     renderWithRouter();
     await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());

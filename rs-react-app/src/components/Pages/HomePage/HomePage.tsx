@@ -1,20 +1,20 @@
-import { useEffect, useState, useRef, type ReactNode } from 'react';
-import { type Character } from '../../../types/types';
-import { getChars } from '../../../api/api';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { Outlet, useSearchParams } from 'react-router';
+import { getChars } from '@api/api';
+import { type Character } from '@appTypes/types';
+import Header from '@components/Header/Header';
+import Loader from '@components/Loader/Loader';
+import Pagination from '@components/Pagination/Pagination';
+import ResultBlock from '@components/ResultBlock/ResultBlock';
+import SearchSection from '@components/SearchSection/SearchSection';
 import {
   Delay,
   ErrorMessage,
   initialPage,
   localStorageKey,
   SearchParams,
-} from '../../../constants/constants';
-import SearchSection from '../../SearchSection/SearchSection';
-import ResultBlock from '../../ResultBlock/ResultBlock';
-import Loader from '../../Loader/Loader';
-import Pagination from '../../Pagination/Pagination';
-import { Outlet, useSearchParams } from 'react-router';
-import Header from '../../Header/Header';
-import useLocalStorage from '../../../hooks/useLocalStorage';
+} from '@constants/constants';
+import useLocalStorage from '@hooks/useLocalStorage';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {
@@ -121,7 +121,7 @@ export default function HomePage(): ReactNode {
     <>
       <Header />
       <main className={styles.pageWrapper}>
-        <SearchSection onSearch={onSearch} initialValue={query} />
+        <SearchSection initialValue={query} onSearch={onSearch} />
         <section className={styles.mainWrapper}>
           <div
             className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}
@@ -131,7 +131,7 @@ export default function HomePage(): ReactNode {
             ) : (
               <div className={styles.resultsWrapper}>
                 {showPagination && (
-                  <Pagination totalPages={totalPages} onChange={handlePageChange} />
+                  <Pagination onChange={handlePageChange} totalPages={totalPages} />
                 )}
                 <ResultBlock chars={chars} errorMessage={errorMessage} />
               </div>

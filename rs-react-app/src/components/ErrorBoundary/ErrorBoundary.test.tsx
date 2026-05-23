@@ -1,9 +1,9 @@
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
+import ErrorButton from '@components/ErrorButton/ErrorButton';
+import { ErrorMessage } from '@constants/constants';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
 import ErrorBoundary from './ErrorBoundary';
-import ErrorButton from '../ErrorButton/ErrorButton';
-import { ErrorMessage } from '../../constants/constants';
 
 describe('ErrorBoundary Component', () => {
   let consoleErrorSpy: MockInstance;

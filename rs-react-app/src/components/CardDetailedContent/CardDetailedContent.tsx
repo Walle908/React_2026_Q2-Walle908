@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
-import { type Character } from '../../types/types';
-import Button from '../Button/Button';
-import Text from '../Text/Text';
+import { type Character } from '@appTypes/types';
+import Button from '@components/Button/Button';
+import Text from '@components/Text/Text';
 import styles from './CardDetailedContent.module.css';
 
 interface CardDetailsContentProps {
@@ -24,7 +24,7 @@ export default function CardDetailsContent({
 
   return (
     <div className={styles.cardWrapper}>
-      <img className={styles.cardImg} src={character.image} alt={character.name} />
+      <img alt={character.name} className={styles.cardImg} src={character.image} />
 
       <div className={styles.cardDescription}>
         <Text as="h2" className={styles.cardTitle}>
@@ -41,7 +41,7 @@ export default function CardDetailsContent({
           })}
         </ul>
       </div>
-      <Button variant="close" onClick={onClose}>
+      <Button onClick={onClose} variant="close">
         Close
       </Button>
     </div>

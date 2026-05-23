@@ -1,9 +1,9 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ErrorMessage } from '@constants/constants';
+import * as useCharactersDetailsModule from '@hooks/useCharactersDetails';
+import { mockCharacter } from '@test-utils/mocks';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import CardDetailed from './CardDetailed';
-import { mockCharacter } from '../../__tests__/mocks';
-import * as useCharactersDetailsModule from '../../hooks/useCharactersDetails';
-import { ErrorMessage } from '../../constants/constants';
 
 describe('CardDetailed Component', () => {
   beforeEach(() => {
@@ -13,9 +13,9 @@ describe('CardDetailed Component', () => {
   it('should render Loader when isLoading: true', () => {
     vi.spyOn(useCharactersDetailsModule, 'default').mockReturnValue({
       char: null,
-      isLoading: true,
-      errorMessage: ErrorMessage.NO_ERROR,
       closeCard: vi.fn(),
+      errorMessage: ErrorMessage.NO_ERROR,
+      isLoading: true,
     });
 
     render(<CardDetailed />);
@@ -30,9 +30,9 @@ describe('CardDetailed Component', () => {
   it('should display an error message if the character is not found', () => {
     vi.spyOn(useCharactersDetailsModule, 'default').mockReturnValue({
       char: null,
-      isLoading: false,
-      errorMessage: ErrorMessage.CHAR_NOT_FOUND,
       closeCard: vi.fn(),
+      errorMessage: ErrorMessage.CHAR_NOT_FOUND,
+      isLoading: false,
     });
 
     render(<CardDetailed />);
@@ -47,9 +47,9 @@ describe('CardDetailed Component', () => {
   it('should render CardDetailsContent when successful data', () => {
     vi.spyOn(useCharactersDetailsModule, 'default').mockReturnValue({
       char: mockCharacter,
-      isLoading: false,
-      errorMessage: ErrorMessage.NO_ERROR,
       closeCard: vi.fn(),
+      errorMessage: ErrorMessage.NO_ERROR,
+      isLoading: false,
     });
 
     render(<CardDetailed />);

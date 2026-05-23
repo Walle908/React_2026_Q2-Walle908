@@ -1,20 +1,20 @@
 import { type ReactNode } from 'react';
-import SearchForm from '../SearchForm/SearchForm';
-import Text from '../Text/Text';
+import SearchForm from '@components/SearchForm/SearchForm';
+import Text from '@components/Text/Text';
 import styles from './SearchSection.module.css';
 
 interface SearchSectionProps {
-  onSearch: (query: string) => void;
   initialValue: string;
+  onSearch: (query: string) => void;
 }
 
-export default function SearchSection({ onSearch, initialValue }: SearchSectionProps): ReactNode {
+export default function SearchSection({ initialValue, onSearch }: SearchSectionProps): ReactNode {
   return (
     <section className={styles.searchSection}>
       <Text as="h1" className={styles.mainTitle}>
         Rick and Morty
       </Text>
-      <SearchForm onSearch={onSearch} initialValue={initialValue} />
+      <SearchForm initialValue={initialValue} onSearch={onSearch} />
     </section>
   );
 }

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
 import { getChars, getOneChar } from './api';
 
 describe('getChars API Function', () => {
@@ -16,14 +16,14 @@ describe('getChars API Function', () => {
 
   it('should fetch the default first page when no search query is provided', async () => {
     const mockApiResponse = {
-      results: [{ id: 1, name: 'Rick Sanchez' }],
       info: { pages: 42 },
+      results: [{ id: 1, name: 'Rick Sanchez' }],
     };
 
     fetchSpy.mockResolvedValueOnce(
       new Response(JSON.stringify(mockApiResponse), {
-        status: 200,
         headers: { 'Content-Type': 'application/json' },
+        status: 200,
       })
     );
 
@@ -34,19 +34,19 @@ describe('getChars API Function', () => {
       expect.any(Object)
     );
 
-    expect(result).toEqual({ results: mockApiResponse.results, pages: 42 });
+    expect(result).toEqual({ pages: 42, results: mockApiResponse.results });
   });
 
   it('should fetch by name parameter when a query string is provided', async () => {
     const mockApiResponse = {
-      results: [{ id: 2, name: 'Morty Smith' }],
       info: { pages: 4 },
+      results: [{ id: 2, name: 'Morty Smith' }],
     };
 
     fetchSpy.mockResolvedValueOnce(
       new Response(JSON.stringify(mockApiResponse), {
-        status: 200,
         headers: { 'Content-Type': 'application/json' },
+        status: 200,
       })
     );
 
@@ -56,14 +56,14 @@ describe('getChars API Function', () => {
       'https://rickandmortyapi.com/api/character/?name=Morty+Smith',
       expect.any(Object)
     );
-    expect(result).toEqual({ results: mockApiResponse.results, pages: 4 });
+    expect(result).toEqual({ pages: 4, results: mockApiResponse.results });
   });
 
   it('should return an empty array if server returns 404 Status (Not Found)', async () => {
     fetchSpy.mockResolvedValueOnce(
       new Response(JSON.stringify({ error: 'There is nothing here' }), {
-        status: 404,
         headers: { 'Content-Type': 'application/json' },
+        status: 404,
       })
     );
 
@@ -87,14 +87,14 @@ describe('getChars API Function', () => {
   it('should return an empty array if results property is missing in response data', async () => {
     fetchSpy.mockResolvedValueOnce(
       new Response(JSON.stringify({}), {
-        status: 200,
         headers: { 'Content-Type': 'application/json' },
+        status: 200,
       })
     );
 
     const result = await getChars('Rick');
 
-    expect(result).toEqual({ results: [], pages: 0 });
+    expect(result).toEqual({ pages: 0, results: [] });
   });
 
   describe('getOneChar API Function', () => {
@@ -107,8 +107,8 @@ describe('getChars API Function', () => {
 
       fetchSpy.mockResolvedValueOnce(
         new Response(JSON.stringify(mockCharResponse), {
-          status: 200,
           headers: { 'Content-Type': 'application/json' },
+          status: 200,
         })
       );
 
@@ -121,8 +121,8 @@ describe('getChars API Function', () => {
     it('should return null if server returns 404 Status (Not Found) for character ID', async () => {
       fetchSpy.mockResolvedValueOnce(
         new Response(JSON.stringify({ error: 'Character not found' }), {
-          status: 404,
           headers: { 'Content-Type': 'application/json' },
+          status: 404,
         })
       );
 

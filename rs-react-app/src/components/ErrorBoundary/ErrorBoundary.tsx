@@ -1,7 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import Button from '../Button/Button';
-import Text from '../Text/Text';
-import { ErrorMessage } from '../../constants/constants';
+import Button from '@components/Button/Button';
+import Text from '@components/Text/Text';
+import { ErrorMessage } from '@constants/constants';
 import styles from './ErrorBoundary.module.css';
 
 interface ErrorProps {
@@ -37,7 +37,7 @@ export default class ErrorBoundary extends Component<ErrorProps, ErrorState> {
           <Text as="h1" className={styles.errorMessage}>
             {ErrorMessage.BOUNDARY_ERROR}
           </Text>
-          <Button variant="reset" onClick={this.onClick}>
+          <Button onClick={this.onClick} variant="reset">
             Reset error
           </Button>
         </div>

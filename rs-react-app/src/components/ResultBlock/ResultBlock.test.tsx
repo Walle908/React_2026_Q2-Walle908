@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { describe, expect, it } from 'vitest';
+import { ErrorMessage } from '@constants/constants';
+import { mockCharacters } from '@test-utils/mocks';
+import { render, screen } from '@testing-library/react';
 import ResultBlock from './ResultBlock';
-import { ErrorMessage } from '../../constants/constants';
-import { mockCharacters } from '../../__tests__/mocks';
 
 describe('ResultBlock Component', () => {
   it('should render a list of Card components when when errorMessage is NO_ERROR', () => {

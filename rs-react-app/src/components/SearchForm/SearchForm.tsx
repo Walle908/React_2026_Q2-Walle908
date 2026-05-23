@@ -1,14 +1,14 @@
 import { type ChangeEvent, type ReactNode, type SubmitEvent, useState } from 'react';
-import Button from '../Button/Button';
+import Button from '@components/Button/Button';
+import SearchInput from '@components/SearchInput/SearchInput';
 import styles from './SearchForm.module.css';
-import SearchInput from '../SearchInput/SearchInput';
 
 interface SearchProps {
-  onSearch: (query: string) => void;
   initialValue: string;
+  onSearch: (query: string) => void;
 }
 
-export default function SearchForm({ onSearch, initialValue }: SearchProps): ReactNode {
+export default function SearchForm({ initialValue, onSearch }: SearchProps): ReactNode {
   const [value, setValue] = useState(initialValue);
 
   const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
@@ -29,10 +29,10 @@ export default function SearchForm({ onSearch, initialValue }: SearchProps): Rea
   return (
     <form className={styles.searchForm} onSubmit={onSubmit}>
       <div className={styles.searchWrapper}>
-        <SearchInput value={value} onChange={onChange} />
+        <SearchInput onChange={onChange} value={value} />
 
         {value && (
-          <Button variant="clear" onClick={onClear}>
+          <Button onClick={onClear} variant="clear">
             {' '}
             ✖
           </Button>

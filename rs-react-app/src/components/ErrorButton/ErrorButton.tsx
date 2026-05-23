@@ -1,6 +1,6 @@
-import { useState, type ReactNode } from 'react';
-import Button from '../Button/Button';
-import { ErrorMessage } from '../../constants/constants';
+import { type ReactNode, useState } from 'react';
+import Button from '@components/Button/Button';
+import { ErrorMessage } from '@constants/constants';
 
 export default function ErrorButton(): ReactNode {
   const [isError, setError] = useState(false);
@@ -14,7 +14,7 @@ export default function ErrorButton(): ReactNode {
   }
 
   return (
-    <Button variant="error" onClick={onClick}>
+    <Button onClick={onClick} variant="error">
       Generate Error
     </Button>
   );

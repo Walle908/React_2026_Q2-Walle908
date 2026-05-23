@@ -1,8 +1,8 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+import { getChars } from '@api/api';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
-import { getChars } from './api/api';
 
 vi.mock('./api/api', () => ({
   getChars: vi.fn(),
@@ -17,7 +17,7 @@ describe('App Component', () => {
   });
 
   it('should render the entire application layout successfully', async () => {
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
 
     render(
       <MemoryRouter>

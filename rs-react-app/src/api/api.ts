@@ -1,5 +1,5 @@
-import { type Character, type CharsResponse } from '../types/types';
-import { ErrorMessage, initialPage, SearchParams } from '../constants/constants';
+import { type Character, type CharsResponse } from '@appTypes/types';
+import { ErrorMessage, initialPage, SearchParams } from '@constants/constants';
 
 const baseUrl = 'https://rickandmortyapi.com/api/character';
 
@@ -30,7 +30,7 @@ export async function getChars(
   }
 
   const data = await response.json();
-  return { results: data.results || [], pages: data.info?.pages || 0 };
+  return { pages: data.info?.pages || 0, results: data.results || [] };
 }
 
 export async function getOneChar(id: string): Promise<Character | null> {

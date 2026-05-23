@@ -4,15 +4,15 @@ import styles from './Button.module.css';
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children: ReactNode;
   className?: string;
-  variant?: 'error' | 'reset' | 'close' | 'clear';
+  variant?: 'clear' | 'close' | 'error' | 'reset';
 }
 
 export default function Button({
   children,
   className,
-  variant,
-  type = 'button',
   onClick,
+  type = 'button',
+  variant,
   ...props
 }: ButtonProps): ReactNode {
   const isClear = variant === 'clear';
@@ -22,7 +22,7 @@ export default function Button({
   const combinedClassName = `${baseClass} ${variantClass} ${className || ''}`.trim();
 
   return (
-    <button type={type} onClick={onClick} className={combinedClassName} {...props}>
+    <button className={combinedClassName} onClick={onClick} type={type} {...props}>
       {children}
     </button>
   );

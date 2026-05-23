@@ -1,6 +1,6 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { emptyMockCharacter, mockCharacter } from '@test-utils/mocks';
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { mockCharacter, emptyMockCharacter } from '../../__tests__/mocks';
 import userEvent from '@testing-library/user-event';
 import CardDetailsContent from './CardDetailedContent';
 

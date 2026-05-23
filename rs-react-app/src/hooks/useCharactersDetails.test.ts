@@ -1,9 +1,9 @@
-import { renderHook, waitFor, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ErrorMessage, SearchParams } from '@constants/constants';
+import { mockCharacter } from '@test-utils/mocks';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import useCharacterDetails from './useCharactersDetails';
-import { ErrorMessage, SearchParams } from '../constants/constants';
-import { mockCharacter } from '../__tests__/mocks';
 
 const mockGetOneChar = vi.fn();
 vi.mock('../api/api', () => ({
@@ -11,7 +11,7 @@ vi.mock('../api/api', () => ({
 }));
 
 const mockSetSearchParams = vi.fn();
-let mockCurrentId: string | null = null;
+let mockCurrentId: null | string = null;
 
 vi.mock('react-router', async (importOriginal) => {
   const original = await importOriginal<typeof import('react-router')>();

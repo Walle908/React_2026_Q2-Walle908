@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { getOneChar } from '../api/api';
-import { type Character } from '../types/types';
-import { SearchParams, ErrorMessage } from '../constants/constants';
+import { getOneChar } from '@api/api';
+import { type Character } from '@appTypes/types';
+import { ErrorMessage, SearchParams } from '@constants/constants';
 
 interface CardDetailedState {
   char: Character | null;
-  isLoading: boolean;
   errorMessage: ErrorMessage;
+  isLoading: boolean;
 }
 
 export default function useCharacterDetails() {
   const [cardState, setCardState] = useState<CardDetailedState>({
     char: null,
-    isLoading: false,
     errorMessage: ErrorMessage.NO_ERROR,
+    isLoading: false,
   });
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -29,13 +29,13 @@ export default function useCharacterDetails() {
         const data = await getOneChar(id);
 
         if (data === null) {
-          setCardState({ isLoading: false, char: null, errorMessage: ErrorMessage.CHAR_NOT_FOUND });
+          setCardState({ char: null, errorMessage: ErrorMessage.CHAR_NOT_FOUND, isLoading: false });
           return;
         }
 
-        setCardState({ isLoading: false, char: data, errorMessage: ErrorMessage.NO_ERROR });
+        setCardState({ char: data, errorMessage: ErrorMessage.NO_ERROR, isLoading: false });
       } catch {
-        setCardState({ isLoading: false, char: null, errorMessage: ErrorMessage.SERVER_ERROR });
+        setCardState({ char: null, errorMessage: ErrorMessage.SERVER_ERROR, isLoading: false });
       }
     };
 
@@ -50,8 +50,8 @@ export default function useCharacterDetails() {
 
   return {
     char: cardState.char,
-    isLoading: cardState.isLoading,
-    errorMessage: cardState.errorMessage,
     closeCard,
+    errorMessage: cardState.errorMessage,
+    isLoading: cardState.isLoading,
   };
 }

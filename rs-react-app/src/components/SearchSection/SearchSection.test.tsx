@@ -1,13 +1,13 @@
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
 import SearchSection from './SearchSection';
 
 describe('SearchSection Component', () => {
   it('should render the title and form correctly', () => {
     const mockOnSearch = vi.fn();
 
-    render(<SearchSection onSearch={mockOnSearch} initialValue="Morty" />);
+    render(<SearchSection initialValue="Morty" onSearch={mockOnSearch} />);
 
     const titleElement = screen.getByRole('heading', { level: 1, name: /rick and morty/i });
     expect(titleElement).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('SearchSection Component', () => {
     const user = userEvent.setup();
     const mockOnSearch = vi.fn();
 
-    render(<SearchSection onSearch={mockOnSearch} initialValue="" />);
+    render(<SearchSection initialValue="" onSearch={mockOnSearch} />);
 
     const inputElement = screen.getByPlaceholderText('Search a character...');
     const submitButton = screen.getByRole('button', { name: /search/i });
