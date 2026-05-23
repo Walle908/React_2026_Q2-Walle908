@@ -1,138 +1,60 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { MemoryRouter, Routes, Route } from 'react-router';
-import { getOneChar } from '../../api/api';
 import CardDetailed from './CardDetailed';
-import { mockCharacter, emptyMockCharacter } from '../../__tests__/mocks';
-import userEvent from '@testing-library/user-event';
-import { useSearchParams } from 'react-router';
-
-vi.mock('../../api/api', () => ({
-  getOneChar: vi.fn(),
-}));
+import { mockCharacter } from '../../__tests__/mocks';
+import * as useCharactersDetailsModule from '../../hooks/useCharactersDetails';
 
 describe('CardDetailed Component', () => {
   beforeEach(() => {
-    vi.clearAllMocks(); // Очищаем историю вызовов перед каждым тестом
+    vi.clearAllMocks();
   });
 
-  it('should render character details correctly when all data is provided', async () => {
-    vi.mocked(getOneChar).mockResolvedValue(mockCharacter);
-
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <Routes>
-          <Route path="/" element={<CardDetailed />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      const image = screen.getByRole('img') as HTMLImageElement;
-      expect(image).toBeInTheDocument();
-      expect(image.src).toBe(mockCharacter.image);
+  it('should render Loader when isLoading: true', () => {
+    vi.spyOn(useCharactersDetailsModule, 'default').mockReturnValue({
+      character: null,
+      isLoading: true,
+      closeCard: vi.fn(),
     });
 
-    const image = screen.getByRole('img') as HTMLImageElement;
-    expect(image).toBeInTheDocument();
-    expect(image.src).toBe(mockCharacter.image);
-    expect(image.alt).toBe(mockCharacter.name);
+    render(<CardDetailed />);
 
-    const title = screen.getByRole('heading', { level: 2, name: mockCharacter.name });
-    expect(title).toBeInTheDocument();
+    expect(screen.getByTestId('loader-element')).toBeInTheDocument();
 
-    expect(screen.getByText(mockCharacter.status)).toBeInTheDocument();
-    expect(screen.getByText(mockCharacter.species)).toBeInTheDocument();
-    expect(screen.getByText(mockCharacter.type)).toBeInTheDocument();
-    expect(screen.getByText(mockCharacter.gender)).toBeInTheDocument();
-    expect(screen.getByText(mockCharacter.origin.name)).toBeInTheDocument();
-    expect(screen.getByText(mockCharacter.location.name)).toBeInTheDocument();
-  });
-
-  it('should display "n/a" fallback text when properties are empty strings or missing', async () => {
-    vi.mocked(getOneChar).mockResolvedValue(emptyMockCharacter);
-
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <Routes>
-          <Route path="/" element={<CardDetailed />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByRole('heading', { level: 2, name: 'n/a' })).toBeInTheDocument();
-    });
-
-    expect(screen.getByRole('heading', { level: 2, name: 'n/a' })).toBeInTheDocument();
-
-    const listItems = screen.getAllByRole('listitem');
-    listItems.forEach((item) => {
-      expect(item.textContent).toContain('n/a');
-    });
-  });
-
-  it('should handle API failure and display fallback UI', async () => {
-    vi.mocked(getOneChar).mockRejectedValueOnce(new Error('Network Error'));
-
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <Routes>
-          <Route path="/" element={<CardDetailed />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { level: 2, name: /The character's info is not found/i })
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('should do nothing and render empty state if details id is missing in URL', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route path="/" element={<CardDetailed />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    expect(getOneChar).not.toHaveBeenCalled();
     expect(
-      screen.getByRole('heading', { level: 2, name: /The character's info is not found/i })
-    ).toBeInTheDocument();
+      screen.queryByRole('heading', { level: 2, name: /the character's info is not found/i })
+    ).not.toBeInTheDocument();
   });
 
-  it('should remove details parameter from URL when Close button is clicked', async () => {
-    const user = userEvent.setup();
-    vi.mocked(getOneChar).mockResolvedValue(mockCharacter);
-
-    let currentParams: URLSearchParams | undefined;
-    function TestComponent() {
-      const [searchParams] = useSearchParams();
-      currentParams = searchParams;
-      return <CardDetailed />;
-    }
-
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <Routes>
-          <Route path="/" element={<TestComponent />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { level: 2, name: mockCharacter.name })
-      ).toBeInTheDocument();
+  it('should display an error message if the character is not found', () => {
+    vi.spyOn(useCharactersDetailsModule, 'default').mockReturnValue({
+      character: null,
+      isLoading: false,
+      closeCard: vi.fn(),
     });
 
-    const closeButton = screen.getByRole('button', { name: /close/i });
-    await user.click(closeButton);
+    render(<CardDetailed />);
 
-    expect(currentParams?.has('details')).toBe(false);
+    expect(
+      screen.getByRole('heading', { level: 2, name: /the character's info is not found/i })
+    ).toBeInTheDocument();
+
+    expect(screen.queryByTestId('loader-element')).not.toBeInTheDocument();
+  });
+
+  it('should render CardDetailsContent when successful data', () => {
+    vi.spyOn(useCharactersDetailsModule, 'default').mockReturnValue({
+      character: mockCharacter,
+      isLoading: false,
+      closeCard: vi.fn(),
+    });
+
+    render(<CardDetailed />);
+
+    expect(screen.getByRole('heading', { name: mockCharacter.name })).toBeInTheDocument();
+
+    expect(screen.queryByTestId('loader-element')).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('heading', { level: 2, name: /the character's info is not found/i })
+    ).not.toBeInTheDocument();
   });
 });

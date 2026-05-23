@@ -1,103 +1,18 @@
-import { useState, useEffect, type ReactNode } from 'react';
-import { type Character } from '../../types/types';
+import { type ReactNode } from 'react';
 import Loader from '../Loader/Loader';
-import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
-import { useSearchParams } from 'react-router';
-import { getOneChar } from '../../api/api';
-import { SearchParams } from '../../constants/constants';
-import styles from './CardDetailed.module.css';
-
-interface CardDetailedState {
-  char: Character | null;
-  isLoading: boolean;
-}
+import useCharacterDetails from '../../hooks/useCharactersDetails';
+import CardDetailsContent from '../CardDetailedContent/CardDetailedContent';
 
 export default function CardDetailed(): ReactNode {
-  const [pageState, setPageState] = useState<CardDetailedState>({
-    char: null,
-    isLoading: false,
-  });
+  const { character, isLoading, closeCard } = useCharacterDetails();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get(SearchParams.DETAILS);
-
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchCharacter = async () => {
-      setPageState((prevState) => ({ ...prevState, isLoading: true }));
-
-      try {
-        const data = await getOneChar(id);
-        setPageState({
-          isLoading: false,
-          char: data || null,
-        });
-      } catch (err) {
-        console.error(`Error while searching: ${err}`);
-        setPageState({
-          isLoading: false,
-          char: null,
-        });
-      }
-    };
-
-    fetchCharacter();
-  }, [id]);
-
-  function closeCard() {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete(SearchParams.DETAILS);
-    setSearchParams(newParams);
+  if (isLoading) {
+    return <Loader />;
   }
 
-  return (
-    <>
-      {pageState.isLoading ? (
-        <Loader />
-      ) : pageState.char ? (
-        <div className={styles.cardWrapper}>
-          <img className={styles.cardImg} src={pageState.char.image} alt={pageState.char.name} />
-
-          <div className={styles.cardDescription}>
-            <Text as="h2" className={styles.cardTitle}>
-              {pageState.char.name || 'n/a'}
-            </Text>
-            <ul className={styles.cardList}>
-              <li>
-                <b>Status: </b>
-                {pageState.char.status || 'n/a'}
-              </li>
-              <li>
-                <b>Species: </b>
-                {pageState.char.species || 'n/a'}
-              </li>
-              <li>
-                <b>Type: </b>
-                {pageState.char.type || 'n/a'}
-              </li>
-              <li>
-                <b>Gender: </b>
-                {pageState.char.gender || 'n/a'}
-              </li>
-              <li>
-                <b>Origin: </b>
-                {pageState.char.origin.name || 'n/a'}
-              </li>
-              <li>
-                <b>Location: </b>
-                {pageState.char.location.name || 'n/a'}
-              </li>
-            </ul>
-          </div>
-          <Button variant="close" onClick={closeCard}>
-            Close
-          </Button>
-        </div>
-      ) : (
-        <Text as="h2">The character&apos;s info is not found</Text>
-      )}
-    </>
-  );
+  if (!character) {
+    return <Text as="h2">The character&apos;s info is not found</Text>;
+  }
+  return <CardDetailsContent character={character} onClose={closeCard} />;
 }
