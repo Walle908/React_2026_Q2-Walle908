@@ -11,7 +11,7 @@ import {
   type Mock,
 } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router';
-import Page from './Page';
+import HomePage from './HomePage';
 import { localStorageKey, initialPage } from '../../../constants/constants';
 import { ErrorMessage } from '../../../constants/constants';
 import { mockCharacters } from '../../../__tests__/mocks';
@@ -22,7 +22,7 @@ vi.mock('../../api/api', () => ({
   getChars: vi.fn(),
 }));
 
-describe('Page Component', () => {
+describe('HomePage Component', () => {
   let mockGetChars: Mock;
   let consoleErrorSpy: MockInstance;
 
@@ -41,7 +41,7 @@ describe('Page Component', () => {
     return render(
       <MemoryRouter initialEntries={initialEntries}>
         <Routes>
-          <Route path="/" element={<Page />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </MemoryRouter>
     );
@@ -268,7 +268,7 @@ describe('Page Component', () => {
     const { container } = render(
       <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=1&${SearchParams.DETAILS}=1`]}>
         <Routes>
-          <Route path="/" element={<Page />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </MemoryRouter>
     );

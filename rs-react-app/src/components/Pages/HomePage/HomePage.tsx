@@ -15,9 +15,9 @@ import { Pagination } from '../../Pagination/Pagination';
 import { Outlet, useSearchParams } from 'react-router';
 import Header from '../../Header/Header';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
-import styles from './Page.module.css';
+import styles from './HomePage.module.css';
 
-export default function Page(): ReactNode {
+export default function HomePage(): ReactNode {
   const [chars, setChars] = useState<Character[]>([]);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>(ErrorMessage.NO_ERROR);
   const [query, setQuery] = useLocalStorage<string>(localStorageKey, '');

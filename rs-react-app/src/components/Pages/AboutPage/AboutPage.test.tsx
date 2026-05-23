@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router';
-import AboutPage from './About';
+import AboutPage from './AboutPage';
 
 describe('AboutPage Component', () => {
   it('should render author information and link to RS School React course', () => {

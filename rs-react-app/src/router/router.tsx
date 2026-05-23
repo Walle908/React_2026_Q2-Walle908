@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router';
 import App from '../App.tsx';
 import NotFoundPage from '../components/Pages/NotFoundPage/NotFoundPage.tsx';
 import CardDetailed from '../components/CardDetailed/CardDetailed.tsx';
-import AboutPage from '../components/Pages/About/About.tsx';
+import AboutPage from '../components/Pages/AboutPage/AboutPage.tsx';
 
 export const router = createBrowserRouter([
   {

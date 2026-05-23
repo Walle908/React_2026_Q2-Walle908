@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import { Link } from 'react-router';
 import { Text } from '../../Text/Text';
 import { Button } from '../../Button/Button';
-import styles from './About.module.css';
+import styles from './AboutPage.module.css';
 
 export default function AboutPage(): ReactNode {
   return (
