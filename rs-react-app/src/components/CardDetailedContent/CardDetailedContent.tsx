@@ -13,6 +13,15 @@ export default function CardDetailsContent({
   character,
   onClose,
 }: CardDetailsContentProps): ReactNode {
+  const fields = [
+    { label: 'Status', value: character.status },
+    { label: 'Species', value: character.species },
+    { label: 'Type', value: character.type },
+    { label: 'Gender', value: character.gender },
+    { label: 'Origin', value: character.origin?.name },
+    { label: 'Location', value: character.location?.name },
+  ];
+
   return (
     <div className={styles.cardWrapper}>
       <img className={styles.cardImg} src={character.image} alt={character.name} />
@@ -22,30 +31,14 @@ export default function CardDetailsContent({
           {character.name || 'n/a'}
         </Text>
         <ul className={styles.cardList}>
-          <li>
-            <b>Status: </b>
-            {character.status || 'n/a'}
-          </li>
-          <li>
-            <b>Species: </b>
-            {character.species || 'n/a'}
-          </li>
-          <li>
-            <b>Type: </b>
-            {character.type || 'n/a'}
-          </li>
-          <li>
-            <b>Gender: </b>
-            {character.gender || 'n/a'}
-          </li>
-          <li>
-            <b>Origin: </b>
-            {character.origin.name || 'n/a'}
-          </li>
-          <li>
-            <b>Location: </b>
-            {character.location.name || 'n/a'}
-          </li>
+          {fields.map(({ label, value }) => {
+            return (
+              <li key={label}>
+                <b>{label}: </b>
+                {value || 'n/a'}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <Button variant="close" onClick={onClose}>
