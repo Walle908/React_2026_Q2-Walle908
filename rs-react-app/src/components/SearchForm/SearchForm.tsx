@@ -1,6 +1,7 @@
 import { type ChangeEvent, type ReactNode, type SubmitEvent, useState } from 'react';
 import { Button } from '../Button/Button';
 import styles from './SearchForm.module.css';
+import SearchInput from '../SearchInput/SearchInput';
 
 interface SearchProps {
   onSearch: (query: string) => void;
@@ -28,15 +29,8 @@ export default function SearchForm({ onSearch, initialValue }: SearchProps): Rea
   return (
     <form className={styles.searchForm} onSubmit={onSubmit}>
       <div className={styles.searchWrapper}>
-        <input
-          id="searchInput"
-          name="search"
-          type="search"
-          placeholder="Search a character..."
-          className={styles.inputSearch}
-          value={value}
-          onChange={onChange}
-        />
+        <SearchInput value={value} onChange={onChange} />
+
         {value && (
           <Button variant="clear" onClick={onClear}>
             {' '}
