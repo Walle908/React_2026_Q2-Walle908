@@ -4,18 +4,23 @@ import NotFoundPage from '../components/Pages/NotFoundPage/NotFoundPage.tsx';
 import CardDetailed from '../components/CardDetailed/CardDetailed.tsx';
 import AboutPage from '../components/Pages/AboutPage/AboutPage.tsx';
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: '',
+          element: <CardDetailed />,
+        },
+      ],
+    },
+    { path: '*', element: <NotFoundPage /> },
+    { path: 'about', element: <AboutPage /> },
+  ],
   {
-    path: '/',
-    element: <App />,
-    errorElement: <NotFoundPage />,
-    children: [
-      {
-        path: '',
-        element: <CardDetailed />,
-      },
-    ],
-  },
-  { path: '*', element: <NotFoundPage /> },
-  { path: 'about', element: <AboutPage /> },
-]);
+    basename: import.meta.env.BASE_URL,
+  }
+);
