@@ -81,7 +81,7 @@ describe('HomePage Component', () => {
   });
 
   it('should display NOT_FOUND error message if API returns an empty array', async () => {
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    mockGetChars.mockResolvedValueOnce(null);
 
     renderWithRouter();
 
@@ -148,7 +148,7 @@ describe('HomePage Component', () => {
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
 
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    mockGetChars.mockResolvedValueOnce(null);
 
     const input = screen.getByPlaceholderText('Search a character...');
     const submitButton = screen.getByRole('button', { name: /search/i });

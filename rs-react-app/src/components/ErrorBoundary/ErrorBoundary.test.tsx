@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
 import ErrorBoundary from './ErrorBoundary';
 import ErrorButton from '../ErrorButton/ErrorButton';
+import { ErrorMessage } from '../../constants/constants';
 
 describe('ErrorBoundary Component', () => {
   let consoleErrorSpy: MockInstance;
@@ -25,7 +26,7 @@ describe('ErrorBoundary Component', () => {
     expect(screen.getByRole('button', { name: /generate error/i })).toBeInTheDocument();
 
     expect(
-      screen.queryByRole('heading', { level: 1, name: /something went wrong.../i })
+      screen.queryByRole('heading', { level: 1, name: ErrorMessage.BOUNDARY_ERROR })
     ).not.toBeInTheDocument();
   });
 
@@ -42,7 +43,7 @@ describe('ErrorBoundary Component', () => {
     await user.click(generateErrorBtn);
 
     expect(
-      screen.getByRole('heading', { level: 1, name: /something went wrong.../i })
+      screen.getByRole('heading', { level: 1, name: ErrorMessage.BOUNDARY_ERROR })
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /reset error/i })).toBeInTheDocument();
 
@@ -65,7 +66,7 @@ describe('ErrorBoundary Component', () => {
     const generateErrorBtn = screen.getByRole('button', { name: /generate error/i });
     await user.click(generateErrorBtn);
     expect(
-      screen.getByRole('heading', { level: 1, name: /something went wrong.../i })
+      screen.getByRole('heading', { level: 1, name: ErrorMessage.BOUNDARY_ERROR })
     ).toBeInTheDocument();
 
     const resetButton = screen.getByRole('button', { name: /reset error/i });
@@ -73,7 +74,7 @@ describe('ErrorBoundary Component', () => {
 
     expect(screen.getByRole('button', { name: /generate error/i })).toBeInTheDocument();
     expect(
-      screen.queryByRole('heading', { level: 1, name: /something went wrong.../i })
+      screen.queryByRole('heading', { level: 1, name: ErrorMessage.BOUNDARY_ERROR })
     ).not.toBeInTheDocument();
   });
 });

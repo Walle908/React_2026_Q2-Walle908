@@ -3,16 +3,21 @@ import Loader from '../Loader/Loader';
 import { Text } from '../Text/Text';
 import useCharacterDetails from '../../hooks/useCharactersDetails';
 import CardDetailsContent from '../CardDetailedContent/CardDetailedContent';
+import styles from './CardDetailed.module.css';
 
 export default function CardDetailed(): ReactNode {
-  const { character, isLoading, closeCard } = useCharacterDetails();
+  const { char, isLoading, errorMessage, closeCard } = useCharacterDetails();
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (!character) {
-    return <Text as="h2">The character&apos;s info is not found</Text>;
+  if (!char) {
+    return (
+      <Text as="h2" className={styles.errorTitle}>
+        {errorMessage}
+      </Text>
+    );
   }
-  return <CardDetailsContent character={character} onClose={closeCard} />;
+  return <CardDetailsContent character={char} onClose={closeCard} />;
 }

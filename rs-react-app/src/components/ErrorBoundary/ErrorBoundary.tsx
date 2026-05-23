@@ -1,6 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { Button } from '../Button/Button';
 import { Text } from '../Text/Text';
+import { ErrorMessage } from '../../constants/constants';
 import styles from './ErrorBoundary.module.css';
 
 interface ErrorProps {
@@ -34,7 +35,7 @@ export default class ErrorBoundary extends Component<ErrorProps, ErrorState> {
       return (
         <div className={styles.errorBlock}>
           <Text as="h1" className={styles.errorMessage}>
-            Something went wrong...
+            {ErrorMessage.BOUNDARY_ERROR}
           </Text>
           <Button variant="reset" onClick={this.onClick}>
             Reset error

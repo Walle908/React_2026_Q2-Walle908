@@ -2,7 +2,7 @@ import { renderHook, waitFor, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MemoryRouter } from 'react-router';
 import useCharacterDetails from './useCharactersDetails';
-import { SearchParams } from '../constants/constants';
+import { ErrorMessage, SearchParams } from '../constants/constants';
 import { mockCharacter } from '../__tests__/mocks';
 
 const mockGetOneChar = vi.fn();
@@ -39,8 +39,9 @@ describe('useCharacterDetails Hook', () => {
       wrapper: MemoryRouter,
     });
 
-    expect(result.current.character).toBeNull();
+    expect(result.current.char).toBeNull();
     expect(result.current.isLoading).toBe(false);
+    expect(result.current.errorMessage).toBe(ErrorMessage.NO_ERROR);
     expect(mockGetOneChar).not.toHaveBeenCalled();
   });
 
@@ -59,14 +60,14 @@ describe('useCharacterDetails Hook', () => {
       expect(result.current.isLoading).toBe(false);
     });
 
-    expect(result.current.character).toEqual(mockCharacter);
+    expect(result.current.char).toEqual(mockCharacter);
+    expect(result.current.errorMessage).toBe(ErrorMessage.NO_ERROR);
     expect(mockGetOneChar).toHaveBeenCalledWith('1');
     expect(mockGetOneChar).toHaveBeenCalledTimes(1);
   });
 
-  it('should handle 404 or empty data (returns null)', async () => {
+  it('should handle 404 (character not found)', async () => {
     mockCurrentId = '999';
-
     mockGetOneChar.mockResolvedValue(null);
 
     const { result } = renderHook(() => useCharacterDetails(), {
@@ -77,13 +78,14 @@ describe('useCharacterDetails Hook', () => {
       expect(result.current.isLoading).toBe(false);
     });
 
-    expect(result.current.character).toBeNull();
+    expect(result.current.char).toBeNull();
+    expect(result.current.errorMessage).toBe(ErrorMessage.CHAR_NOT_FOUND);
   });
 
   it('should handle server errors gracefully', async () => {
     mockCurrentId = '123';
 
-    mockGetOneChar.mockRejectedValue(new Error('Server error while requesting data'));
+    mockGetOneChar.mockRejectedValue(new Error(ErrorMessage.ANOTHER_ERROR));
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -95,8 +97,9 @@ describe('useCharacterDetails Hook', () => {
       expect(result.current.isLoading).toBe(false);
     });
 
-    expect(result.current.character).toBeNull();
-    expect(consoleSpy).toHaveBeenCalled();
+    expect(result.current.char).toBeNull();
+    expect(result.current.errorMessage).toBe(ErrorMessage.ANOTHER_ERROR);
+    consoleSpy.mockRestore();
   });
 
   it('should call setSearchParams when closeCard is invoked', () => {

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, afterEach, type MockInstance } from 'vitest';
 import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 import ErrorButton from './ErrorButton';
+import { ErrorMessage } from '../../constants/constants';
 
 describe('ErrorButton Component', () => {
   let consoleErrorSpy: MockInstance;
@@ -36,7 +37,7 @@ describe('ErrorButton Component', () => {
     await user.click(button);
 
     expect(
-      screen.getByRole('heading', { level: 1, name: /something went wrong.../i })
+      screen.getByRole('heading', { level: 1, name: ErrorMessage.BOUNDARY_ERROR })
     ).toBeInTheDocument();
     expect(button).not.toBeInTheDocument();
   });

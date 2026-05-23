@@ -1,5 +1,5 @@
 import { type Character, type CharsResponse } from '../types/types';
-import { initialPage, SearchParams } from '../constants/constants';
+import { ErrorMessage, initialPage, SearchParams } from '../constants/constants';
 
 const baseUrl = 'https://rickandmortyapi.com/api/character';
 
@@ -26,7 +26,7 @@ export async function getChars(
   }
 
   if (!response.ok) {
-    throw new Error('Server error while requesting data');
+    throw new Error(ErrorMessage.ANOTHER_ERROR);
   }
 
   const data = await response.json();
@@ -43,7 +43,7 @@ export async function getOneChar(id: string): Promise<Character | null> {
   }
 
   if (!response.ok) {
-    throw new Error('Server error while requesting data');
+    throw new Error(ErrorMessage.ANOTHER_ERROR);
   }
 
   const data = await response.json();

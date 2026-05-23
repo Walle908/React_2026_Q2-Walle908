@@ -69,7 +69,7 @@ describe('getChars API Function', () => {
 
     const result = await getChars('NonExistentCharacter');
 
-    expect(result).toEqual({ results: [], pages: 0 });
+    expect(result).toEqual(null);
     expect(fetchSpy).toHaveBeenCalledTimes(1);
   });
 
