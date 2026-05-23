@@ -1,0 +1,48 @@
+.baseButton {
+  min-width: max-content;
+  width: 10rem;
+  height: 4rem;
+  background-color: var(--color-dark-blue);
+  border-radius: 8px;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.baseButton:hover {
+  background-color: var(--color-light-blue);
+}
+
+.clear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-dark-blue);
+  font-size: 1.8rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+}
+
+.clear:hover {
+  color: var(--color-dark);
+}
+
+.error {
+  background-color: var(--color-red);
+}
+
+.reset {
+  margin-top: 4rem;
+}
+
+.close {
+  align-self: center;
+}

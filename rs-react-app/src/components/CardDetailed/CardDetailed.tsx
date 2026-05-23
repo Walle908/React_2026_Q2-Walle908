@@ -1,6 +1,7 @@
 import { useState, useEffect, type ReactNode } from 'react';
 import { type Character } from '../../types/types';
 import Loader from '../Loader/Loader';
+import { Button } from '../Button/Button';
 import { useSearchParams } from 'react-router';
 import { getOneChar } from '../../api/api';
 import { SearchParams } from '../../constants/constants';
@@ -87,9 +88,9 @@ export default function CardDetailed(): ReactNode {
               </li>
             </ul>
           </div>
-          <button className={`button ${styles.closeButton}`} onClick={closeCard}>
+          <Button variant="close" onClick={closeCard}>
             Close
-          </button>
+          </Button>
         </div>
       ) : (
         <h2>The character&apos;s info is not found</h2>

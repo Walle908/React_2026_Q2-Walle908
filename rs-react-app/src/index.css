@@ -63,24 +63,6 @@ input[type='search']::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
-.button {
-  min-width: max-content;
-  width: 10rem;
-  height: 4rem;
-  background-color: var(--color-dark-blue);
-  border-radius: 8px;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  font-size: 1.6rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.4s;
-}
-
-.button:hover {
-  background-color: var(--color-light-blue);
-}
-
 .link {
   text-decoration: none;
   color: var(--color-dark);

@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { useSearchParams } from 'react-router';
+import { Button } from '../Button/Button';
 import { initialPage, SearchParams } from '../../constants/constants';
 import styles from './Pagination.module.css';
 
@@ -15,19 +16,15 @@ export function Pagination({ totalPages, onChange }: PaginationProps): ReactNode
 
   return (
     <div className={styles.paginationWrapper}>
-      <button
-        className="button"
-        onClick={() => onChange(currentPage - 1)}
-        disabled={currentPage === initialPage}>
+      <Button onClick={() => onChange(currentPage - 1)} disabled={currentPage === initialPage}>
         Prev
-      </button>
+      </Button>
       <p className={styles.paginationText}>{`Page ${currentPage} of ${totalPages}`}</p>
-      <button
-        className="button"
+      <Button
         onClick={() => onChange(currentPage + 1)}
         disabled={currentPage === totalPages || totalPages === 0}>
         Next
-      </button>
+      </Button>
     </div>
   );
 }
