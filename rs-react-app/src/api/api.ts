@@ -7,7 +7,7 @@ export async function getChars(
   query: string = '',
   page: number = initialPage,
   signal?: AbortSignal
-): Promise<CharsResponse> {
+): Promise<CharsResponse | null> {
   const params = new URLSearchParams();
 
   if (query.trim()) {
@@ -22,7 +22,7 @@ export async function getChars(
   const response = await fetch(url, { signal });
 
   if (response.status === 404) {
-    return { results: [], pages: 0 };
+    return null;
   }
 
   if (!response.ok) {

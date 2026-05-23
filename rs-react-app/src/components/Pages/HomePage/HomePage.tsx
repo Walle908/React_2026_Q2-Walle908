@@ -37,19 +37,20 @@ export default function HomePage(): ReactNode {
   ) => {
     setIsLoading(true);
     try {
-      const { results, pages } = await getChars(searchQuery, page, controller.signal);
+      const data = await getChars(searchQuery, page, controller.signal);
 
-      if (results.length === 0) {
+      if (data === null) {
         setChars([]);
         setTotalPages(0);
         setErrorMessage(ErrorMessage.NOT_FOUND);
-      } else {
-        setChars(results);
-        setTotalPages(pages);
-        setErrorMessage(ErrorMessage.NO_ERROR);
+        return;
       }
+
+      setChars(data.results);
+      setTotalPages(data.pages);
+      setErrorMessage(ErrorMessage.NO_ERROR);
     } catch (err: unknown) {
-      if (err instanceof Error) if (err.name === 'AbortError') return;
+      if (err instanceof Error && err.name === 'AbortError') return;
 
       setChars([]);
       setTotalPages(0);
