@@ -35,7 +35,7 @@ export default function useCharacterDetails() {
 
         setCardState({ isLoading: false, char: data, errorMessage: ErrorMessage.NO_ERROR });
       } catch {
-        setCardState({ isLoading: false, char: null, errorMessage: ErrorMessage.ANOTHER_ERROR });
+        setCardState({ isLoading: false, char: null, errorMessage: ErrorMessage.SERVER_ERROR });
       }
     };
 

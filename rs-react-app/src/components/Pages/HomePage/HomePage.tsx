@@ -27,62 +27,59 @@ export default function HomePage(): ReactNode {
   const lastClickRef = useRef(0);
 
   const pageParam = searchParams.get(SearchParams.PAGE);
-  const currentPage = Number(pageParam);
   const characterId = searchParams.get(SearchParams.DETAILS);
-
-  const fetchCharacters = async (
-    searchQuery: string,
-    page: number,
-    controller: AbortController
-  ) => {
-    setIsLoading(true);
-    try {
-      const data = await getChars(searchQuery, page, controller.signal);
-
-      if (data === null) {
-        setChars([]);
-        setTotalPages(0);
-        setErrorMessage(ErrorMessage.NOT_FOUND);
-        return;
-      }
-
-      setChars(data.results);
-      setTotalPages(data.pages);
-      setErrorMessage(ErrorMessage.NO_ERROR);
-    } catch (err: unknown) {
-      if (err instanceof Error && err.name === 'AbortError') return;
-
-      setChars([]);
-      setTotalPages(0);
-      setErrorMessage(ErrorMessage.ANOTHER_ERROR);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const currentPage = Number(pageParam) >= initialPage ? Number(pageParam) : initialPage;
 
   useEffect(() => {
-    if (!currentPage || currentPage < initialPage) return;
-
-    const controller = new AbortController();
-
-    const runFetch = async () => {
-      await fetchCharacters(query, currentPage, controller);
-    };
-    runFetch();
-
-    return () => controller.abort();
-  }, [currentPage, query]);
-
-  useEffect(() => {
-    const pageParam = searchParams.get(SearchParams.PAGE);
     const parsedPage = Number(pageParam);
 
     if (!pageParam || !Number.isInteger(parsedPage) || parsedPage < initialPage) {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set(SearchParams.PAGE, String(initialPage));
-      setSearchParams(newParams, { replace: true });
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.set(SearchParams.PAGE, String(initialPage));
+          return next;
+        },
+        { replace: true }
+      );
     }
-  }, [currentPage, searchParams, setSearchParams]);
+  }, [pageParam, setSearchParams]);
+
+  useEffect(() => {
+    if (Number(pageParam) < initialPage) return;
+
+    const controller = new AbortController();
+
+    const fetchCharacters = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getChars(query, currentPage, controller.signal);
+
+        if (data === null) {
+          setChars([]);
+          setTotalPages(0);
+          setErrorMessage(ErrorMessage.NOT_FOUND);
+          return;
+        }
+
+        setChars(data.results);
+        setTotalPages(data.pages);
+        setErrorMessage(ErrorMessage.NO_ERROR);
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') return;
+
+        setChars([]);
+        setTotalPages(0);
+        setErrorMessage(ErrorMessage.SERVER_ERROR);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCharacters();
+
+    return () => controller.abort();
+  }, [currentPage, pageParam, query]);
 
   const onSearch = async (newQuery: string) => {
     const trimmedQuery = newQuery.trim();
@@ -94,9 +91,14 @@ export default function HomePage(): ReactNode {
     setQuery(trimmedQuery);
     setTotalPages(0);
 
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set(SearchParams.PAGE, String(initialPage));
-    setSearchParams(newParams, { replace: true });
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.set(SearchParams.PAGE, String(initialPage));
+        return next;
+      },
+      { replace: true }
+    );
   };
 
   const handlePageChange = async (newPage: number) => {
@@ -106,9 +108,11 @@ export default function HomePage(): ReactNode {
     if (now - lastClickRef.current < Delay) return;
     lastClickRef.current = now;
 
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set(SearchParams.PAGE, String(newPage));
-    setSearchParams(newParams);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set(SearchParams.PAGE, String(newPage));
+      return next;
+    });
   };
 
   const showPagination = !isLoading && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;

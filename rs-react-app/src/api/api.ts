@@ -26,7 +26,7 @@ export async function getChars(
   }
 
   if (!response.ok) {
-    throw new Error(ErrorMessage.ANOTHER_ERROR);
+    throw new Error(ErrorMessage.SERVER_ERROR);
   }
 
   const data = await response.json();
@@ -43,7 +43,7 @@ export async function getOneChar(id: string): Promise<Character | null> {
   }
 
   if (!response.ok) {
-    throw new Error(ErrorMessage.ANOTHER_ERROR);
+    throw new Error(ErrorMessage.SERVER_ERROR);
   }
 
   const data = await response.json();

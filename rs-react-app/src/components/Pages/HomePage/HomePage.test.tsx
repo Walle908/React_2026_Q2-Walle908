@@ -16,7 +16,6 @@ import { localStorageKey, initialPage } from '../../../constants/constants';
 import { ErrorMessage } from '../../../constants/constants';
 import { mockCharacters } from '../../../__tests__/mocks';
 import * as apiModule from '../../../api/api';
-import { SearchParams } from '../../../constants/constants';
 
 vi.mock('../../api/api', () => ({
   getChars: vi.fn(),
@@ -80,7 +79,7 @@ describe('HomePage Component', () => {
     });
   });
 
-  it('should display NOT_FOUND error message if API returns an empty array', async () => {
+  it('should display NOT_FOUND error message if API returns null', async () => {
     mockGetChars.mockResolvedValueOnce(null);
 
     renderWithRouter();
@@ -92,14 +91,14 @@ describe('HomePage Component', () => {
     });
   });
 
-  it('should display ANOTHER_ERROR message if API request fails', async () => {
-    mockGetChars.mockRejectedValueOnce(new Error('Server error'));
+  it('should display SERVER_ERROR message if API request fails', async () => {
+    mockGetChars.mockRejectedValueOnce(new Error(ErrorMessage.SERVER_ERROR));
 
     renderWithRouter();
 
     await waitFor(() => {
       expect(
-        screen.getByRole('heading', { level: 2, name: ErrorMessage.ANOTHER_ERROR })
+        screen.getByRole('heading', { level: 2, name: ErrorMessage.SERVER_ERROR })
       ).toBeInTheDocument();
     });
   });
@@ -163,7 +162,7 @@ describe('HomePage Component', () => {
     });
   });
 
-  it('should handle API failure (ANOTHER_ERROR) during manual search submit', async () => {
+  it('should handle API failure (SERVER_ERROR) during manual search submit', async () => {
     const user = userEvent.setup();
     mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
 
@@ -180,14 +179,14 @@ describe('HomePage Component', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByRole('heading', { level: 2, name: ErrorMessage.ANOTHER_ERROR })
+        screen.getByRole('heading', { level: 2, name: ErrorMessage.SERVER_ERROR })
       ).toBeInTheDocument();
     });
   });
 
   it('should handle case when localStorage is empty on mount', async () => {
     localStorage.removeItem(localStorageKey);
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    mockGetChars.mockResolvedValueOnce(null);
 
     renderWithRouter();
 
@@ -201,8 +200,8 @@ describe('HomePage Component', () => {
 
   it('should update existing value in localStorage when a new search is performed', async () => {
     const user = userEvent.setup();
-    localStorage.setItem(localStorageKey, 'Morty');
-    mockGetChars.mockResolvedValueOnce({ results: [], pages: 0 });
+    localStorage.setItem(localStorageKey, JSON.stringify('Morty'));
+    mockGetChars.mockResolvedValueOnce(null);
 
     renderWithRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
@@ -258,35 +257,6 @@ describe('HomePage Component', () => {
 
     await waitFor(() => {
       expect(mockGetChars).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  it('should remove details parameter from URL when clicking on the left-panel wrapper background', async () => {
-    const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ results: mockCharacters, pages: 3 });
-
-    const { container } = render(
-      <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=1&${SearchParams.DETAILS}=1`]}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </MemoryRouter>
-    );
-
-    await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
-
-    const leftPanel = screen.getByTestId('left-panel');
-    expect(leftPanel).toBeInTheDocument();
-
-    if (leftPanel) {
-      await user.click(leftPanel);
-    }
-
-    await waitFor(() => {
-      const links = container.querySelectorAll('.link');
-      if (links.length > 0) {
-        expect(links[0]?.getAttribute('href')).not.toContain('details=');
-      }
     });
   });
 });

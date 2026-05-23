@@ -85,7 +85,7 @@ describe('useCharacterDetails Hook', () => {
   it('should handle server errors gracefully', async () => {
     mockCurrentId = '123';
 
-    mockGetOneChar.mockRejectedValue(new Error(ErrorMessage.ANOTHER_ERROR));
+    mockGetOneChar.mockRejectedValue(new Error(ErrorMessage.SERVER_ERROR));
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
@@ -98,7 +98,7 @@ describe('useCharacterDetails Hook', () => {
     });
 
     expect(result.current.char).toBeNull();
-    expect(result.current.errorMessage).toBe(ErrorMessage.ANOTHER_ERROR);
+    expect(result.current.errorMessage).toBe(ErrorMessage.SERVER_ERROR);
     consoleSpy.mockRestore();
   });
 

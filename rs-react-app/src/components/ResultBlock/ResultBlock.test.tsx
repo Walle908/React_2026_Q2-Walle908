@@ -41,15 +41,15 @@ it('should render an error message when errorMessage is NOT_FOUND', () => {
   ).not.toBeInTheDocument();
 });
 
-it('should render an error message when errorMessage is ANOTHER_ERROR', () => {
+it('should render an error message when errorMessage is SERVER_ERROR', () => {
   render(
     <MemoryRouter>
-      <ResultBlock chars={[]} errorMessage={ErrorMessage.ANOTHER_ERROR} />
+      <ResultBlock chars={[]} errorMessage={ErrorMessage.SERVER_ERROR} />
     </MemoryRouter>
   );
 
   const errorHeading = screen.getByTestId('bad-result');
 
   expect(errorHeading).toBeInTheDocument();
-  expect(errorHeading.textContent).toBe(ErrorMessage.ANOTHER_ERROR);
+  expect(errorHeading.textContent).toBe(ErrorMessage.SERVER_ERROR);
 });
