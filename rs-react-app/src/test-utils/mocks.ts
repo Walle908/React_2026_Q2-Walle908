@@ -1,4 +1,4 @@
-import { type Character } from '@appTypes/types';
+import { type Character } from '@/types/types';
 
 export const mockCharacter: Character = {
   created: '2017-11-04T21:12:45.235Z',

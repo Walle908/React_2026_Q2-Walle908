@@ -1,6 +1,6 @@
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
-import { getChars } from '@api/api';
+import { getChars } from '@/api/api';
 import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 

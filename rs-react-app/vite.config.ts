@@ -10,13 +10,6 @@ export default defineConfig(({ command }) => {
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
-        '@api': path.resolve(__dirname, './src/api'),
-        '@appTypes': path.resolve(__dirname, './src/types'),
-        '@components': path.resolve(__dirname, './src/components'),
-        '@constants': path.resolve(__dirname, './src/constants'),
-        '@hooks': path.resolve(__dirname, './src/hooks'),
-        '@router': path.resolve(__dirname, './src/router'),
-        '@test-utils': path.resolve(__dirname, './src/test-utils'),
       },
     },
     server: {

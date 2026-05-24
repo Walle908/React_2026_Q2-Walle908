@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { getOneChar } from '@api/api';
-import { type Character } from '@appTypes/types';
-import { ErrorMessage, SearchParams } from '@constants/constants';
+import { getOneChar } from '@/api/api';
+import { ErrorMessage, SearchParams } from '@/constants/constants';
+import { type Character } from '@/types/types';
 
 interface CardDetailedState {
   char: Character | null;

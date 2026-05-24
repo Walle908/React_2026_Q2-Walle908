@@ -1,5 +1,5 @@
-import { type Character, type CharsResponse } from '@appTypes/types';
-import { ErrorMessage, initialPage, SearchParams } from '@constants/constants';
+import { ErrorMessage, initialPage, SearchParams } from '@/constants/constants';
+import { type Character, type CharsResponse } from '@/types/types';
 
 const baseUrl = 'https://rickandmortyapi.com/api/character';
 

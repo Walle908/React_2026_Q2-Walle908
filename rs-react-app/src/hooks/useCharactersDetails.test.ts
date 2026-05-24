@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ErrorMessage, SearchParams } from '@constants/constants';
-import { mockCharacter } from '@test-utils/mocks';
+import { ErrorMessage, SearchParams } from '@/constants/constants';
+import { mockCharacter } from '@/test-utils/mocks';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import useCharacterDetails from './useCharactersDetails';
 
