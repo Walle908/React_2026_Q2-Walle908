@@ -1,0 +1,47 @@
+.baseLink {
+  text-decoration: none;
+  color: var(--color-dark);
+  display: block;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.buttonLink {
+  display: block;
+  min-width: max-content;
+  width: 10rem;
+  height: 4rem;
+  background-color: var(--color-dark-blue);
+  border-radius: 8px;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.buttonLink:hover {
+  background-color: var(--color-light-blue);
+}
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  width: 24rem;
+  height: 34rem;
+  gap: 4rem;
+  align-items: center;
+  border: 3px solid var(--color-light-green);
+  border-radius: 5px;
+  background-color: var(--color-transparent-dark-green);
+  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+a.cardLink:hover {
+  transform: scale(1.05);
+}

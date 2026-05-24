@@ -1,6 +1,5 @@
 import { type ReactNode } from 'react';
-import { Link } from 'react-router';
-import Button from '@/components/ui/Button/Button';
+import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
 import styles from './AboutPage.module.css';
 
@@ -14,7 +13,7 @@ export default function AboutPage(): ReactNode {
         <Text as="span" size="md" weight="bold">
           Author:
         </Text>
-        <a className={`link ${styles.aboutLink}`} href="https://github.com/Walle908">
+        <a className={styles.link} href="https://github.com/Walle908">
           Elena Valiullina
         </a>
       </Text>
@@ -23,13 +22,13 @@ export default function AboutPage(): ReactNode {
         <Text as="span" size="md" weight="bold">
           Link to the course:
         </Text>
-        <a className={`link ${styles.aboutLink}`} href="https://rs.school/courses/reactjs">
+        <a className={styles.link} href="https://rs.school/courses/reactjs">
           RS School React course
         </a>
       </Text>
-      <Link className="link" to="/">
-        <Button>Go to main page</Button>
-      </Link>
+      <LinkComponent to="/" variant="buttonLink">
+        Go to main page
+      </LinkComponent>
     </div>
   );
 }

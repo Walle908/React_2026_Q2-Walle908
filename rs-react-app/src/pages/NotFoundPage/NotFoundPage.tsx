@@ -1,6 +1,5 @@
 import { type ReactNode } from 'react';
-import { Link } from 'react-router';
-import Button from '@/components/ui/Button/Button';
+import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
 import styles from './NotFoundPage.module.css';
 
@@ -13,9 +12,9 @@ export default function NotFoundPage(): ReactNode {
       <Text as="h1" color="error" size="xl">
         Page not found
       </Text>
-      <Link className="link" to="/">
-        <Button>Go to main page</Button>
-      </Link>
+      <LinkComponent to="/" variant="buttonLink">
+        Go to main page
+      </LinkComponent>
     </div>
   );
 }

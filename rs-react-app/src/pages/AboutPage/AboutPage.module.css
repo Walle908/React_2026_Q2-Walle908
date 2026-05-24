@@ -12,6 +12,13 @@
   gap: 1rem;
 }
 
-.aboutLink:hover {
+.link {
+  text-decoration: none;
+  color: var(--color-dark);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.link:hover {
   color: var(--color-light-blue);
 }

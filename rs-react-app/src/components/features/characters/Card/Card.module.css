@@ -1,22 +1,3 @@
-.cardWrapper {
-  display: flex;
-  flex-direction: column;
-  width: 24rem;
-  height: 34rem;
-  gap: 4rem;
-  align-items: center;
-  border: 3px solid var(--color-light-green);
-  border-radius: 5px;
-  background-color: var(--color-transparent-dark-green);
-  padding: 1rem;
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-}
-
-.cardWrapper:hover {
-  transform: scale(1.05);
-}
-
 .cardImg {
   width: 20rem;
   height: 20rem;
