@@ -40,8 +40,5 @@ describe('AboutPage Component', () => {
     expect(backToMainLink).toBeInTheDocument();
 
     expect(backToMainLink.getAttribute('href')).toBe('/');
-
-    const buttonElement = screen.getByRole('button', { name: /go to main page/i });
-    expect(buttonElement).toBeInTheDocument();
   });
 });

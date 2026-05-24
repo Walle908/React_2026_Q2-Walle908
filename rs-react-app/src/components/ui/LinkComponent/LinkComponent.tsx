@@ -14,7 +14,7 @@ export default function LinkComponent({
 }: LinkComponentProps): ReactNode {
   const variantClass = variant ? styles[variant] : '';
 
-  const combinedClassName = `${styles.baseLink} ${variantClass} ${className}`;
+  const combinedClassName = `${styles.baseLink} ${variantClass} ${className}`.trim();
 
   return (
     <Link className={combinedClassName} {...props}>

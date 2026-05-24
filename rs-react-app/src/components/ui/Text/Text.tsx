@@ -25,7 +25,7 @@ export default function Text({
   const variantClass = styles[color];
   const weightClass = styles[weight];
 
-  const combinedClassName = `${sizeClass} ${weightClass} ${variantClass} ${className}`;
+  const combinedClassName = `${sizeClass} ${weightClass} ${variantClass} ${className}`.trim();
 
   return (
     <Tag className={combinedClassName} {...props}>

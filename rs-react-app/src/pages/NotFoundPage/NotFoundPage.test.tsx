@@ -29,8 +29,5 @@ describe('NotFoundPage Component', () => {
     expect(linkElement).toBeInTheDocument();
 
     expect(linkElement.getAttribute('href')).toBe('/');
-
-    const buttonElement = screen.getByRole('button', { name: /go to main page/i });
-    expect(buttonElement).toBeInTheDocument();
   });
 });

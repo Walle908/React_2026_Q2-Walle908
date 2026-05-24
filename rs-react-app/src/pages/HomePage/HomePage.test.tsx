@@ -9,9 +9,9 @@ import {
   type MockInstance,
   vi,
 } from 'vitest';
-import * as apiModule from '@api/api';
-import { ErrorMessage, initialPage, localStorageKey } from '@constants/constants';
-import { mockCharacters } from '@test-utils/mocks';
+import * as apiModule from '@/api/api';
+import { ErrorMessage, initialPage, localStorageKey } from '@/constants/constants';
+import { mockCharacters } from '@/test-utils/mocks';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import HomePage from './HomePage';

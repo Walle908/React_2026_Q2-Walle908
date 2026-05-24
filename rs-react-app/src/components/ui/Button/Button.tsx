@@ -17,7 +17,7 @@ export default function Button({
 }: ButtonProps): ReactNode {
   const variantClass = styles[variant];
 
-  const combinedClassName = `${variantClass} ${className}`;
+  const combinedClassName = `${variantClass} ${className}`.trim();
 
   return (
     <button className={combinedClassName} onClick={onClick} type={type} {...props}>
