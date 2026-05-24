@@ -20,7 +20,7 @@ import styles from './HomePage.module.css';
 export default function HomePage(): ReactNode {
   const [chars, setChars] = useState<Character[]>([]);
   const [errorMessage, setErrorMessage] = useState<ErrorMessage>(ErrorMessage.NO_ERROR);
-  const [query, setQuery] = useLocalStorage<string>(localStorageKey, '');
+  const [query, setQuery] = useLocalStorage<string>(localStorageKey);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState<boolean>(false);
