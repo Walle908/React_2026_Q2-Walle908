@@ -1,4 +1,8 @@
-.inputSearch {
+input[type='search']::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+.search {
   width: 100%;
   height: 4rem;
   padding: 10px 40px 10px 15px;
@@ -11,10 +15,10 @@
   font-size: 1.6rem;
 }
 
-.inputSearch:hover {
+.search:hover {
   border-color: var(--color-light-blue);
 }
 
-.inputSearch:focus {
+.search:focus {
   border-color: var(--color-dark-blue);
 }

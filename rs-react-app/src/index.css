@@ -54,10 +54,6 @@ h2 {
   text-align: center;
 }
 
-input[type='search']::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-}
-
 .link {
   text-decoration: none;
   color: var(--color-dark);
