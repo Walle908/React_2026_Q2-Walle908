@@ -4,22 +4,20 @@ import styles from './Button.module.css';
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children: ReactNode;
   className?: string;
-  variant?: 'clear' | 'close' | 'error' | 'reset';
+  variant?: 'base' | 'plain';
 }
 
 export default function Button({
   children,
-  className,
+  className = '',
   onClick,
   type = 'button',
-  variant,
+  variant = 'base',
   ...props
 }: ButtonProps): ReactNode {
-  const isClear = variant === 'clear';
-  const baseClass = isClear ? '' : styles.baseButton;
-  const variantClass = variant ? styles[variant] : '';
+  const variantClass = styles[variant];
 
-  const combinedClassName = `${baseClass} ${variantClass} ${className || ''}`.trim();
+  const combinedClassName = `${variantClass} ${className}`;
 
   return (
     <button className={combinedClassName} onClick={onClick} type={type} {...props}>

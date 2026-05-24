@@ -27,21 +27,19 @@ export default function CardDetailsContent({
       <img alt={character.name} className={styles.cardImg} src={character.image} />
 
       <div className={styles.cardDescription}>
-        <Text as="h2" className={styles.cardTitle}>
+        <Text as="h2" className={styles.cardTitle} size="md">
           {character.name || 'n/a'}
         </Text>
         <ul className={styles.cardList}>
-          {fields.map(({ label, value }) => {
-            return (
-              <li key={label}>
-                <b>{label}: </b>
-                {value || 'n/a'}
-              </li>
-            );
-          })}
+          {fields.map(({ label, value }) => (
+            <li key={label}>
+              <b>{label}: </b>
+              {value || 'n/a'}
+            </li>
+          ))}
         </ul>
       </div>
-      <Button onClick={onClose} variant="close">
+      <Button className={styles.closeButton} onClick={onClose}>
         Close
       </Button>
     </div>

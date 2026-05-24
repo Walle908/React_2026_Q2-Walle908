@@ -20,7 +20,7 @@ export default function Pagination({ onChange, totalPages }: PaginationProps): R
       <Button disabled={currentPage === initialPage} onClick={() => onChange(currentPage - 1)}>
         Prev
       </Button>
-      <Text className={styles.paginationText}>{`Page ${currentPage} of ${totalPages}`}</Text>
+      <Text size="md" weight="medium">{`Page ${currentPage} of ${totalPages}`}</Text>
       <Button
         disabled={currentPage === totalPages || totalPages === 0}
         onClick={() => onChange(currentPage + 1)}>

@@ -11,3 +11,12 @@
   align-items: center;
   width: 21rem;
 }
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+}
+
+.clearButton:hover {
+  color: var(--color-dark);
+}

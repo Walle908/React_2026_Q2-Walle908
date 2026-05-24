@@ -19,6 +19,6 @@
 }
 
 .badResult {
-  font-size: 3rem;
+  padding-top: 10rem;
   grid-column: 1 / -1;
 }

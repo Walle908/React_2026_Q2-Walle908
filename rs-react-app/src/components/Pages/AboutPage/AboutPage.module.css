@@ -10,11 +10,6 @@
 .aboutCourse {
   display: flex;
   gap: 1rem;
-  font-size: 2rem;
-}
-
-.aboutText {
-  font-weight: bold;
 }
 
 .aboutLink:hover {

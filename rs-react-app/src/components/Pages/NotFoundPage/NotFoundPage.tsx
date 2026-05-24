@@ -7,8 +7,12 @@ import styles from './NotFoundPage.module.css';
 export default function NotFoundPage(): ReactNode {
   return (
     <div className={styles.notFoundWrapper}>
-      <Text className={styles.errorPageSubTitle}>Error 404</Text>
-      <Text as="h1">Page not found</Text>
+      <Text className={styles.errorPageSubTitle} size="xl" weight="bold">
+        Error 404
+      </Text>
+      <Text as="h1" color="error" size="xl">
+        Page not found
+      </Text>
       <Link className="link" to="/">
         <Button>Go to main page</Button>
       </Link>

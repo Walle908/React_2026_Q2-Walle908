@@ -1,4 +1,4 @@
-.baseButton {
+.base {
   min-width: max-content;
   width: 10rem;
   height: 4rem;
@@ -12,13 +12,11 @@
   transition: 0.4s;
 }
 
-.baseButton:hover {
+.base:hover {
   background-color: var(--color-light-blue);
 }
 
-.clear {
-  position: absolute;
-  right: 10px;
+.plain {
   background: none;
   border: none;
   cursor: pointer;
@@ -29,20 +27,4 @@
   align-items: center;
   justify-content: center;
   transition: color 0.3s;
-}
-
-.clear:hover {
-  color: var(--color-dark);
-}
-
-.error {
-  background-color: var(--color-red);
-}
-
-.reset {
-  margin-top: 4rem;
-}
-
-.close {
-  align-self: center;
 }

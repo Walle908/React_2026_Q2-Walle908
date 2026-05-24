@@ -18,7 +18,7 @@ export default function Card({ char }: CardProps): ReactNode {
     <Link className="link" to={`/?${newParams.toString()}`}>
       <div className={styles.cardWrapper}>
         <img alt={char.name} className={styles.cardImg} src={char.image} />
-        <Text as="h2" className={styles.cardTitle}>
+        <Text as="h2" className={styles.cardTitle} size="md">
           {char.name || 'n/a'}
         </Text>
       </div>

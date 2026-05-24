@@ -34,10 +34,10 @@ export default class ErrorBoundary extends Component<ErrorProps, ErrorState> {
     if (this.state.hasError) {
       return (
         <div className={styles.errorBlock}>
-          <Text as="h1" className={styles.errorMessage}>
+          <Text as="h1" color="error" size="xl">
             {ErrorMessage.BOUNDARY_ERROR}
           </Text>
-          <Button onClick={this.onClick} variant="reset">
+          <Button className={styles.resetButton} onClick={this.onClick}>
             Reset error
           </Button>
         </div>

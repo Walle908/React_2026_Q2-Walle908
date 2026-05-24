@@ -32,13 +32,12 @@ export default function SearchForm({ initialValue, onSearch }: SearchProps): Rea
         <SearchInput onChange={onChange} value={value} />
 
         {value && (
-          <Button onClick={onClear} variant="clear">
-            {' '}
+          <Button className={styles.clearButton} onClick={onClear} variant="plain">
             ✖
           </Button>
         )}
       </div>
-      <Button type="submit"> Search</Button>
+      <Button type="submit">Search</Button>
     </form>
   );
 }

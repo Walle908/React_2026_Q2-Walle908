@@ -14,7 +14,7 @@ export default function CardDetailed(): ReactNode {
 
   if (!char) {
     return (
-      <Text as="h2" className={styles.errorTitle}>
+      <Text as="h2" className={styles.errorTitle} size="lg">
         {errorMessage}
       </Text>
     );

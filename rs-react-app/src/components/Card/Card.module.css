@@ -8,7 +8,6 @@
   border: 3px solid var(--color-light-green);
   border-radius: 5px;
   background-color: var(--color-transparent-dark-green);
-  font-size: 1.6rem;
   padding: 1rem;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
@@ -27,5 +26,5 @@
 }
 
 .cardTitle {
-  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }

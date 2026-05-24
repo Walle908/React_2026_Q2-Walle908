@@ -14,7 +14,7 @@ export default function ResultBlock({ chars, errorMessage }: ResultSectionProps)
   if (errorMessage !== ErrorMessage.NO_ERROR) {
     return (
       <div className={styles.resultBlock}>
-        <Text as="h2" className={styles.badResult} data-testid="bad-result">
+        <Text as="h2" className={styles.badResult} data-testid="bad-result" size="lg">
           {errorMessage}
         </Text>
       </div>

@@ -11,7 +11,7 @@ interface SearchSectionProps {
 export default function SearchSection({ initialValue, onSearch }: SearchSectionProps): ReactNode {
   return (
     <section className={styles.searchSection}>
-      <Text as="h1" className={styles.mainTitle}>
+      <Text as="h1" className={styles.mainTitle} color="accent" size="xxl">
         Rick and Morty
       </Text>
       <SearchForm initialValue={initialValue} onSearch={onSearch} />
