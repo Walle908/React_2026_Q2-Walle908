@@ -46,7 +46,7 @@ export const charactersSlice = createSlice({
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.isLoading = false;
 
-        if (action.payload === null) {
+        if (!action.payload) {
           state.chars = [];
           state.errorMessage = ErrorMessage.NOT_FOUND;
           state.totalPages = 0;

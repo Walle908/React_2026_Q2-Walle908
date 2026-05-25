@@ -1,7 +1,7 @@
 import { type ReactNode, useEffect } from 'react';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import { ThemeContext } from '@/contexts/ThemeContext';
-import styles from './ThemeContext.module.css';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import styles from './ThemeContextProvider.module.css';
 
 const DARK_THEME_CLASS = 'dark';
 const THEME_LS_KEY = 'theme_walle908';

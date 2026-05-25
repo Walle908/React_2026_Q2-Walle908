@@ -1,16 +1,31 @@
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { SearchParams } from '@/constants/constants';
 import { emptyMockCharacter, mockCharacter } from '@/test-utils/mocks';
+import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
 
+const createMockStore = (initialSelectedChars = []) => {
+  return configureStore({
+    reducer: {
+      selectedCharacters: () => ({
+        selectedChars: initialSelectedChars,
+      }),
+    },
+  });
+};
+
 describe('Card Component', () => {
   it('should render character details correctly when all data is provided', () => {
+    const store = createMockStore([]);
     render(
-      <MemoryRouter>
-        <Card char={mockCharacter} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <Card char={mockCharacter} />
+        </MemoryRouter>
+      </Provider>
     );
 
     const image = screen.getByRole('img') as HTMLImageElement;
@@ -23,20 +38,26 @@ describe('Card Component', () => {
   });
 
   it('should display "n/a" fallback text when character name is empty', () => {
+    const store = createMockStore([]);
     render(
-      <MemoryRouter>
-        <Card char={emptyMockCharacter} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <Card char={emptyMockCharacter} />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(screen.getByRole('heading', { level: 2, name: 'n/a' })).toBeInTheDocument();
   });
 
   it('should construct correct URL preserving existing search params', () => {
+    const store = createMockStore([]);
     render(
-      <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=3`]}>
-        <Card char={mockCharacter} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[`/?${SearchParams.PAGE}=3`]}>
+          <Card char={mockCharacter} />
+        </MemoryRouter>
+      </Provider>
     );
 
     const link = screen.getByRole('link') as HTMLAnchorElement;

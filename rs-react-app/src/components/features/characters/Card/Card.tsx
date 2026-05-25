@@ -1,6 +1,8 @@
 import { type ReactNode } from 'react';
+import { useSearchParams } from 'react-router';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
+import { SearchParams } from '@/constants/constants';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleSelection } from '@/store/reducers/selectedCharactersSlice';
 import { type Character } from '@/types/types';
@@ -13,11 +15,14 @@ interface CardProps {
 export default function Card({ char }: CardProps): ReactNode {
   const dispatch = useAppDispatch();
   const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);
-
   const isSelected = selectedChars.some((item) => item.id === char.id);
 
+  const [searchParams] = useSearchParams();
+  const newParams = new URLSearchParams(searchParams);
+  newParams.set(SearchParams.DETAILS || 'details', String(char.id));
+
   return (
-    <LinkComponent to={`/?details=${char.id}`} variant="cardLink">
+    <LinkComponent to={`/?${newParams.toString()}`} variant="cardLink">
       <input
         checked={isSelected}
         className={styles.checkbox}

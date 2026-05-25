@@ -1,3 +1,4 @@
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router';
 import {
   afterEach,
@@ -11,7 +12,12 @@ import {
 } from 'vitest';
 import * as apiModule from '@/api/api';
 import { ErrorMessage, initialPage, localStorageKey } from '@/constants/constants';
+import { ThemeProvider } from '@/contexts/ThemeContextProvider';
+import characterReducer from '@/store/reducers/charactersSlice';
+import searchReducer from '@/store/reducers/searchSlice';
+import selectedCharactersReducer from '@/store/reducers/selectedCharactersSlice';
 import { mockCharacters } from '@/test-utils/mocks';
+import { configureStore } from '@reduxjs/toolkit';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import HomePage from './HomePage';
@@ -35,20 +41,39 @@ describe('HomePage Component', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  const renderWithRouter = (initialEntries = ['/']) => {
+  const createTestStore = (preloadedState = {}) => {
+    return configureStore({
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+          serializableCheck: false,
+        }),
+      preloadedState,
+      reducer: {
+        characters: characterReducer,
+        search: searchReducer,
+        selectedCharacters: selectedCharactersReducer,
+      },
+    });
+  };
+
+  const renderWithReduxAndRouter = (initialEntries = ['/'], store = createTestStore()) => {
     return render(
-      <MemoryRouter initialEntries={initialEntries}>
-        <Routes>
-          <Route element={<HomePage />} path="/" />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter initialEntries={initialEntries}>
+            <Routes>
+              <Route element={<HomePage />} path="/" />
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
   };
 
   it('should render Loader during mount and then show results on successful API response', async () => {
     mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
 
     const loaderElement = screen.getByTestId('loader-element');
 
@@ -65,10 +90,13 @@ describe('HomePage Component', () => {
   });
 
   it('should read initial query from localStorage on initialization', async () => {
-    localStorage.setItem(localStorageKey, JSON.stringify('Morty'));
+    localStorage.setItem(localStorageKey, 'Morty');
     mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
+    const store = createTestStore({
+      search: { query: 'Morty' },
+    });
 
-    renderWithRouter();
+    renderWithReduxAndRouter(['/'], store);
 
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
     expect(input.value).toBe('Morty');
@@ -81,7 +109,7 @@ describe('HomePage Component', () => {
   it('should display NOT_FOUND error message if API returns null', async () => {
     mockGetChars.mockResolvedValueOnce(null);
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
 
     await waitFor(() => {
       expect(
@@ -93,7 +121,7 @@ describe('HomePage Component', () => {
   it('should display SERVER_ERROR message if API request fails', async () => {
     mockGetChars.mockRejectedValueOnce(new Error(ErrorMessage.SERVER_ERROR));
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
 
     await waitFor(() => {
       expect(
@@ -107,7 +135,7 @@ describe('HomePage Component', () => {
 
     mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
 
     mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
@@ -122,14 +150,14 @@ describe('HomePage Component', () => {
       expect(mockGetChars).toHaveBeenCalledWith('Rick', initialPage, expect.any(AbortSignal));
     });
 
-    expect(localStorage.getItem(localStorageKey)).toBe(JSON.stringify('Rick'));
+    expect(localStorage.getItem(localStorageKey)).toBe('Rick');
   });
 
   it('should prevent duplicate API requests if query has not changed', async () => {
     const user = userEvent.setup();
     mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
 
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -143,7 +171,7 @@ describe('HomePage Component', () => {
     const user = userEvent.setup();
     mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
 
     mockGetChars.mockResolvedValueOnce(null);
@@ -165,7 +193,7 @@ describe('HomePage Component', () => {
     const user = userEvent.setup();
     mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
 
     mockGetChars.mockRejectedValueOnce(new Error('Server Down'));
@@ -187,7 +215,7 @@ describe('HomePage Component', () => {
     localStorage.removeItem(localStorageKey);
     mockGetChars.mockResolvedValueOnce(null);
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
 
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
     expect(input.value).toBe('');
@@ -202,7 +230,7 @@ describe('HomePage Component', () => {
     localStorage.setItem(localStorageKey, JSON.stringify('Morty'));
     mockGetChars.mockResolvedValueOnce(null);
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
     await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
 
     mockGetChars.mockResolvedValueOnce({ pages: 1, results: mockCharacters });
@@ -218,14 +246,14 @@ describe('HomePage Component', () => {
       expect(mockGetChars).toHaveBeenCalledWith('Summer', initialPage, expect.any(AbortSignal));
     });
 
-    expect(localStorage.getItem(localStorageKey)).toBe(JSON.stringify('Summer'));
+    expect(localStorage.getItem(localStorageKey)).toBe('Summer');
   });
 
   it('should change page and update URL when handlePageChange is triggered via Pagination', async () => {
     const user = userEvent.setup();
     mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
@@ -245,7 +273,7 @@ describe('HomePage Component', () => {
     const user = userEvent.setup();
     mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
 
-    renderWithRouter();
+    renderWithReduxAndRouter();
     await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
 
     mockGetChars.mockClear();
