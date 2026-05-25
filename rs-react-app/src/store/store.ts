@@ -2,14 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import characterDetails from './reducers/characterDetailsSlice';
 import characters from './reducers/charactersSlice';
 import search from './reducers/searchSlice';
-import selectCharacters from './reducers/selectCharactersSlice';
+import selectedCharacters from './reducers/selectedCharactersSlice';
 
 export const store = configureStore({
   reducer: {
     characterDetails,
     characters,
     search,
-    selectCharacters,
+    selectedCharacters,
   },
 });
 

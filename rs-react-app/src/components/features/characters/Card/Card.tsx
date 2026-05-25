@@ -2,7 +2,7 @@ import { type ReactNode } from 'react';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { toggleSelection } from '@/store/reducers/selectCharactersSlice';
+import { toggleSelection } from '@/store/reducers/selectedCharactersSlice';
 import { type Character } from '@/types/types';
 import styles from './Card.module.css';
 
@@ -12,15 +12,16 @@ interface CardProps {
 
 export default function Card({ char }: CardProps): ReactNode {
   const dispatch = useAppDispatch();
-  const selectedIds = useAppSelector((state) => state.selectCharacters.selectedIds);
+  const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);
 
-  const isSelected = selectedIds.includes(char.id);
+  const isSelected = selectedChars.some((item) => item.id === char.id);
 
   return (
     <LinkComponent to={`/?details=${char.id}`} variant="cardLink">
       <input
         checked={isSelected}
-        onChange={() => dispatch(toggleSelection(char.id))}
+        className={styles.checkbox}
+        onChange={() => dispatch(toggleSelection(char))}
         onClick={(e) => e.stopPropagation()}
         type="checkbox"
       />

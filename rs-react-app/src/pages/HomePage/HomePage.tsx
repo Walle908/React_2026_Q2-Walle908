@@ -1,5 +1,6 @@
 import { type ReactNode, useEffect, useRef } from 'react';
 import { Outlet, useSearchParams } from 'react-router';
+import Flyout from '@/components/features/characters/Flyout/Flyout';
 import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
 import SearchSection from '@/components/features/search/SearchSection/SearchSection';
 import Header from '@/components/layout/Header/Header';
@@ -126,6 +127,7 @@ export default function HomePage(): ReactNode {
             </aside>
           )}
         </section>
+        <Flyout />
       </main>
     </>
   );

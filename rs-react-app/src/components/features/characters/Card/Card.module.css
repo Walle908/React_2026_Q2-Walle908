@@ -9,3 +9,7 @@
 .cardTitle {
   margin-bottom: 1rem;
 }
+
+.checkbox {
+  align-self: flex-end;
+}
