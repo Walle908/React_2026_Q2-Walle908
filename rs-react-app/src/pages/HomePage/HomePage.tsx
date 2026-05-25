@@ -12,16 +12,15 @@ import {
   localStorageKey,
   SearchParams,
 } from '@/constants/constants';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { clearCharacter, fetchCharacterById } from '@/store/reducers/characterDetailsSlice';
 import { fetchCharacters } from '@/store/reducers/charactersSlice';
+import { setQuery } from '@/store/reducers/searchSlice';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {
   const dispatch = useAppDispatch();
   const lastClickRef = useRef(0);
-  const [query, setQuery] = useLocalStorage<string>(localStorageKey);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const pageParam = searchParams.get(SearchParams.PAGE);
@@ -31,6 +30,7 @@ export default function HomePage(): ReactNode {
   const { chars, errorMessage, isLoading, totalPages } = useAppSelector(
     (state) => state.characters
   );
+  const query = useAppSelector((state) => state.search.query);
 
   useEffect(() => {
     const parsedPage = Number(pageParam);
@@ -52,14 +52,17 @@ export default function HomePage(): ReactNode {
   }, [dispatch, query, currentPage]);
 
   useEffect(() => {
-    if (!characterId) return;
+    if (!characterId) {
+      dispatch(clearCharacter());
+      return;
+    }
 
     dispatch(fetchCharacterById(characterId));
-
-    return () => {
-      dispatch(clearCharacter());
-    };
   }, [characterId, dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, query);
+  }, [query]);
 
   const onSearch = async (newQuery: string) => {
     const trimmedQuery = newQuery.trim();
@@ -68,7 +71,7 @@ export default function HomePage(): ReactNode {
       return;
     }
 
-    setQuery(trimmedQuery);
+    dispatch(setQuery(trimmedQuery));
 
     setSearchParams(
       (prev) => {
