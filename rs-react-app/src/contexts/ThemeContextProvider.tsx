@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { ThemeContext } from '@/hooks/useTheme';
+import { ThemeContext } from '@/contexts/ThemeContext';
 import styles from './ThemeContext.module.css';
 
 const DARK_THEME_CLASS = 'dark';
