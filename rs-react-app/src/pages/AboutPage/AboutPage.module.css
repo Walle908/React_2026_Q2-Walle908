@@ -1,9 +1,9 @@
 .aboutWrapper {
-  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4rem;
+  margin: auto;
 }
 
 .aboutAuthor,
@@ -14,11 +14,11 @@
 
 .link {
   text-decoration: none;
-  color: var(--color-dark);
+  color: var(--text);
   cursor: pointer;
   transition: 0.4s;
 }
 
 .link:hover {
-  color: var(--color-light-blue);
+  color: var(--hover);
 }

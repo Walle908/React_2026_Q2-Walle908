@@ -4,7 +4,7 @@
   margin: 0 auto;
   width: max-content;
   max-width: 90vw;
-  background: var(--color-light-green);
+  background: var(--accent);
   display: flex;
   justify-content: center;
   align-items: center;

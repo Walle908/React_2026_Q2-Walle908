@@ -12,5 +12,9 @@
 }
 
 .aboutLink:hover {
-  color: var(--color-light-blue);
+  color: var(--hover);
+}
+
+.switcher {
+  font-size: 3rem;
 }

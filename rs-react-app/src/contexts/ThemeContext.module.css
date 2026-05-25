@@ -1,7 +1,6 @@
-.notFoundWrapper {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4rem;
-  margin: auto;
+  min-height: 100vh;
 }

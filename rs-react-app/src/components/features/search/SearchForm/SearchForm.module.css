@@ -16,7 +16,3 @@
   position: absolute;
   right: 10px;
 }
-
-.clearButton:hover {
-  color: var(--color-dark);
-}
