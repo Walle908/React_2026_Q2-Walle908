@@ -21,7 +21,7 @@ export const mockCharacter: Character = {
   url: 'https://rickandmortyapi.com/api/character/16',
 };
 
-export const emptyMockCharacter = {
+export const emptyMockCharacter: Character = {
   created: '2017-11-04T18:48:46.250Z',
   episode: ['https://rickandmortyapi.com/api/episode/1'],
   gender: '',
@@ -36,7 +36,7 @@ export const emptyMockCharacter = {
   url: 'https://rickandmortyapi.com/api/character/1',
 };
 
-export const mockCharacters = [
+export const mockCharacters: Character[] = [
   {
     created: '2017-11-04T18:48:46.250Z',
     episode: ['https://rickandmortyapi.com/api/episode/1'],

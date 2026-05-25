@@ -25,7 +25,7 @@ export default defineConfig(({ command }) => {
           'src/**/*.d.ts',
           'src/constants/**',
           'src/types/**',
-          'src/__tests__/**',
+          'src/test-utils/**',
         ],
         include: ['src/**/*.{js,jsx,ts,tsx}'],
         provider: 'v8',
