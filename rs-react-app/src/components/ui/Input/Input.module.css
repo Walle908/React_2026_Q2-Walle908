@@ -22,3 +22,10 @@ input[type='search']::-webkit-search-cancel-button {
 .search:focus {
   border-color: var(--color-dark-blue);
 }
+
+input[type='checkbox'] {
+  width: 2rem;
+  height: 2rem;
+
+  accent-color: var(--color-dark-blue);
+}

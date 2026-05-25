@@ -31,8 +31,8 @@
   display: flex;
   flex-direction: column;
   width: 24rem;
-  height: 34rem;
-  gap: 4rem;
+  height: 36rem;
+  gap: 2rem;
   align-items: center;
   border: 3px solid var(--color-light-green);
   border-radius: 5px;
