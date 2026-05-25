@@ -17,6 +17,24 @@ const initialState: CharactersState = {
   totalPages: 0,
 };
 
+export const fetchCharacters = createAsyncThunk<
+  null | { pages: number; results: Character[] },
+  { page: number; query: string },
+  { rejectValue: ErrorMessage }
+>('characters/fetchCharacters', async ({ page, query }, { rejectWithValue, signal }) => {
+  try {
+    const data = await getChars(query, page, signal);
+
+    if (data === null) return null;
+
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === 'AbortError') throw err;
+
+    return rejectWithValue(ErrorMessage.SERVER_ERROR);
+  }
+});
+
 export const charactersSlice = createSlice({
   extraReducers: (builder) => {
     builder
@@ -53,26 +71,6 @@ export const charactersSlice = createSlice({
   initialState,
   name: 'characters',
   reducers: {},
-});
-
-export const fetchCharacters = createAsyncThunk<
-  null | { pages: number; results: Character[]; },
-  { page: number; query: string; },
-  { rejectValue: ErrorMessage }
->('characters/fetchCharacters', async ({ page, query }, { rejectWithValue, signal }) => {
-  try {
-    const data = await getChars(query, page, signal);
-
-    if (data === null) {
-      return null;
-    }
-
-    return data;
-  } catch (err: unknown) {
-    if (err instanceof Error && err.name === 'AbortError') throw err;
-
-    return rejectWithValue(ErrorMessage.SERVER_ERROR);
-  }
 });
 
 export default charactersSlice.reducer;

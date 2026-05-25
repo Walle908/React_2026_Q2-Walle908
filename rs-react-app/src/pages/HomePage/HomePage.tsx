@@ -14,6 +14,7 @@ import {
 } from '@/constants/constants';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { clearCharacter, fetchCharacterById } from '@/store/reducers/characterDetailsSlice';
 import { fetchCharacters } from '@/store/reducers/charactersSlice';
 import styles from './HomePage.module.css';
 
@@ -49,6 +50,16 @@ export default function HomePage(): ReactNode {
   useEffect(() => {
     dispatch(fetchCharacters({ page: currentPage, query }));
   }, [dispatch, query, currentPage]);
+
+  useEffect(() => {
+    if (!characterId) return;
+
+    dispatch(fetchCharacterById(characterId));
+
+    return () => {
+      dispatch(clearCharacter());
+    };
+  }, [characterId, dispatch]);
 
   const onSearch = async (newQuery: string) => {
     const trimmedQuery = newQuery.trim();
