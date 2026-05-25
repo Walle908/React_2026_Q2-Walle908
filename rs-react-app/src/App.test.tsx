@@ -29,7 +29,6 @@ describe('App Component', () => {
       reducer: {
         characters: characterReducer,
         search: searchReducer,
-        // Если во Flyout или других компонентах используются другие слайсы, добавьте их сюда:
         selectedCharacters: () => ({ selectedChars: [] }),
       },
     });

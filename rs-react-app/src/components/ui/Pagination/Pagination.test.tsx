@@ -1,4 +1,4 @@
-import { MemoryRouter } from 'react-router'; // Импорт из react-router
+import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { SearchParams } from '@/constants/constants';
 import { render, screen } from '@testing-library/react';

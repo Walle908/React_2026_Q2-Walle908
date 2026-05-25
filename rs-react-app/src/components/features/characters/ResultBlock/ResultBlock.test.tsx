@@ -11,7 +11,7 @@ const createMockStore = () => {
   return configureStore({
     reducer: {
       selectedCharacters: () => ({
-        selectedChars: [], // Пустой массив выбранных карточек по умолчанию
+        selectedChars: [],
       }),
     },
   });
