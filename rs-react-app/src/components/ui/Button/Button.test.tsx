@@ -5,22 +5,27 @@ import Button from './Button';
 import styles from './Button.module.css';
 
 describe('Button Component', () => {
-  it('should render basic button when variant is not provided', () => {
+  it('should render basic button when variant and color is not provided', () => {
     render(<Button>Click me</Button>);
 
     const buttonElement = screen.getByRole('button', { name: /click me/i });
 
     expect(buttonElement).toBeInTheDocument();
     expect(buttonElement).toHaveAttribute('type', 'button');
-    expect(buttonElement.className.trim()).toBe(styles.base);
+    expect(buttonElement.className).toBe(`${styles.base} ${styles.baseBg}`);
   });
 
-  it('should render plain button without base styles', () => {
-    render(<Button variant="plain">✖</Button>);
+  it('should render plain button with clean style', () => {
+    render(
+      <Button color="noBg" variant="plain">
+        ✖
+      </Button>
+    );
     const buttonElement = screen.getByRole('button', { name: /✖/i });
 
     expect(buttonElement.className).not.toContain(styles.base);
-    expect(buttonElement.className).toBe(styles.plain);
+    expect(buttonElement.className).not.toContain(styles.basic);
+    expect(buttonElement.className).toBe(`${styles.plain} ${styles.noBg}`);
   });
 
   it('should combine custom className and respect type attribute', () => {
@@ -33,7 +38,7 @@ describe('Button Component', () => {
     const buttonElement = screen.getByRole('button', { name: /submit form/i });
 
     expect(buttonElement).toHaveAttribute('type', 'submit');
-    expect(buttonElement.className).toContain('base');
+    expect(buttonElement.className).toContain(styles.base);
     expect(buttonElement.className).toContain('custom-external-class');
   });
 
@@ -59,11 +64,11 @@ describe('Button Component', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it('should fallback to empty string if a variant does not exist in styles', () => {
+  it('should fallback to base variant and basic color if variant and color do not exist in styles', () => {
     render(<Button variant={undefined}>Fallback test</Button>);
 
     const buttonElement = screen.getByRole('button', { name: /fallback test/i });
 
-    expect(buttonElement.className.trim()).toBe(styles.base);
+    expect(buttonElement.className).toBe(`${styles.base} ${styles.baseBg}`);
   });
 });
