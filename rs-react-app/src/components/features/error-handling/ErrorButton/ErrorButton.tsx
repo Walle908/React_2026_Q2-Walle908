@@ -1,7 +1,6 @@
 import { type ReactNode, useState } from 'react';
 import Button from '@/components/ui/Button/Button';
 import { ErrorMessage } from '@/constants/constants';
-import styles from './ErrorButton.module.css';
 
 export default function ErrorButton(): ReactNode {
   const [isError, setError] = useState(false);
@@ -15,7 +14,7 @@ export default function ErrorButton(): ReactNode {
   }
 
   return (
-    <Button className={styles.errorButton} onClick={onClick}>
+    <Button color="errorBg" onClick={onClick}>
       Generate Error
     </Button>
   );

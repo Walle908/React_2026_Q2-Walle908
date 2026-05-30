@@ -1,4 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
+import combineClasses from '@/utils/combineClasses';
 import styles from './Text.module.css';
 
 interface TextProps extends HTMLAttributes<HTMLElement> {
@@ -21,14 +22,14 @@ export default function Text({
   ...props
 }: TextProps): ReactNode {
   const Tag = as;
-  const sizeClass = styles[size];
-  const variantClass = styles[color];
-  const weightClass = styles[weight];
+  const sizeClass = styles[size] ? styles[size] : '';
+  const colorClass = styles[color] ? styles[color] : '';
+  const weightClass = styles[weight] ? styles[weight] : '';
 
-  const combinedClassName = `${sizeClass} ${weightClass} ${variantClass} ${className}`.trim();
+  const combinedClasses = combineClasses(sizeClass, colorClass, weightClass, className);
 
   return (
-    <Tag className={combinedClassName} {...props}>
+    <Tag className={combinedClasses} {...props}>
       {children}
     </Tag>
   );
