@@ -4,7 +4,7 @@
   width: 25rem;
   justify-content: flex-start;
   gap: 2rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   background-color: var(--accent);
   padding: 2rem;
 }
@@ -17,7 +17,7 @@
 .cardImg {
   width: 20rem;
   height: 20rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   background-size: cover;
   align-self: center;
 }

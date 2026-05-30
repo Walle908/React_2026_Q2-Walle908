@@ -10,6 +10,6 @@
   align-items: center;
   gap: 2rem;
   padding: 2rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   z-index: 1000;
 }

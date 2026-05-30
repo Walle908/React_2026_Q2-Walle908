@@ -5,10 +5,10 @@ input[type='search']::-webkit-search-cancel-button {
 .search {
   width: 100%;
   height: 4rem;
-  padding: 10px 40px 10px 15px;
-  background: var(--input-bg);
+  padding: 1rem 4rem 1rem 1.5rem;
+  background: var(--input-search-bg);
   color: var(--text);
-  border-radius: 5px;
+  border-radius: 0.5rem;
   outline: none;
   transition: all 0.4s ease-in-out;
   border: 2px solid var(--primary);

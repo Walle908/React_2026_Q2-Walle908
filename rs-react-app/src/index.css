@@ -2,7 +2,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
 
-  --min-width: 320px;
   --max-width: 1280px;
 
   --bg: #2f9331;
@@ -12,7 +11,7 @@
   --primary: #477385;
   --hover: #83d2e4;
   --error: #e31d2b;
-  --input-bg: #e7e0db;
+  --input-search-bg: #e7e0db;
   --loader-rgb: 0 0 0;
 }
 
@@ -24,17 +23,8 @@
   --primary: #526e2dff;
   --hover: #917c5dff;
   --error: #e89242ff;
-  --input-bg: rgba(0, 0, 0, 0.3);
+  --input-search-bg: rgba(0, 0, 0, 0.3);
   --loader-rgb: 231 224 219;
-}
-
-#root {
-  max-width: var(--max-width);
-  min-width: var(--min-width);
-  min-height: 100vh;
-  width: 100%;
-  margin: 0 auto;
-  padding: 4rem 2rem;
 }
 
 * {
@@ -48,7 +38,6 @@ html {
 body {
   margin: 0;
   background-color: var(--bg);
-  color: var(--text);
   transition:
     background-color 0.3s,
     color 0.3s;
@@ -66,4 +55,22 @@ h2 {
 h1,
 h2 {
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 5px;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 4px;
+  }
 }
