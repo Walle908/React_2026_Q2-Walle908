@@ -12,13 +12,13 @@ vi.mock('react-router', async (importOriginal) => {
   };
 });
 
-vi.mock('../App.tsx', () => ({
-  default: () => <div data-testid="app-layout">Main App Layout</div>,
+vi.mock('../pages/HomePage/HomePage.tsx', () => ({
+  default: () => <div data-testid="home-page">Home page Layout</div>,
 }));
-vi.mock('../components/Pages/NotFoundPage/NotFoundPage.tsx', () => ({
+vi.mock('../pages/NotFoundPage/NotFoundPage.tsx', () => ({
   default: () => <div>Page not found</div>,
 }));
-vi.mock('../components/Pages/About/About.tsx', () => ({
+vi.mock('../pages/About/About.tsx', () => ({
   default: () => <div>About App</div>,
 }));
 vi.mock('../components/CardDetailed/CardDetailed.tsx', () => ({
@@ -28,10 +28,10 @@ vi.mock('../components/CardDetailed/CardDetailed.tsx', () => ({
 import { router } from './router';
 
 describe('Router Configuration', () => {
-  it('should render App layout on the root route "/"', () => {
+  it('should render HomePage on the root route "/"', () => {
     render(<RouterProvider router={router} />);
 
-    expect(screen.getByTestId('app-layout')).toBeInTheDocument();
+    expect(screen.getByTestId('home-page')).toBeInTheDocument();
   });
 
   it('should render AboutPage when navigating to "/about"', async () => {

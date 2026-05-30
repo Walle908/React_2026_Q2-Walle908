@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { SearchParams } from '@/constants/constants';
-import { emptyMockCharacter, mockCharacter } from '@/test-utils/mocks';
+import { mockCharacter } from '@/test-utils/mocks';
 import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import Card from './Card';
@@ -35,19 +35,6 @@ describe('Card Component', () => {
 
     const title = screen.getByRole('heading', { level: 2, name: mockCharacter.name });
     expect(title).toBeInTheDocument();
-  });
-
-  it('should display "n/a" fallback text when character name is empty', () => {
-    const store = createMockStore([]);
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <Card char={emptyMockCharacter} />
-        </MemoryRouter>
-      </Provider>
-    );
-
-    expect(screen.getByRole('heading', { level: 2, name: 'n/a' })).toBeInTheDocument();
   });
 
   it('should construct correct URL preserving existing search params', () => {

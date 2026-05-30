@@ -4,7 +4,6 @@
   align-items: center;
   min-height: 100vh;
   max-width: var(--max-width);
-  min-width: var(--min-width);
   width: 100%;
   margin: 0 auto;
   padding: 4rem 2rem;

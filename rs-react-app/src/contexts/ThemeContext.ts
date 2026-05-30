@@ -5,10 +5,11 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<null | ThemeContextType>(null);
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) throw new Error('useTheme must be used inside ThemeProvider');
-  return context;
+const initialThemeContext: ThemeContextType = {
+  isDarkTheme: false,
+  toggleTheme: () => {},
 };
+
+export const ThemeContext = createContext<ThemeContextType>(initialThemeContext);
+
+export const useTheme = () => useContext(ThemeContext);

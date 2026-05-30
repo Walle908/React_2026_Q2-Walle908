@@ -28,7 +28,7 @@ export const emptyMockCharacter: Character = {
   id: 1,
   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
   location: { name: '', url: '' },
-  name: '',
+  name: 'n/a',
   origin: { name: '', url: '' },
   species: '',
   status: '',

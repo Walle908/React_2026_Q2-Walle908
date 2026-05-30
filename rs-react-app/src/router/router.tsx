@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 import CardDetailed from '@/components/features/characters/CardDetailed/CardDetailed.tsx';
 import AboutPage from '@/pages/AboutPage/AboutPage.tsx';
-import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage.tsx';
 import HomePage from '@/pages/HomePage/HomePage.tsx';
+import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage.tsx';
 
 export const router = createBrowserRouter(
   [

@@ -32,7 +32,7 @@ export default function Card({ char }: CardProps): ReactNode {
       />
       <img alt={char.name} className={styles.cardImg} src={char.image} />
       <Text as="h2" className={styles.cardTitle} size="md">
-        {char.name || 'n/a'}
+        {char.name}
       </Text>
     </LinkComponent>
   );

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useTheme } from './ThemeContext';
 import { ThemeProvider } from './ThemeContextProvider';
@@ -17,16 +17,6 @@ describe('Theme System (Context & Provider)', () => {
   beforeEach(() => {
     localStorage.clear();
     document.documentElement.className = '';
-  });
-
-  it('should throw an error if useTheme is used outside ThemeProvider', () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
-    expect(() => render(<TestComponent />)).toThrowError(
-      'useTheme must be used inside ThemeProvider'
-    );
-
-    consoleSpy.mockRestore();
   });
 
   it('should initialize with light theme and apply correct class to html element', () => {

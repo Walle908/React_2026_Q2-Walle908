@@ -10,8 +10,8 @@ export default function Header(): ReactNode {
 
   return (
     <header className={styles.header}>
-      <Button className={styles.switcher} onClick={toggleTheme} variant="plain" color="noBg">
-        {isDarkTheme === false ? '🌙' : '☀️'}
+      <Button className={styles.switcher} color="noBg" onClick={toggleTheme} variant="plain">
+        {isDarkTheme ? '🌙' : '☀️'}
       </Button>
       <LinkComponent className={styles.aboutLink} to="/about">
         About
