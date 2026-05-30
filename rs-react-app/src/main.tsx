@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
+import ErrorBoundary from '@/components/features/error-handling/ErrorBoundary/ErrorBoundary';
 import { router } from '@/router/router';
 import { ThemeProvider } from './contexts/ThemeContextProvider';
 import { store } from './store/store';
@@ -13,7 +14,9 @@ if (root) {
     <StrictMode>
       <Provider store={store}>
         <ThemeProvider>
-          <RouterProvider router={router} />
+          <ErrorBoundary>
+            <RouterProvider router={router} />
+          </ErrorBoundary>
         </ThemeProvider>
       </Provider>
     </StrictMode>
