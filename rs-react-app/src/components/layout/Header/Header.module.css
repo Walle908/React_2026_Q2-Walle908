@@ -11,10 +11,6 @@
   font-weight: 600;
 }
 
-.aboutLink:hover {
-  color: var(--hover);
-}
-
 .switcher {
   font-size: 3rem;
 }
