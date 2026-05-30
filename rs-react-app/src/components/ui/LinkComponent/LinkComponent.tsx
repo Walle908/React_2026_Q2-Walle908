@@ -1,23 +1,25 @@
 import { type ReactNode } from 'react';
 import { Link, type LinkProps } from 'react-router';
+import combineClasses from '@/utils/combineClasses';
 import styles from './LinkComponent.module.css';
 
 interface LinkComponentProps extends LinkProps {
-  variant?: 'buttonLink' | 'cardLink';
+  variant?: 'baseLink' | 'buttonLink' | 'cardLink';
 }
 
 export default function LinkComponent({
   children,
   className = '',
-  variant,
+  variant = 'baseLink',
   ...props
 }: LinkComponentProps): ReactNode {
-  const variantClass = variant ? styles[variant] : '';
+  const baseClass = styles.baseLink ? styles.baseLink : '';
+  const variantClass = styles[variant] ? styles[variant] : '';
 
-  const combinedClassName = `${styles.baseLink} ${variantClass} ${className}`.trim();
+  const combinedClasses = combineClasses(baseClass, variantClass, className);
 
   return (
-    <Link className={combinedClassName} {...props}>
+    <Link className={combinedClasses} {...props}>
       {children}
     </Link>
   );

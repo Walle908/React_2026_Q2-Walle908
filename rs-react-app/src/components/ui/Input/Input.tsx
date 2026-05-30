@@ -1,4 +1,5 @@
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react';
+import combineClasses from '@/utils/combineClasses';
 import styles from './Input.module.css';
 
 interface InputProps extends ComponentPropsWithoutRef<'input'> {
@@ -7,8 +8,8 @@ interface InputProps extends ComponentPropsWithoutRef<'input'> {
 }
 
 export default function Input({ className = '', variant, ...props }: InputProps): ReactNode {
-  const variantClass = styles[variant];
-  const combinedClassName = `${variantClass} ${className}`.trim();
+  const variantClass = styles[variant] ? styles[variant] : '';
+  const combinedClasses = combineClasses(variantClass, className);
 
-  return <input className={combinedClassName} {...props} />;
+  return <input className={combinedClasses} {...props} />;
 }
