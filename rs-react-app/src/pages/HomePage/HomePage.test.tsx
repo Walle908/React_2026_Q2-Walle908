@@ -13,8 +13,6 @@ import {
 import * as apiModule from '@/api/api';
 import { ErrorMessage, initialPage, localStorageKey } from '@/constants/constants';
 import { ThemeProvider } from '@/contexts/ThemeContextProvider';
-import characterReducer from '@/store/reducers/charactersSlice';
-import searchReducer from '@/store/reducers/searchSlice';
 import selectedCharactersReducer from '@/store/reducers/selectedCharactersSlice';
 import { mockCharacters } from '@/test-utils/mocks';
 import { configureStore } from '@reduxjs/toolkit';
@@ -49,8 +47,6 @@ describe('HomePage Component', () => {
         }),
       preloadedState,
       reducer: {
-        characters: characterReducer,
-        search: searchReducer,
         selectedCharacters: selectedCharactersReducer,
       },
     });

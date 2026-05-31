@@ -13,25 +13,28 @@ import {
   localStorageKey,
   SearchParams,
 } from '@/constants/constants';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { clearCharacter, fetchCharacterById } from '@/store/reducers/characterDetailsSlice';
-import { fetchCharacters } from '@/store/reducers/charactersSlice';
-import { setQuery } from '@/store/reducers/searchSlice';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { useGetCharsQuery } from '@/services/apiSlice';
+import getErrorMessage from '@/utils/getErrorMessage';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {
-  const dispatch = useAppDispatch();
   const lastClickRef = useRef(0);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useLocalStorage<string>(localStorageKey);
 
   const pageParam = searchParams.get(SearchParams.PAGE);
   const characterId = searchParams.get(SearchParams.DETAILS);
   const currentPage = Number(pageParam) >= initialPage ? Number(pageParam) : initialPage;
 
-  const { chars, errorMessage, isLoading, totalPages } = useAppSelector(
-    (state) => state.characters
-  );
-  const query = useAppSelector((state) => state.search.query);
+  const { data, error, isLoading } = useGetCharsQuery({
+    page: currentPage,
+    query,
+  });
+
+  const chars = data?.results ?? [];
+  const totalPages = data?.info?.pages ?? 0;
+  const errorMessage = getErrorMessage(error);
 
   useEffect(() => {
     const parsedPage = Number(pageParam);
@@ -48,23 +51,6 @@ export default function HomePage(): ReactNode {
     }
   }, [pageParam, setSearchParams]);
 
-  useEffect(() => {
-    dispatch(fetchCharacters({ page: currentPage, query }));
-  }, [dispatch, query, currentPage]);
-
-  useEffect(() => {
-    if (!characterId) {
-      dispatch(clearCharacter());
-      return;
-    }
-
-    dispatch(fetchCharacterById(characterId));
-  }, [characterId, dispatch]);
-
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, query);
-  }, [query]);
-
   const onSearch = async (newQuery: string) => {
     const trimmedQuery = newQuery.trim();
 
@@ -72,7 +58,7 @@ export default function HomePage(): ReactNode {
       return;
     }
 
-    dispatch(setQuery(trimmedQuery));
+    setQuery(trimmedQuery);
 
     setSearchParams(
       (prev) => {
