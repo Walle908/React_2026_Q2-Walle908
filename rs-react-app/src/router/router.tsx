@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 import CardDetailed from '@/components/features/characters/CardDetailed/CardDetailed.tsx';
 import AboutPage from '@/pages/AboutPage/AboutPage.tsx';
+import HomePage from '@/pages/HomePage/HomePage.tsx';
 import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage.tsx';
-import App from '../App.tsx';
 
 export const router = createBrowserRouter(
   [
@@ -13,7 +13,7 @@ export const router = createBrowserRouter(
           path: '',
         },
       ],
-      element: <App />,
+      element: <HomePage />,
       errorElement: <NotFoundPage />,
       path: '/',
     },

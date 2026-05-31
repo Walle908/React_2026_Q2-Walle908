@@ -1,11 +1,15 @@
 .cardImg {
   width: 20rem;
   height: 20rem;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   background-size: cover;
   align-self: center;
 }
 
 .cardTitle {
   margin-bottom: 1rem;
+}
+
+.inputCheckbox {
+  align-self: flex-end;
 }

@@ -23,15 +23,15 @@
 }
 
 .base {
-  color: var(--color-dark);
+  color: var(--text);
 }
 
 .accent {
-  color: var(--color-light-green);
+  color: var(--accent);
 }
 
 .error {
-  color: var(--color-red);
+  color: var(--error);
 }
 
 .medium {

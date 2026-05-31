@@ -1,6 +1,6 @@
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef } from 'react';
 import { Outlet, useSearchParams } from 'react-router';
-import { getChars } from '@/api/api';
+import Flyout from '@/components/features/characters/Flyout/Flyout';
 import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
 import SearchSection from '@/components/features/search/SearchSection/SearchSection';
 import Header from '@/components/layout/Header/Header';
@@ -13,22 +13,25 @@ import {
   localStorageKey,
   SearchParams,
 } from '@/constants/constants';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import { type Character } from '@/types/types';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { clearCharacter, fetchCharacterById } from '@/store/reducers/characterDetailsSlice';
+import { fetchCharacters } from '@/store/reducers/charactersSlice';
+import { setQuery } from '@/store/reducers/searchSlice';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {
-  const [chars, setChars] = useState<Character[]>([]);
-  const [errorMessage, setErrorMessage] = useState<ErrorMessage>(ErrorMessage.NO_ERROR);
-  const [query, setQuery] = useLocalStorage<string>(localStorageKey);
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
   const lastClickRef = useRef(0);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const pageParam = searchParams.get(SearchParams.PAGE);
   const characterId = searchParams.get(SearchParams.DETAILS);
   const currentPage = Number(pageParam) >= initialPage ? Number(pageParam) : initialPage;
+
+  const { chars, errorMessage, isLoading, totalPages } = useAppSelector(
+    (state) => state.characters
+  );
+  const query = useAppSelector((state) => state.search.query);
 
   useEffect(() => {
     const parsedPage = Number(pageParam);
@@ -46,40 +49,21 @@ export default function HomePage(): ReactNode {
   }, [pageParam, setSearchParams]);
 
   useEffect(() => {
-    if (Number(pageParam) < initialPage) return;
+    dispatch(fetchCharacters({ page: currentPage, query }));
+  }, [dispatch, query, currentPage]);
 
-    const controller = new AbortController();
+  useEffect(() => {
+    if (!characterId) {
+      dispatch(clearCharacter());
+      return;
+    }
 
-    const fetchCharacters = async () => {
-      setIsLoading(true);
-      try {
-        const data = await getChars(query, currentPage, controller.signal);
+    dispatch(fetchCharacterById(characterId));
+  }, [characterId, dispatch]);
 
-        if (data === null) {
-          setChars([]);
-          setTotalPages(0);
-          setErrorMessage(ErrorMessage.NOT_FOUND);
-          return;
-        }
-
-        setChars(data.results);
-        setTotalPages(data.pages);
-        setErrorMessage(ErrorMessage.NO_ERROR);
-      } catch (err: unknown) {
-        if (err instanceof Error && err.name === 'AbortError') return;
-
-        setChars([]);
-        setTotalPages(0);
-        setErrorMessage(ErrorMessage.SERVER_ERROR);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCharacters();
-
-    return () => controller.abort();
-  }, [currentPage, pageParam, query]);
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, query);
+  }, [query]);
 
   const onSearch = async (newQuery: string) => {
     const trimmedQuery = newQuery.trim();
@@ -88,8 +72,7 @@ export default function HomePage(): ReactNode {
       return;
     }
 
-    setQuery(trimmedQuery);
-    setTotalPages(0);
+    dispatch(setQuery(trimmedQuery));
 
     setSearchParams(
       (prev) => {
@@ -144,6 +127,7 @@ export default function HomePage(): ReactNode {
             </aside>
           )}
         </section>
+        <Flyout />
       </main>
     </>
   );

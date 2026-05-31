@@ -1,16 +1,32 @@
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it } from 'vitest';
 import { ErrorMessage } from '@/constants/constants';
 import { mockCharacters } from '@/test-utils/mocks';
+import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
 import ResultBlock from './ResultBlock';
 
+const createMockStore = () => {
+  return configureStore({
+    reducer: {
+      selectedCharacters: () => ({
+        selectedChars: [],
+      }),
+    },
+  });
+};
+
 describe('ResultBlock Component', () => {
   it('should render a list of Card components when when errorMessage is NO_ERROR', () => {
+    const store = createMockStore();
+
     render(
-      <MemoryRouter>
-        <ResultBlock chars={mockCharacters} errorMessage={ErrorMessage.NO_ERROR} />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <ResultBlock chars={mockCharacters} errorMessage={ErrorMessage.NO_ERROR} />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(

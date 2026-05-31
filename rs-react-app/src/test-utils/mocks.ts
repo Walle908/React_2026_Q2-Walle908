@@ -21,14 +21,14 @@ export const mockCharacter: Character = {
   url: 'https://rickandmortyapi.com/api/character/16',
 };
 
-export const emptyMockCharacter = {
+export const emptyMockCharacter: Character = {
   created: '2017-11-04T18:48:46.250Z',
   episode: ['https://rickandmortyapi.com/api/episode/1'],
   gender: '',
   id: 1,
   image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
   location: { name: '', url: '' },
-  name: '',
+  name: 'n/a',
   origin: { name: '', url: '' },
   species: '',
   status: '',
@@ -36,7 +36,7 @@ export const emptyMockCharacter = {
   url: 'https://rickandmortyapi.com/api/character/1',
 };
 
-export const mockCharacters = [
+export const mockCharacters: Character[] = [
   {
     created: '2017-11-04T18:48:46.250Z',
     episode: ['https://rickandmortyapi.com/api/episode/1'],

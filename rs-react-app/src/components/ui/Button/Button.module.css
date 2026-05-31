@@ -2,13 +2,17 @@
   min-width: max-content;
   width: 10rem;
   height: 4rem;
-  border-radius: 8px;
+  border-radius: 0.8rem;
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 1.6rem;
   font-weight: 600;
   cursor: pointer;
   transition: 0.4s;
+}
+
+.base:hover {
+  background-color: var(--hover);
 }
 
 .plain {
@@ -22,9 +26,13 @@
   transition: color 0.3s;
 }
 
+.plain:hover {
+  color: var(--text);
+}
+
 .noBg {
   background: none;
-  color: var(--color-dark-blue);
+  color: var(--primary);
 }
 
 .noBg:hover {
@@ -32,16 +40,16 @@
 }
 
 .baseBg {
-  background-color: var(--color-dark-blue);
-  color: (--color-dark);
+  background-color: var(--primary);
+  color: var(--text);
 }
 
 .errorBg {
-  background-color: var(--color-red);
-  color: (--color-dark);
+  background-color: var(--error);
+  color: var(--text);
 }
 
 .baseBg:hover,
 .errorBg:hover {
-  background-color: var(--color-light-blue);
+  background-color: var(--hover);
 }

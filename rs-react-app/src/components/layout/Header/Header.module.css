@@ -11,6 +11,6 @@
   font-weight: 600;
 }
 
-.aboutLink:hover {
-  color: var(--color-light-blue);
+.switcher {
+  font-size: 3rem;
 }
