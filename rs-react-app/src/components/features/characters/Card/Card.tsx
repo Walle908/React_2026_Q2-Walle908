@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { useSearchParams } from 'react-router';
+import Input from '@/components/ui/Input/Input';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
 import { SearchParams } from '@/constants/constants';
@@ -23,12 +24,13 @@ export default function Card({ char }: CardProps): ReactNode {
 
   return (
     <LinkComponent to={`/?${newParams.toString()}`} variant="cardLink">
-      <input
+      <Input
         checked={isSelected}
-        className={styles.checkbox}
+        className={styles.inputCheckbox}
         onChange={() => dispatch(toggleSelection(char))}
         onClick={(e) => e.stopPropagation()}
         type="checkbox"
+        variant="checkbox"
       />
       <img alt={char.name} className={styles.cardImg} src={char.image} />
       <Text as="h2" className={styles.cardTitle} size="md">
