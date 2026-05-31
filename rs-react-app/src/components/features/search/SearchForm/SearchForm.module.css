@@ -1,0 +1,22 @@
+.searchForm {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.searchWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 21rem;
+}
+
+.clearButton {
+  position: absolute;
+  right: 10px;
+}
+
+.clearButton:hover {
+  color: var(--color-dark);
+}

@@ -1,14 +1,15 @@
+import { MemoryRouter } from 'react-router';
+import { beforeEach, describe, expect, it, type Mock, vi } from 'vitest';
+import { getChars } from '@/api/api';
 import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import App from './App';
-import { getChars } from './api/api';
 
 vi.mock('./api/api', () => ({
   getChars: vi.fn(),
 }));
 
 describe('App Component', () => {
-  const mockGetChars = vi.mocked(getChars);
+  const mockGetChars = getChars as Mock;
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -16,9 +17,13 @@ describe('App Component', () => {
   });
 
   it('should render the entire application layout successfully', async () => {
-    mockGetChars.mockResolvedValueOnce([]);
+    mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
 
-    const { unmount } = render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     const mainTitle = screen.getByRole('heading', { level: 1, name: /rick and morty/i });
     expect(mainTitle).toBeInTheDocument();
@@ -29,7 +34,5 @@ describe('App Component', () => {
     await waitFor(() => {
       expect(mockGetChars).toHaveBeenCalledTimes(1);
     });
-
-    unmount();
   });
 });

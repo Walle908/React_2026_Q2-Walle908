@@ -1,10 +1,11 @@
-import { Component, type ReactNode } from 'react';
-import Page from './components/Page/Page';
+import { type ReactNode } from 'react';
+import ErrorBoundary from '@/components/features/error-handling/ErrorBoundary/ErrorBoundary';
+import HomePage from '@/pages/HomePage/HomePage';
 
-class App extends Component {
-  override render(): ReactNode {
-    return <Page />;
-  }
+export default function App(): ReactNode {
+  return (
+    <ErrorBoundary>
+      <HomePage />
+    </ErrorBoundary>
+  );
 }
-
-export default App;

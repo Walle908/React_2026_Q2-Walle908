@@ -1,0 +1,36 @@
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+  justify-content: flex-start;
+  gap: 2rem;
+  border-radius: 5px;
+  background-color: var(--color-light-green);
+  padding: 2rem;
+}
+
+.cardDescription {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.cardImg {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 5px;
+  background-size: cover;
+  align-self: center;
+}
+
+.cardList {
+  list-style-type: none;
+  font-size: 1.6rem;
+}
+
+.cardTitle {
+  margin-bottom: 1rem;
+}
+
+.closeButton {
+  align-self: center;
+}

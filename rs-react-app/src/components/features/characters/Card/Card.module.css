@@ -1,0 +1,11 @@
+.cardImg {
+  width: 20rem;
+  height: 20rem;
+  border-radius: 5px;
+  background-size: cover;
+  align-self: center;
+}
+
+.cardTitle {
+  margin-bottom: 1rem;
+}

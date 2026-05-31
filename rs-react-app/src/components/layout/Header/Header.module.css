@@ -1,0 +1,16 @@
+.header {
+  display: flex;
+  gap: 3rem;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutLink {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.aboutLink:hover {
+  color: var(--color-light-blue);
+}
