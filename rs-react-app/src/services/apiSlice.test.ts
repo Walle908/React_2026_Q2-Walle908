@@ -96,4 +96,49 @@ describe('apiSlice', () => {
       expect(result.status).toBe('rejected');
     });
   });
+
+  describe('Caching Behavior)', () => {
+    it('should cache data and avoid duplicate network requests for the same arguments', async () => {
+      const mockResponse = new Response(JSON.stringify(mockApiData), {
+        headers: { 'Content-Type': 'application/json' },
+        status: 200,
+      });
+      vi.mocked(fetch).mockResolvedValue(mockResponse);
+
+      const firstAction = store.dispatch(
+        apiSlice.endpoints.getChars.initiate({ page: 1, query: 'Rick' })
+      );
+      const firstResult = await firstAction;
+      expect(firstResult.status).toBe('fulfilled');
+
+      expect(fetch).toHaveBeenCalledTimes(1);
+
+      const secondAction = store.dispatch(
+        apiSlice.endpoints.getChars.initiate({ page: 1, query: 'Rick' })
+      );
+      const secondResult = await secondAction;
+      expect(secondResult.status).toBe('fulfilled');
+
+      expect(fetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should perform a new network request after cache is explicitly invalidated', async () => {
+      const mockResponse = new Response(JSON.stringify(mockApiData), {
+        headers: { 'Content-Type': 'application/json' },
+        status: 200,
+      });
+      vi.mocked(fetch).mockResolvedValue(mockResponse);
+
+      await store.dispatch(apiSlice.endpoints.getChars.initiate({ page: 1, query: 'Morty' }));
+      expect(fetch).toHaveBeenCalledTimes(1);
+
+      store.dispatch(
+        apiSlice.util.invalidateTags([{ id: 'LIST', type: 'Character' }, { type: 'Character' }])
+      );
+
+      await store.dispatch(apiSlice.endpoints.getChars.initiate({ page: 1, query: 'Morty' }));
+
+      expect(fetch).toHaveBeenCalledTimes(2);
+    });
+  });
 });
