@@ -20,7 +20,7 @@ export default function Card({ char }: CardProps): ReactNode {
 
   const [searchParams] = useSearchParams();
   const newParams = new URLSearchParams(searchParams);
-  newParams.set(SearchParams.DETAILS || 'details', String(char.id));
+  newParams.set(SearchParams.DETAILS, String(char.id));
 
   return (
     <LinkComponent to={`/?${newParams.toString()}`} variant="cardLink">

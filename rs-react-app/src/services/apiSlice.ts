@@ -37,8 +37,8 @@ export const apiSlice = createApi({
       },
     }),
   }),
-  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 60,
 
+  keepUnusedDataFor: Number(import.meta.env.VITE_CACHE_TTL) || 60,
   reducerPath: 'apiSlice',
   tagTypes: ['Character'],
 });

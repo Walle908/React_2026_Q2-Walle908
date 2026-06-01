@@ -22,8 +22,3 @@ export interface Character {
   type: string;
   url: string;
 }
-
-export interface CharsResponse {
-  pages: number;
-  results: Character[];
-}

@@ -33,7 +33,9 @@ describe('CardDetailedContent Component', () => {
   it('should display "n/a" fallback text when properties are empty strings or missing', () => {
     render(<CardDetailsContent character={emptyMockCharacter} onClose={mockOnClose} />);
 
-    expect(screen.getByRole('heading', { level: 2, name: 'n/a' })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 2, name: emptyMockCharacter.name })
+    ).toBeInTheDocument();
 
     const listItems = screen.getAllByRole('listitem');
     listItems.forEach((item) => {

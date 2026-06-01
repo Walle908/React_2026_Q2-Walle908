@@ -51,6 +51,7 @@ describe('CardDetailed', () => {
     mockedUseGetCharByIdQuery.mockReturnValue({
       data: undefined,
       error: { data: { error: 'Character not found' }, status: 404 },
+      isFetching: false,
       isLoading: false,
     });
 
