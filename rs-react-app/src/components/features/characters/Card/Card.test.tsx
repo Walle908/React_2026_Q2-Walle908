@@ -1,10 +1,12 @@
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { SearchParams } from '@/constants/constants';
+import { toggleSelection } from '@/store/reducers/selectedCharactersSlice';
 import { mockCharacter } from '@/test-utils/mocks';
 import { configureStore } from '@reduxjs/toolkit';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Card from './Card';
 
 const createMockStore = (initialSelectedChars = []) => {
@@ -52,5 +54,29 @@ describe('Card Component', () => {
 
     const expectedHref = `/?${SearchParams.PAGE}=3&${SearchParams.DETAILS}=${mockCharacter.id}`;
     expect(link.getAttribute('to') || link.getAttribute('href')).toContain(expectedHref);
+  });
+
+  it('should dispatch toggleSelection and stop propagation when checkbox is clicked', async () => {
+    const user = userEvent.setup();
+    const store = createMockStore([]);
+
+    const dispatchSpy = vi.spyOn(store, 'dispatch');
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <Card char={mockCharacter} />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const checkbox = screen.getByRole('checkbox');
+    expect(checkbox).toBeInTheDocument();
+
+    await user.click(checkbox);
+
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+
+    expect(dispatchSpy).toHaveBeenCalledWith(toggleSelection(mockCharacter));
   });
 });

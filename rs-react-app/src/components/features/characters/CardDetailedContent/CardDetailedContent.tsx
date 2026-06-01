@@ -33,7 +33,7 @@ export default function CardDetailsContent({
 
       <div className={styles.cardDescription}>
         <Text as="h2" className={styles.cardTitle} size="md">
-          {character.name || 'n/a'}
+          {character.name}
         </Text>
         <ul className={styles.cardList}>
           {fields.map(({ label, value }) => (

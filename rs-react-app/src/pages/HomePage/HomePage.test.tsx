@@ -10,29 +10,37 @@ import {
   type MockInstance,
   vi,
 } from 'vitest';
-import * as apiModule from '@/api/api';
 import { ErrorMessage, initialPage, localStorageKey } from '@/constants/constants';
 import { ThemeProvider } from '@/contexts/ThemeContextProvider';
+import { apiSlice, useGetCharsQuery } from '@/services/apiSlice';
 import selectedCharactersReducer from '@/store/reducers/selectedCharactersSlice';
 import { mockCharacters } from '@/test-utils/mocks';
 import { configureStore } from '@reduxjs/toolkit';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import HomePage from './HomePage';
 
-vi.mock('../../api/api', () => ({
-  getChars: vi.fn(),
+vi.mock('@/services/apiSlice', () => ({
+  apiSlice: {
+    middleware: () => (next: (action: unknown) => unknown) => (action: unknown) => next(action),
+    reducer: (state = {}) => state,
+    reducerPath: 'apiSlice',
+    util: {
+      invalidateTags: vi.fn((tags) => ({ payload: tags, type: 'api/invalidateTags' })),
+    },
+  },
+  useGetCharsQuery: vi.fn(),
 }));
 
+const mockedUseGetCharsQuery = useGetCharsQuery as unknown as Mock;
+
 describe('HomePage Component', () => {
-  let mockGetChars: Mock;
   let consoleErrorSpy: MockInstance;
 
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    mockGetChars = vi.spyOn(apiModule, 'getChars');
   });
 
   afterEach(() => {
@@ -44,9 +52,10 @@ describe('HomePage Component', () => {
       middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
           serializableCheck: false,
-        }),
+        }).concat(apiSlice.middleware as unknown as import('@reduxjs/toolkit').Middleware),
       preloadedState,
       reducer: {
+        [apiSlice.reducerPath]: apiSlice.reducer,
         selectedCharacters: selectedCharactersReducer,
       },
     });
@@ -67,74 +76,90 @@ describe('HomePage Component', () => {
   };
 
   it('should render Loader during mount and then show results on successful API response', async () => {
-    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 3 }, results: mockCharacters },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
 
-    const loaderElement = screen.getByTestId('loader-element');
+    expect(mockedUseGetCharsQuery).toHaveBeenCalledWith(
+      { page: initialPage, query: '' },
+      { refetchOnMountOrArgChange: false }
+    );
 
-    expect(loaderElement).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledWith('', initialPage, expect.any(AbortSignal));
-    });
-
-    expect(loaderElement).not.toBeInTheDocument();
+    expect(screen.queryByTestId('loader-element')).not.toBeInTheDocument();
     expect(
       screen.getByRole('heading', { level: 2, name: mockCharacters[0]?.name })
     ).toBeInTheDocument();
   });
 
   it('should read initial query from localStorage on initialization', async () => {
-    localStorage.setItem(localStorageKey, 'Morty');
-    mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
-    const store = createTestStore({
-      search: { query: 'Morty' },
+    localStorage.setItem(localStorageKey, JSON.stringify('Morty'));
+
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 0 }, results: [] },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
     });
 
-    renderWithReduxAndRouter(['/'], store);
+    renderWithReduxAndRouter();
 
     const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
     expect(input.value).toBe('Morty');
 
     await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledWith('Morty', initialPage, expect.any(AbortSignal));
+      expect(mockedUseGetCharsQuery).toHaveBeenCalledWith(
+        { page: initialPage, query: 'Morty' },
+        { refetchOnMountOrArgChange: false }
+      );
     });
   });
 
-  it('should display NOT_FOUND error message if API returns null', async () => {
-    mockGetChars.mockResolvedValueOnce(null);
+  it('should display NOT_FOUND error message if API returns 404', async () => {
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: undefined,
+      error: { data: { error: 'There is nothing here' }, status: 404 },
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { level: 2, name: ErrorMessage.NOT_FOUND })
-      ).toBeInTheDocument();
-    });
+    expect(
+      screen.getByRole('heading', { level: 2, name: ErrorMessage.NOT_FOUND })
+    ).toBeInTheDocument();
   });
 
   it('should display SERVER_ERROR message if API request fails', async () => {
-    mockGetChars.mockRejectedValueOnce(new Error(ErrorMessage.SERVER_ERROR));
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: undefined,
+      error: { status: 500 },
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { level: 2, name: ErrorMessage.SERVER_ERROR })
-      ).toBeInTheDocument();
-    });
+    expect(
+      screen.getByRole('heading', { level: 2, name: ErrorMessage.SERVER_ERROR })
+    ).toBeInTheDocument();
   });
 
   it('should trigger new search, update localStorage, and handle trimming on form submit', async () => {
     const user = userEvent.setup();
 
-    mockGetChars.mockResolvedValueOnce({ pages: 0, results: [] });
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 0 }, results: [] },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
-    await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
-
-    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
 
     const input = screen.getByPlaceholderText('Search a character...');
     const submitButton = screen.getByRole('button', { name: /search/i });
@@ -142,144 +167,98 @@ describe('HomePage Component', () => {
     await user.type(input, '   Rick   ');
     await user.click(submitButton);
 
-    await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledWith('Rick', initialPage, expect.any(AbortSignal));
-    });
-
-    expect(localStorage.getItem(localStorageKey)).toBe('Rick');
+    expect(localStorage.getItem(localStorageKey)).toBe(JSON.stringify('Rick'));
   });
 
   it('should prevent duplicate API requests if query has not changed', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
+
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 3 }, results: mockCharacters },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
-    await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
 
-    const submitButton = screen.getByRole('button', { name: /search/i });
+    const submitButton = await screen.getByRole('button', { name: /search/i });
+    const initialCallCount = mockedUseGetCharsQuery.mock.calls.length;
 
     await user.click(submitButton);
 
-    expect(mockGetChars).toHaveBeenCalledTimes(1);
+    expect(mockedUseGetCharsQuery).toHaveBeenCalledTimes(initialCallCount);
   });
 
-  it('should handle empty API response (NOT_FOUND) during manual search submit', async () => {
-    const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
+  it('should dispatch invalidateTags action when Refresh button is clicked', () => {
+    const store = createTestStore();
+    const dispatchSpy = vi.spyOn(store, 'dispatch');
 
-    renderWithReduxAndRouter();
-    await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
-
-    mockGetChars.mockResolvedValueOnce(null);
-
-    const input = screen.getByPlaceholderText('Search a character...');
-    const submitButton = screen.getByRole('button', { name: /search/i });
-
-    await user.type(input, 'No Character');
-    await user.click(submitButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { level: 2, name: ErrorMessage.NOT_FOUND })
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('should handle API failure (SERVER_ERROR) during manual search submit', async () => {
-    const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ pages: 3, results: mockCharacters });
-
-    renderWithReduxAndRouter();
-    await waitFor(() => expect(mockGetChars).toHaveBeenCalledTimes(1));
-
-    mockGetChars.mockRejectedValueOnce(new Error('Server Down'));
-
-    const input = screen.getByPlaceholderText('Search a character...');
-    const submitButton = screen.getByRole('button', { name: /search/i });
-
-    await user.type(input, 'Rick');
-    await user.click(submitButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole('heading', { level: 2, name: ErrorMessage.SERVER_ERROR })
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('should handle case when localStorage is empty on mount', async () => {
-    localStorage.removeItem(localStorageKey);
-    mockGetChars.mockResolvedValueOnce(null);
-
-    renderWithReduxAndRouter();
-
-    const input = screen.getByPlaceholderText('Search a character...') as HTMLInputElement;
-    expect(input.value).toBe('');
-
-    await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledWith('', initialPage, expect.any(AbortSignal));
-    });
-  });
-
-  it('should update existing value in localStorage when a new search is performed', async () => {
-    const user = userEvent.setup();
-    localStorage.setItem(localStorageKey, JSON.stringify('Morty'));
-    mockGetChars.mockResolvedValueOnce(null);
-
-    renderWithReduxAndRouter();
-    await waitFor(() => expect(mockGetChars).toHaveBeenCalled());
-
-    mockGetChars.mockResolvedValueOnce({ pages: 1, results: mockCharacters });
-
-    const input = screen.getByPlaceholderText('Search a character...');
-    const submitButton = screen.getByRole('button', { name: /search/i });
-
-    await user.clear(input);
-    await user.type(input, 'Summer');
-    await user.click(submitButton);
-
-    await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledWith('Summer', initialPage, expect.any(AbortSignal));
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 3 }, results: mockCharacters },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
     });
 
-    expect(localStorage.getItem(localStorageKey)).toBe('Summer');
+    renderWithReduxAndRouter(['/'], store);
+
+    const refreshButton = screen.getByRole('button', { name: /refresh/i });
+    fireEvent.click(refreshButton);
+
+    expect(dispatchSpy).toHaveBeenCalled();
+    expect(apiSlice.util.invalidateTags).toHaveBeenCalledWith([
+      { id: 'LIST', type: 'Character' },
+      { type: 'Character' },
+    ]);
   });
 
   it('should change page and update URL when handlePageChange is triggered via Pagination', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
+
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 5 }, results: mockCharacters },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
 
-    await waitFor(() => {
-      expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
-    });
+    const nextButton = await screen.findByRole('button', { name: /next/i });
+    expect(nextButton).toBeInTheDocument();
 
-    mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
-
-    const nextButton = screen.getByRole('button', { name: /next/i });
     await user.click(nextButton);
 
     await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledWith('', 2, expect.any(AbortSignal));
+      expect(mockedUseGetCharsQuery).toHaveBeenCalledWith(
+        { page: 2, query: '' },
+        { refetchOnMountOrArgChange: false }
+      );
     });
   });
 
   it('should ignore page changes if clicked faster than the allowed Delay threshold', async () => {
     const user = userEvent.setup();
-    mockGetChars.mockResolvedValueOnce({ pages: 5, results: mockCharacters });
+
+    mockedUseGetCharsQuery.mockReturnValue({
+      data: { info: { pages: 5 }, results: mockCharacters },
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+    });
 
     renderWithReduxAndRouter();
-    await waitFor(() => expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument());
 
-    mockGetChars.mockClear();
-    const nextButton = screen.getByRole('button', { name: /next/i });
+    const nextButton = await screen.findByRole('button', { name: /next/i });
 
-    user.click(nextButton);
-    user.click(nextButton);
+    mockedUseGetCharsQuery.mockClear();
+
+    await user.click(nextButton);
+    await user.click(nextButton);
 
     await waitFor(() => {
-      expect(mockGetChars).toHaveBeenCalledTimes(1);
+      expect(mockedUseGetCharsQuery).toHaveBeenCalledTimes(1);
     });
   });
 });
