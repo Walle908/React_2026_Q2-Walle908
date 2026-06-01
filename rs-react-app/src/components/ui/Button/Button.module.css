@@ -49,6 +49,11 @@
   color: var(--text);
 }
 
+.accentBg {
+  background-color: var(--accent);
+  color: var(--text);
+}
+
 .baseBg:hover,
 .errorBg:hover {
   background-color: var(--hover);

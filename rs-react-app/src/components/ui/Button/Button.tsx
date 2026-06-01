@@ -5,7 +5,7 @@ import styles from './Button.module.css';
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children: ReactNode;
   className?: string;
-  color?: 'baseBg' | 'errorBg' | 'noBg';
+  color?: 'accentBg' | 'baseBg' | 'errorBg' | 'noBg';
   variant?: 'base' | 'plain';
 }
 

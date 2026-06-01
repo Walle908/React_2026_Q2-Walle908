@@ -1,9 +1,11 @@
 import { type ReactNode, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet, useSearchParams } from 'react-router';
 import Flyout from '@/components/features/characters/Flyout/Flyout';
 import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
 import SearchSection from '@/components/features/search/SearchSection/SearchSection';
 import Header from '@/components/layout/Header/Header';
+import Button from '@/components/ui/Button/Button';
 import Loader from '@/components/ui/Loader/Loader';
 import Pagination from '@/components/ui/Pagination/Pagination';
 import {
@@ -15,10 +17,12 @@ import {
 } from '@/constants/constants';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useGetCharsQuery } from '@/services/apiSlice';
+import { apiSlice } from '@/services/apiSlice';
 import getErrorMessage from '@/utils/getErrorMessage';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {
+  const dispatch = useDispatch();
   const lastClickRef = useRef(0);
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useLocalStorage<string>(localStorageKey);
@@ -89,7 +93,14 @@ export default function HomePage(): ReactNode {
     });
   };
 
+  const handleRefresh = () => {
+    dispatch(
+      apiSlice.util.invalidateTags([{ id: 'LIST', type: 'Character' }, { type: 'Character' }])
+    );
+  };
+
   const showPagination = !isFetching && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
+  const isAnyLoading = isLoading || isFetching;
 
   return (
     <>
@@ -100,12 +111,17 @@ export default function HomePage(): ReactNode {
           <div
             className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}
             data-testid="left-panel">
-            {isLoading || isFetching ? (
+            {isAnyLoading ? (
               <Loader />
             ) : (
               <div className={styles.resultsWrapper}>
                 {showPagination && (
-                  <Pagination onChange={handlePageChange} totalPages={totalPages} />
+                  <div className={styles.rowWrapper}>
+                    <Pagination onChange={handlePageChange} totalPages={totalPages} />
+                    <Button color={'accentBg'} disabled={isAnyLoading} onClick={handleRefresh}>
+                      {isAnyLoading ? 'Updating...' : 'Refresh'}
+                    </Button>
+                  </div>
                 )}
                 <ResultBlock chars={chars} errorMessage={errorMessage} />
               </div>
