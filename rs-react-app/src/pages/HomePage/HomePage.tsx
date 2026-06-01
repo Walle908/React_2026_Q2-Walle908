@@ -27,10 +27,15 @@ export default function HomePage(): ReactNode {
   const characterId = searchParams.get(SearchParams.DETAILS);
   const currentPage = Number(pageParam) >= initialPage ? Number(pageParam) : initialPage;
 
-  const { data, error, isLoading } = useGetCharsQuery({
-    page: currentPage,
-    query,
-  });
+  const { data, error, isFetching, isLoading } = useGetCharsQuery(
+    {
+      page: currentPage,
+      query,
+    },
+    {
+      refetchOnMountOrArgChange: false,
+    }
+  );
 
   const chars = data?.results ?? [];
   const totalPages = data?.info?.pages ?? 0;
@@ -71,7 +76,7 @@ export default function HomePage(): ReactNode {
   };
 
   const handlePageChange = async (newPage: number) => {
-    if (newPage === currentPage || isLoading) return;
+    if (newPage === currentPage || isLoading || isFetching) return;
 
     const now = Date.now();
     if (now - lastClickRef.current < Delay) return;
@@ -84,7 +89,7 @@ export default function HomePage(): ReactNode {
     });
   };
 
-  const showPagination = !isLoading && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
+  const showPagination = !isFetching && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
 
   return (
     <>
@@ -95,7 +100,7 @@ export default function HomePage(): ReactNode {
           <div
             className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}
             data-testid="left-panel">
-            {isLoading ? (
+            {isLoading || isFetching ? (
               <Loader />
             ) : (
               <div className={styles.resultsWrapper}>

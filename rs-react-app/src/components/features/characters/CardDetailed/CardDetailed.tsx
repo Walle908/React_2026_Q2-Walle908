@@ -12,7 +12,7 @@ export default function CardDetailed(): ReactNode {
   const [searchParams, setSearchParams] = useSearchParams();
   const id = searchParams.get(SearchParams.DETAILS);
 
-  const { data: char, error, isLoading } = useGetCharByIdQuery(id ?? '', { skip: !id });
+  const { data: char, error, isFetching, isLoading } = useGetCharByIdQuery(id ?? '', { skip: !id });
 
   const errorMessage = getErrorMessage(error);
 
@@ -22,7 +22,7 @@ export default function CardDetailed(): ReactNode {
     setSearchParams(newParams);
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loader />;
   }
 
