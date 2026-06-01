@@ -2,10 +2,12 @@ export const localStorageKey = 'lastSearch_walle908';
 
 export const enum ErrorMessage {
   BOUNDARY_ERROR = 'Something went wrong...',
-  CHAR_NOT_FOUND = "The character's info is not found",
+  CHAR_NOT_FOUND = 'Character not found',
+  NETWORK_ERROR = 'Network error. Please check your internet connection.',
   NO_ERROR = '',
   NOT_FOUND = 'No characters found',
-  SERVER_ERROR = 'Server error while requesting data',
+  SERVER_ERROR = 'Server error',
+  TOO_MANY_REQUESTS = 'Too many requests. Please wait a minute before trying again.',
 }
 
 export const initialPage = 1;

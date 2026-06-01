@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import { useSearchParams } from 'react-router';
 import CardDetailsContent from '@/components/features/characters/CardDetailedContent/CardDetailedContent';
+import Button from '@/components/ui/Button/Button';
 import Loader from '@/components/ui/Loader/Loader';
 import Text from '@/components/ui/Text/Text';
 import { SearchParams } from '@/constants/constants';
@@ -26,11 +27,18 @@ export default function CardDetailed(): ReactNode {
     return <Loader />;
   }
 
+  if (!id) {
+    return null;
+  }
+
   if (!char) {
     return (
-      <Text as="h2" className={styles.errorTitle} size="lg">
-        {errorMessage}
-      </Text>
+      <div className={styles.errorWrapper}>
+        <Text as="h2" className={styles.errorTitle} size="lg">
+          {errorMessage}
+        </Text>
+        <Button onClick={closeCard}>Close</Button>
+      </div>
     );
   }
   return <CardDetailsContent character={char} onClose={closeCard} />;

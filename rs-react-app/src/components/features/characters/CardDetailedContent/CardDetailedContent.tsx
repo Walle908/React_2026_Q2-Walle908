@@ -24,7 +24,12 @@ export default function CardDetailsContent({
 
   return (
     <div className={styles.cardWrapper}>
-      <img alt={character.name} className={styles.cardImg} src={character.image} />
+      <img
+        alt={character.name}
+        className={styles.cardImg}
+        key={character.id}
+        src={character.image}
+      />
 
       <div className={styles.cardDescription}>
         <Text as="h2" className={styles.cardTitle} size="md">
