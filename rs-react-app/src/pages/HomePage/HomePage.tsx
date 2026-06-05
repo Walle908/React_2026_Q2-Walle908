@@ -118,7 +118,7 @@ export default function HomePage(): ReactNode {
                 {showPagination && (
                   <div className={styles.rowWrapper}>
                     <Pagination onChange={handlePageChange} totalPages={totalPages} />
-                    <Button color={'accentBg'} disabled={isAnyLoading} onClick={handleRefresh}>
+                    <Button color={'accent'} disabled={isAnyLoading} onClick={handleRefresh}>
                       {isAnyLoading ? 'Updating...' : 'Refresh'}
                     </Button>
                   </div>

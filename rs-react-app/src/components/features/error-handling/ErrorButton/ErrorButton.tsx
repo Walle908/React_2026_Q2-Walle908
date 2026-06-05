@@ -14,7 +14,7 @@ export default function ErrorButton(): ReactNode {
   }
 
   return (
-    <Button color="errorBg" onClick={onClick}>
+    <Button color="error" onClick={onClick}>
       Generate Error
     </Button>
   );

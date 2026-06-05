@@ -5,17 +5,17 @@ import styles from './Button.module.css';
 interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
   children: ReactNode;
   className?: string;
-  color?: 'accentBg' | 'baseBg' | 'errorBg' | 'noBg';
-  variant?: 'base' | 'plain';
+  color?: 'accent' | 'base' | 'error' | 'no';
+  variant?: 'default' | 'plain';
 }
 
 export default function Button({
   children,
   className = '',
-  color = 'baseBg',
+  color = 'base',
   onClick,
   type = 'button',
-  variant = 'base',
+  variant = 'default',
   ...props
 }: ButtonProps): ReactNode {
   const variantClass = styles[variant] ? styles[variant] : '';

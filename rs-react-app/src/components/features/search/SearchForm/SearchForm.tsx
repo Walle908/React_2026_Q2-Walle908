@@ -37,7 +37,7 @@ export default function SearchForm({ initialValue, onSearch }: SearchProps): Rea
           variant="search"
         />
         {value && (
-          <Button className={styles.clearButton} color="noBg" onClick={onClear} variant="plain">
+          <Button className={styles.clearButton} color="no" onClick={onClear} variant="plain">
             ✖
           </Button>
         )}

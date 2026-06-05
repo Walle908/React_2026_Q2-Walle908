@@ -1,4 +1,4 @@
-.base {
+.default {
   min-width: max-content;
   width: 10rem;
   height: 4rem;
@@ -11,7 +11,7 @@
   transition: 0.4s;
 }
 
-.base:hover {
+.default:hover {
   background-color: var(--hover);
 }
 
@@ -30,31 +30,22 @@
   color: var(--text);
 }
 
-.noBg {
+.no {
   background: none;
   color: var(--primary);
 }
 
-.noBg:hover {
-  color: var(--color-dark);
-}
-
-.baseBg {
+.base {
   background-color: var(--primary);
   color: var(--text);
 }
 
-.errorBg {
+.error {
   background-color: var(--error);
   color: var(--text);
 }
 
-.accentBg {
+.accent {
   background-color: var(--accent);
   color: var(--text);
-}
-
-.baseBg:hover,
-.errorBg:hover {
-  background-color: var(--hover);
 }
