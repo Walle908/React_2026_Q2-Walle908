@@ -1,9 +1,11 @@
 import { type ReactNode, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Outlet, useSearchParams } from 'react-router';
 import Flyout from '@/components/features/characters/Flyout/Flyout';
 import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
 import SearchSection from '@/components/features/search/SearchSection/SearchSection';
 import Header from '@/components/layout/Header/Header';
+import Button from '@/components/ui/Button/Button';
 import Loader from '@/components/ui/Loader/Loader';
 import Pagination from '@/components/ui/Pagination/Pagination';
 import {
@@ -13,25 +15,35 @@ import {
   localStorageKey,
   SearchParams,
 } from '@/constants/constants';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { clearCharacter, fetchCharacterById } from '@/store/reducers/characterDetailsSlice';
-import { fetchCharacters } from '@/store/reducers/charactersSlice';
-import { setQuery } from '@/store/reducers/searchSlice';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { useGetCharsQuery } from '@/services/apiSlice';
+import { apiSlice } from '@/services/apiSlice';
+import getErrorMessage from '@/utils/getErrorMessage';
 import styles from './HomePage.module.css';
 
 export default function HomePage(): ReactNode {
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const lastClickRef = useRef(0);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useLocalStorage<string>(localStorageKey);
 
   const pageParam = searchParams.get(SearchParams.PAGE);
   const characterId = searchParams.get(SearchParams.DETAILS);
   const currentPage = Number(pageParam) >= initialPage ? Number(pageParam) : initialPage;
 
-  const { chars, errorMessage, isLoading, totalPages } = useAppSelector(
-    (state) => state.characters
+  const { data, error, isFetching, isLoading } = useGetCharsQuery(
+    {
+      page: currentPage,
+      query,
+    },
+    {
+      refetchOnMountOrArgChange: false,
+    }
   );
-  const query = useAppSelector((state) => state.search.query);
+
+  const chars = data?.results ?? [];
+  const totalPages = data?.info?.pages ?? 0;
+  const errorMessage = getErrorMessage(error);
 
   useEffect(() => {
     const parsedPage = Number(pageParam);
@@ -48,23 +60,6 @@ export default function HomePage(): ReactNode {
     }
   }, [pageParam, setSearchParams]);
 
-  useEffect(() => {
-    dispatch(fetchCharacters({ page: currentPage, query }));
-  }, [dispatch, query, currentPage]);
-
-  useEffect(() => {
-    if (!characterId) {
-      dispatch(clearCharacter());
-      return;
-    }
-
-    dispatch(fetchCharacterById(characterId));
-  }, [characterId, dispatch]);
-
-  useEffect(() => {
-    localStorage.setItem(localStorageKey, query);
-  }, [query]);
-
   const onSearch = async (newQuery: string) => {
     const trimmedQuery = newQuery.trim();
 
@@ -72,7 +67,7 @@ export default function HomePage(): ReactNode {
       return;
     }
 
-    dispatch(setQuery(trimmedQuery));
+    setQuery(trimmedQuery);
 
     setSearchParams(
       (prev) => {
@@ -85,7 +80,7 @@ export default function HomePage(): ReactNode {
   };
 
   const handlePageChange = async (newPage: number) => {
-    if (newPage === currentPage || isLoading) return;
+    if (newPage === currentPage || isLoading || isFetching) return;
 
     const now = Date.now();
     if (now - lastClickRef.current < Delay) return;
@@ -98,7 +93,14 @@ export default function HomePage(): ReactNode {
     });
   };
 
-  const showPagination = !isLoading && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
+  const handleRefresh = () => {
+    dispatch(
+      apiSlice.util.invalidateTags([{ id: 'LIST', type: 'Character' }, { type: 'Character' }])
+    );
+  };
+
+  const showPagination = !isFetching && chars.length > 0 && errorMessage === ErrorMessage.NO_ERROR;
+  const isAnyLoading = isLoading || isFetching;
 
   return (
     <>
@@ -109,12 +111,17 @@ export default function HomePage(): ReactNode {
           <div
             className={`${styles.leftPanel} ${characterId ? styles.split : ''}`}
             data-testid="left-panel">
-            {isLoading ? (
+            {isAnyLoading ? (
               <Loader />
             ) : (
               <div className={styles.resultsWrapper}>
                 {showPagination && (
-                  <Pagination onChange={handlePageChange} totalPages={totalPages} />
+                  <div className={styles.rowWrapper}>
+                    <Pagination onChange={handlePageChange} totalPages={totalPages} />
+                    <Button color={'accent'} disabled={isAnyLoading} onClick={handleRefresh}>
+                      {isAnyLoading ? 'Updating...' : 'Refresh'}
+                    </Button>
+                  </div>
                 )}
                 <ResultBlock chars={chars} errorMessage={errorMessage} />
               </div>

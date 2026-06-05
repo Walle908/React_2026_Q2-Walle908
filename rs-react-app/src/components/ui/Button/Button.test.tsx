@@ -12,20 +12,19 @@ describe('Button Component', () => {
 
     expect(buttonElement).toBeInTheDocument();
     expect(buttonElement).toHaveAttribute('type', 'button');
-    expect(buttonElement.className).toBe(`${styles.base} ${styles.baseBg}`);
+    expect(buttonElement.className).toBe(`${styles.default} ${styles.base}`);
   });
 
   it('should render plain button with clean style', () => {
     render(
-      <Button color="noBg" variant="plain">
+      <Button color="no" variant="plain">
         ✖
       </Button>
     );
     const buttonElement = screen.getByRole('button', { name: /✖/i });
 
-    expect(buttonElement.className).not.toContain(styles.base);
-    expect(buttonElement.className).not.toContain(styles.basic);
-    expect(buttonElement.className).toBe(`${styles.plain} ${styles.noBg}`);
+    expect(buttonElement.className).not.toContain(styles.default);
+    expect(buttonElement.className).toBe(`${styles.plain} ${styles.no}`);
   });
 
   it('should combine custom className and respect type attribute', () => {
@@ -38,7 +37,7 @@ describe('Button Component', () => {
     const buttonElement = screen.getByRole('button', { name: /submit form/i });
 
     expect(buttonElement).toHaveAttribute('type', 'submit');
-    expect(buttonElement.className).toContain(styles.base);
+    expect(buttonElement.className).toContain(`${styles.default} ${styles.base}`);
     expect(buttonElement.className).toContain('custom-external-class');
   });
 
@@ -64,11 +63,11 @@ describe('Button Component', () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it('should fallback to base variant and basic color if variant and color do not exist in styles', () => {
+  it('should fallback to default variant and base color if variant and color do not exist in styles', () => {
     render(<Button variant={undefined}>Fallback test</Button>);
 
     const buttonElement = screen.getByRole('button', { name: /fallback test/i });
 
-    expect(buttonElement.className).toBe(`${styles.base} ${styles.baseBg}`);
+    expect(buttonElement.className).toBe(`${styles.default} ${styles.base}`);
   });
 });

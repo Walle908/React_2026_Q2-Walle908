@@ -1,14 +1,11 @@
+import { apiSlice } from '@/services/apiSlice';
 import { configureStore } from '@reduxjs/toolkit';
-import characterDetails from './reducers/characterDetailsSlice';
-import characters from './reducers/charactersSlice';
-import search from './reducers/searchSlice';
 import selectedCharacters from './reducers/selectedCharactersSlice';
 
 export const store = configureStore({
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
   reducer: {
-    characterDetails,
-    characters,
-    search,
+    [apiSlice.reducerPath]: apiSlice.reducer,
     selectedCharacters,
   },
 });

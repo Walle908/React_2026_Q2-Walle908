@@ -1,9 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { mockCharacters } from '@/test-utils/mocks';
-import selectedCharactersReducer, {
-  toggleSelection,
-  unselectAll,
-} from '../selectedCharactersSlice';
+import selectedCharactersReducer, { toggleSelection, unselectAll } from './selectedCharactersSlice';
 
 describe('selectedCharactersSlice', () => {
   const initialState = {
