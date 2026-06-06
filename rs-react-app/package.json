@@ -11,8 +11,11 @@
     "prepare": "cd .. && husky rs-react-app/.husky"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^7.17.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.0.2",
@@ -21,6 +24,7 @@
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/react-redux": "^7.1.34",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
