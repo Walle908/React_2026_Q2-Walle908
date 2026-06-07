@@ -9,9 +9,10 @@
   --text: #25452c;
   --primary: #ff9f1c;
   --additional: #386641;
-  --accent1: #006666;
   --accent: #168aad;
-  --hover: #ff8008;
+  --accent1: #006666;
+  --accent2: #ff8008;
+  --hover: #ffaf47;
   --error: #e63946;
   --input-bg: #fdf8e2;
 }
