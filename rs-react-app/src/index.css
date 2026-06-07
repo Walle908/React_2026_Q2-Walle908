@@ -15,6 +15,7 @@
   --hover: #ffaf47;
   --error: #e63946;
   --input-bg: #fdf8e2;
+  --disabled: #6b6b6b;
 }
 
 #root {

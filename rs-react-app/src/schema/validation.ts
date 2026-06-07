@@ -24,6 +24,7 @@ export const validationSchema = yup.object({
 
   email: yup
     .string()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
     .required('Email is required')
     .test('basic-email', 'Invalid email format', (value) => {
       if (!value) return false;

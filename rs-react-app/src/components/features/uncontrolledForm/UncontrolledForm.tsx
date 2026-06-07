@@ -2,14 +2,17 @@ import { useState, type ReactNode, type SyntheticEvent } from 'react';
 import Text from '@/components/ui/text/Text';
 import InputComponent from '@/components/ui/inputComponent/InputComponent';
 import Button from '@/components/ui/button/Button';
+import PasswordStrengthIndicator from '@/components/ui/passwordStrengthIndicator/PasswordStrengthIndicator';
 import * as yup from 'yup';
 import { validationSchema } from '@/schema/validation';
+
 import styles from './UncontrolledForm.module.css';
 
 type FormErrors = Record<string, string>;
 
 export default function UncontrolledForm(): ReactNode {
   const [errors, setErrors] = useState<FormErrors>({});
+  const [passwordValue, setPasswordValue] = useState('');
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -65,7 +68,16 @@ export default function UncontrolledForm(): ReactNode {
           error={errors.age}
         />
         <InputComponent type="email" name="email" label="Email" error={errors.email} />
-        <InputComponent type="password" name="password" label="Password" error={errors.password} />
+        <div className={styles.columnWrapper}>
+          <InputComponent
+            type="password"
+            name="password"
+            label="Password"
+            error={errors.password}
+            onChange={(e) => setPasswordValue(e.target.value)}
+          />
+          <PasswordStrengthIndicator value={passwordValue} />
+        </div>
         <InputComponent
           type="password"
           name="confirmPassword"
@@ -100,6 +112,14 @@ export default function UncontrolledForm(): ReactNode {
           </Text>
         </div>
 
+        <InputComponent
+          name="image"
+          label="Upload an image (png/jpeg)"
+          type="file"
+          variant="file"
+          error={errors.image}
+        />
+
         <div className={styles.columnWrapper}>
           <InputComponent
             type="checkbox"
@@ -112,13 +132,6 @@ export default function UncontrolledForm(): ReactNode {
             {errors.terms}
           </Text>
         </div>
-        <InputComponent
-          name="image"
-          label="Upload an image (png/jpeg)"
-          type="file"
-          variant="file"
-          error={errors.image}
-        />
         <Button type="submit" className={styles.submitBtn}>
           Submit
         </Button>
