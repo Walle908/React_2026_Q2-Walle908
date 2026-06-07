@@ -40,7 +40,7 @@ export default function PasswordStrengthIndicator({
   const strength = getPasswordStrength(value);
 
   const getProgressBarColor = (percent: number) => {
-    if (percent === 0) return '#3a3a3a';
+    if (percent === 0) return '#6b6b6b';
     if (percent <= 25) return '#e63946';
     if (percent <= 50) return '#ff9f1c';
     if (percent <= 75) return '#ffdf1c';

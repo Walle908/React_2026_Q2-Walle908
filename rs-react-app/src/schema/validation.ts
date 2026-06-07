@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import COUNTRIES_LIST from '@/constants/countriesList';
 
 const MAX_IMAGE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/png', 'image/jpeg'];
@@ -51,6 +52,12 @@ export const validationSchema = yup.object({
     .oneOf([yup.ref('password')], 'Passwords must match'),
 
   gender: yup.string().required('Please select your gender').nullable(),
+
+  country: yup
+    .string()
+    .transform((value, originalValue) => (originalValue === '' ? undefined : value))
+    .required('Country is required')
+    .oneOf(COUNTRIES_LIST, 'Selected country is not allowed'),
 
   terms: yup.boolean().oneOf([true], 'You must accept terms and conditions'),
 
