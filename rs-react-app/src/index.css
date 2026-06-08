@@ -84,3 +84,21 @@ li {
     scrollbar-color: var(--accent1) var(--bg-additional);
   }
 }
+
+@media (max-width: 768px) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 500px) {
+  html {
+    font-size: 6px;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 5px;
+  }
+}

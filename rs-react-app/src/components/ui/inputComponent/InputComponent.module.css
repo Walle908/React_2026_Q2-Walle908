@@ -29,7 +29,7 @@
   border-radius: 0.5rem;
   outline: none;
   transition: all 0.3s ease-in-out;
-  border: 2px solid var(--additional);
+  border: 0.2rem solid var(--additional);
   font-size: 1.4rem;
 }
 
@@ -54,21 +54,21 @@
   height: 1.6rem;
   margin: 0;
   background-color: var(--light);
-  border: 2px solid var(--primary);
+  border: 0.2rem solid var(--primary);
   border-radius: 50%;
   outline: none;
   transition: 0.2s all linear;
 }
 
 .radio:checked {
-  border: 4px solid var(--additional);
+  border: 0.4rem solid var(--additional);
   background-color: var(--primary);
 }
 
 .file {
   padding: 1rem;
   background: var(--light);
-  border: 2px solid var(--additional);
+  border: 0.2rem solid var(--additional);
   border-radius: 0.5rem;
   font-size: 1.4rem;
   cursor: pointer;
@@ -81,7 +81,7 @@
   border-radius: 0.8rem;
   border: none;
   padding: 0.6rem 1.2rem;
-  margin-right: 10px;
+  margin-right: 1rem;
   background-color: var(--primary);
   color: var(--text);
   font-size: 1.4rem;

@@ -1,4 +1,5 @@
 .container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,11 +8,11 @@
 }
 
 .buttonContainer {
+  width: 50rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3rem;
-  width: 100%;
   padding: 2rem;
   border-radius: 0.5rem;
   background-color: var(--accent);

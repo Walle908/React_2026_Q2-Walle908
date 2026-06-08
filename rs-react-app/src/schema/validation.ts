@@ -9,7 +9,7 @@ export const validationSchema = yup.object({
     .string()
     .transform((value, originalValue) => (originalValue === '' ? undefined : value))
     .required('Name is required')
-    .test('capital-letter', 'The first letter must be capitalized', (value) => {
+    .test('capital-letter', 'Name must start with a capital letter', (value) => {
       if (!value) return false;
       const firstChar = value.charAt(0);
       const isLetter = firstChar.toLowerCase() !== firstChar.toUpperCase();
@@ -21,13 +21,13 @@ export const validationSchema = yup.object({
     .transform((value, originalValue) => (originalValue === '' ? undefined : value))
     .typeError('Age must be a number')
     .required('Age is required')
-    .positive('Negative values are not allowed'),
+    .positive('Age must be a positive number'),
 
   email: yup
     .string()
     .transform((value, originalValue) => (originalValue === '' ? undefined : value))
     .required('Email is required')
-    .test('basic-email', 'Invalid email format', (value) => {
+    .test('basic-email', 'Invalid email address', (value) => {
       if (!value) return false;
       const parts = value.split('@');
       if (parts.length !== 2) return false;
