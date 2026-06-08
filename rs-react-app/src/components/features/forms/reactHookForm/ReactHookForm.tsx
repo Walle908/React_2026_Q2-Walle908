@@ -10,7 +10,7 @@ import InputComponent from '@/components/ui/inputComponent/InputComponent';
 import Text from '@/components/ui/text/Text';
 import Button from '@/components/ui/button/Button';
 import PasswordStrengthIndicator from '@/components/ui/passwordStrengthIndicator/PasswordStrengthIndicator';
-import styles from './Form.module.css';
+import styles from '../Form.module.css';
 
 interface ReactHookFormProps {
   onClose: () => void;

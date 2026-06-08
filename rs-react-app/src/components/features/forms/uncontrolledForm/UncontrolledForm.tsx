@@ -9,7 +9,7 @@ import { validationSchema } from '@/schema/validation';
 import { useAppSelector } from '@/store/hooks';
 import { addSubmission, type FormDataPayload } from '@/store/formSlice';
 import convertToBase64 from '@/utils/convertToBase64';
-import styles from './Form.module.css';
+import styles from '../Form.module.css';
 
 type FormErrors = Record<string, string>;
 interface UncontrolledFormProps {

@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from 'react';
 import { Provider } from 'react-redux';
-import UncontrolledForm from './components/features/forms/UncontrolledForm';
-import ReactHookForm from './components/features/forms/ReactHookForm';
+import UncontrolledForm from './components/features/forms/uncontrolledForm/UncontrolledForm';
+import ReactHookForm from './components/features/forms/reactHookForm/ReactHookForm';
 import Modal from './components/ui/modal/Modal';
 import Text from './components/ui/text/Text';
 import Button from './components/ui/button/Button';
