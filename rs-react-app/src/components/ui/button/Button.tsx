@@ -18,8 +18,8 @@ export default function Button({
   variant = 'default',
   ...props
 }: ButtonProps): ReactNode {
-  const variantClass = styles[variant] ? styles[variant] : '';
-  const colorClass = styles[color] ? styles[color] : '';
+  const variantClass = styles[variant] || '';
+  const colorClass = styles[color] || '';
   const combinedClasses = classNames(variantClass, colorClass, className);
 
   return (
