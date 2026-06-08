@@ -44,7 +44,7 @@ export default function PasswordStrengthIndicator({
     if (percent <= 25) return '#e63946';
     if (percent <= 50) return '#ff9f1c';
     if (percent <= 75) return '#ffdf1c';
-    return '#25452c';
+    return '#2e7d32';
   };
 
   const currentColor = getProgressBarColor(strength.percent);

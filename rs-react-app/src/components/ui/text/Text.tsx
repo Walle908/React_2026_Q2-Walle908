@@ -6,7 +6,7 @@ interface TextProps extends HTMLAttributes<HTMLElement> {
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
   children: ReactNode;
   className?: string;
-  color?: 'default' | 'accent' | 'accent2' | 'error';
+  color?: 'default' | 'accent' | 'accent1' | 'error';
   size?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   weight?: 'bold' | 'medium' | 'normal';
 }

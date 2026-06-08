@@ -15,7 +15,7 @@
 }
 
 .lg {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .xl {
@@ -34,8 +34,8 @@
   color: var(--accent1);
 }
 
-.accent2 {
-  color: var(--accent2);
+.accent1 {
+  color: var(--accent1);
 }
 
 .error {

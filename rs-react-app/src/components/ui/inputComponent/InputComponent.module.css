@@ -24,7 +24,7 @@
 .default {
   width: 100%;
   padding: 0.5rem 1rem;
-  background: var(--input-bg);
+  background: var(--light);
   color: var(--text);
   border-radius: 0.5rem;
   outline: none;
@@ -53,7 +53,7 @@
   width: 1.6rem;
   height: 1.6rem;
   margin: 0;
-  background-color: var(--input-bg);
+  background-color: var(--light);
   border: 2px solid var(--primary);
   border-radius: 50%;
   outline: none;
@@ -67,7 +67,7 @@
 
 .file {
   padding: 1rem;
-  background: var(--input-bg);
+  background: var(--light);
   border: 2px solid var(--additional);
   border-radius: 0.5rem;
   font-size: 1.4rem;

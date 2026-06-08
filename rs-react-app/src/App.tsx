@@ -7,6 +7,7 @@ import Text from './components/ui/text/Text';
 import Button from './components/ui/button/Button';
 import { store } from '../src/store/store';
 import styles from './App.module.css';
+import CardList from './components/features/cards/cardList/CardList';
 
 function App(): ReactNode {
   const [activeForm, setActiveForm] = useState<'uncontrolledForm' | 'hookForm' | null>(null);
@@ -14,14 +15,16 @@ function App(): ReactNode {
   return (
     <Provider store={store}>
       <div className={styles.container}>
-        <Text as="h1" size="xxl" weight="bold" color="accent2">
-          Hello! Please fill in forms!
+        <Text as="h1" size="xl" weight="bold" color="accent1">
+          Hello! Please fill out a form!
         </Text>
 
         <div className={styles.buttonContainer}>
           <Button onClick={() => setActiveForm('uncontrolledForm')}>Open Uncontrolled Form</Button>
           <Button onClick={() => setActiveForm('hookForm')}>Open React Hook Form</Button>
         </div>
+
+        <CardList />
 
         <Modal isOpen={activeForm !== null} onClose={() => setActiveForm(null)}>
           {activeForm === 'uncontrolledForm' && (

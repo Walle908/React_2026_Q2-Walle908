@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 5rem;
 }
 
 .buttonContainer {
@@ -14,7 +14,7 @@
   width: 100%;
   padding: 2rem;
   border-radius: 0.5rem;
-  background-color: var(--accent1);
+  background-color: var(--accent);
 }
 
 .title {
