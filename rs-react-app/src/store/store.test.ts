@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { store } from './store'; // Путь к вашему store.ts
+import { store } from './store';
 import { addSubmission } from './formSlice';
 import { mockPayload } from '@/test-utils/mocks';
 

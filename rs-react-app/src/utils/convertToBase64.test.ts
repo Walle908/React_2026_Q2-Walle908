@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'; // Если используете Jest, замените vi на jest
+import { describe, it, expect, vi } from 'vitest';
 import convertToBase64 from './convertToBase64';
 
 describe('convertToBase64', () => {
