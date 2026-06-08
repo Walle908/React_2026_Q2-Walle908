@@ -9,7 +9,7 @@ export interface FormDataPayload {
   password: string;
   gender: string;
   country: string;
-  image: string | null;
+  image: string;
   terms: boolean;
 }
 

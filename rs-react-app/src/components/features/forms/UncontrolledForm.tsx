@@ -1,16 +1,15 @@
-import { useState, type ReactNode, type SyntheticEvent } from 'react';
+import { useState, type ReactNode, type SubmitEvent } from 'react';
 import { useDispatch } from 'react-redux';
-
 import Text from '@/components/ui/text/Text';
 import InputComponent from '@/components/ui/inputComponent/InputComponent';
 import Button from '@/components/ui/button/Button';
 import PasswordStrengthIndicator from '@/components/ui/passwordStrengthIndicator/PasswordStrengthIndicator';
 import * as yup from 'yup';
 import { validationSchema } from '@/schema/validation';
+import { useAppSelector } from '@/store/hooks';
 import { addSubmission, type FormDataPayload } from '@/store/formSlice';
 import convertToBase64 from '@/utils/convertToBase64';
-import styles from './UncontrolledForm.module.css';
-import { useAppSelector } from '@/store/hooks';
+import styles from './Form.module.css';
 
 type FormErrors = Record<string, string>;
 
@@ -20,7 +19,7 @@ export default function UncontrolledForm(): ReactNode {
   const [passwordValue, setPasswordValue] = useState('');
   const countries = useAppSelector((state) => state.forms.countries);
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrors({});
 
@@ -35,7 +34,7 @@ export default function UncontrolledForm(): ReactNode {
       email: formData.get('email'),
       password: formData.get('password'),
       confirmPassword: formData.get('confirmPassword'),
-      gender: formData.get('gender') || undefined,
+      gender: formData.get('gender'),
       image: formData.get('image') as File,
       country: formData.get('country'),
       terms: formData.has('terms'),
@@ -62,6 +61,7 @@ export default function UncontrolledForm(): ReactNode {
 
       form.reset();
       setErrors({});
+      setPasswordValue('');
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const validationErrors: FormErrors = {};

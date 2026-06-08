@@ -51,7 +51,7 @@ export const validationSchema = yup.object({
     .required('Confirm password is required')
     .oneOf([yup.ref('password')], 'Passwords must match'),
 
-  gender: yup.string().required('Please select your gender').nullable(),
+  gender: yup.string().required('Please select your gender'),
 
   country: yup
     .string()
@@ -59,10 +59,13 @@ export const validationSchema = yup.object({
     .required('Country is required')
     .oneOf(COUNTRIES_LIST, 'Selected country is not allowed'),
 
-  terms: yup.boolean().oneOf([true], 'You must accept terms and conditions'),
+  terms: yup
+    .boolean()
+    .required('You must accept terms and conditions')
+    .oneOf([true], 'You must accept terms and conditions'),
 
   image: yup
-    .mixed<File>()
+    .mixed<FileList>()
     .required('Image is required')
     .test('validate-image', 'Image error', function (value) {
       if (!value) {
@@ -87,4 +90,4 @@ export const validationSchema = yup.object({
     }),
 });
 
-export type FormData = yup.InferType<typeof validationSchema>;
+export type FormValidFields = yup.InferType<typeof validationSchema>;

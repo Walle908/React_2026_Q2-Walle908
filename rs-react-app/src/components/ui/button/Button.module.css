@@ -49,3 +49,11 @@
   background-color: var(--accent);
   color: var(--text);
 }
+
+.default:disabled,
+.plain:disabled {
+  background-color: var(--disabled-light);
+  color: var(--disabled-dark);
+  opacity: 0.6;
+  pointer-events: none;
+}
