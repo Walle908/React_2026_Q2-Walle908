@@ -12,7 +12,11 @@ import Button from '@/components/ui/button/Button';
 import PasswordStrengthIndicator from '@/components/ui/passwordStrengthIndicator/PasswordStrengthIndicator';
 import styles from './Form.module.css';
 
-export default function ReactHookForm(): ReactNode {
+interface ReactHookFormProps {
+  onClose: () => void;
+}
+
+export default function ReactHookForm({ onClose }: ReactHookFormProps): ReactNode {
   const dispatch = useDispatch();
   const countries = useAppSelector((state) => state.forms.countries);
 
@@ -66,6 +70,7 @@ export default function ReactHookForm(): ReactNode {
 
       dispatch(addSubmission(formPayload));
       reset();
+      onClose();
     } catch (error) {
       console.error('Submission error:', error);
     }
@@ -83,7 +88,7 @@ export default function ReactHookForm(): ReactNode {
 
   return (
     <div className={styles.container}>
-      <Text as="h1" size="lg" weight="bold" color="accent">
+      <Text as="h1" size="lg" weight="bold" color="accent" className={styles.title}>
         React Hook Form (Controlled)
       </Text>
 

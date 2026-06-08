@@ -37,3 +37,7 @@
   min-height: 1.4rem;
   display: block;
 }
+
+.title {
+  text-align: center;
+}

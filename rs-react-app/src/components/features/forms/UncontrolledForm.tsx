@@ -12,8 +12,11 @@ import convertToBase64 from '@/utils/convertToBase64';
 import styles from './Form.module.css';
 
 type FormErrors = Record<string, string>;
+interface UncontrolledFormProps {
+  onClose: () => void;
+}
 
-export default function UncontrolledForm(): ReactNode {
+export default function UncontrolledForm({ onClose }: UncontrolledFormProps): ReactNode {
   const dispatch = useDispatch();
   const [errors, setErrors] = useState<FormErrors>({});
   const [passwordValue, setPasswordValue] = useState('');
@@ -62,6 +65,7 @@ export default function UncontrolledForm(): ReactNode {
       form.reset();
       setErrors({});
       setPasswordValue('');
+      onClose();
     } catch (err) {
       if (err instanceof yup.ValidationError) {
         const validationErrors: FormErrors = {};

@@ -31,7 +31,11 @@
 }
 
 .accent {
-  color: var(--accent);
+  color: var(--accent1);
+}
+
+.accent2 {
+  color: var(--accent2);
 }
 
 .error {

@@ -51,3 +51,37 @@ ul,
 li {
   margin: 0;
 }
+
+@media vivaldi, (-webkit-min-device-pixel-ratio: 0) {
+  html,
+  body {
+    scrollbar-color: auto;
+    scrollbar-width: auto;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 1.1rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--bg-additional);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent2);
+  border-radius: 0.5rem;
+  border: 0.3rem solid var(--bg-additional);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--hover);
+}
+
+@-moz-document url-prefix() {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent2) var(--bg-additional);
+  }
+}
