@@ -1,10 +1,10 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useCo2Data } from '../../hooks/useCo2Data';
 import { LoadingSpinner } from '../loading-spinner/loading-spinner';
-import { SearchBar } from '../search-bar/search-bar';
-import { YearSelector } from '../year-selector/year-selector';
+import { SearchBarMemo } from '../search-bar/search-bar';
+import { YearSelectorMemo } from '../year-selector/year-selector';
 import { CountryListMemo } from '../country-list/country-list';
-import { ColumnModal } from '../column-modal/column-modal';
+import { ColumnModalMemo } from '../column-modal/column-modal';
 import { getAvailableYears, getAvailableColumns } from '../../utils/data-transformers';
 
 import styles from './app.module.css';
@@ -90,8 +90,8 @@ export const App = () => {
 
       {/* Controls */}
       <div className={styles.controls}>
-        <SearchBar value={state.searchQuery} onChange={handleSearch} />
-        <YearSelector year={state.selectedYear} years={years} onChange={handleYearChange} />
+        <SearchBarMemo value={state.searchQuery} onChange={handleSearch} />
+        <YearSelectorMemo year={state.selectedYear} years={years} onChange={handleYearChange} />
 
         <div className={styles.sortContainer}>
           <label className={styles.sortLabel}>Sort by:</label>
@@ -129,7 +129,7 @@ export const App = () => {
       />
 
       {/* Column Modal */}
-      <ColumnModal
+      <ColumnModalMemo
         isOpen={state.isColumnModalOpen}
         availableColumns={availableColumns}
         selectedColumns={state.selectedColumns}
