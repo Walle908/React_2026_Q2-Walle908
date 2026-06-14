@@ -11,8 +11,8 @@
 - **Layouts effects**: <0.1 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/baseline/sort-countries-flame-baseline.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/baseline/sort-countries-ranked-baseline.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/baseline/sort-countries-flame-baseline.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/baseline/sort-countries-ranked-baseline.PNG)
 
 ### Interaction B: Search countries
 
@@ -21,8 +21,8 @@
 - **Layouts effects**: <0.1 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/baseline/search-countries-flame-baseline.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/baseline/search-countries-ranked-baseline.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/baseline/search-countries-flame-baseline.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/baseline/search-countries-ranked-baseline.PNG)
 
 ### Interaction C: Change year
 
@@ -31,8 +31,8 @@
 - **Layouts effects**: <0.1 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/baseline/change-year-flame-baseline.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/baseline/change-year-ranked-baseline.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/baseline/change-year-flame-baseline.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/baseline/change-year-ranked-baseline.PNG)
 
 ### Interaction D: Toggle column
 
@@ -41,8 +41,8 @@
 - **Layouts effects**: <0.1 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/baseline/toggle-column-flame-baseline.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/baseline/toggle-column-ranked-baseline.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/baseline/toggle-column-flame-baseline.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/baseline/toggle-column-ranked-baseline.PNG)
 
 ## Optimized Measurements
 
@@ -53,8 +53,8 @@
 - **Layouts effects**: 3.4 ms
 - **Passive effects**: 0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/optimized/sort-countries-flame-optimized.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/optimized/sort-countries-ranked-optimized.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/optimized/sort-countries-flame-optimized.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/optimized/sort-countries-ranked-optimized.PNG)
 
 ### Interaction B: Search countries
 
@@ -63,8 +63,8 @@
 - **Layouts effects**: 3.5 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/optimized/search-countries-flame-optimized.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/optimized/search-countries-ranked-optimized.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/optimized/search-countries-flame-optimized.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/optimized/search-countries-ranked-optimized.PNG)
 
 ### Interaction C: Change year
 
@@ -73,8 +73,8 @@
 - **Layouts effects**: 1.6 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/optimized/change-year-flame-optimized.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/optimized/change-year-ranked-optimized.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/optimized/change-year-flame-optimized.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/optimized/change-year-ranked-optimized.PNG)
 
 ### Interaction D: Toggle column
 
@@ -83,8 +83,8 @@
 - **Layouts effects**: <0.1 ms
 - **Passive effects**: <0.1 ms
 - **Screenshot**:
-  - Flamegraph chart ![flamegraph](/src/performance-starter/screenshots/optimized/toggle-column-flame-optimized.PNG)
-  - Ranked chart ![ranked](/src/performance-starter/screenshots/optimized/toggle-column-ranked-optimized.PNG)
+  - Flamegraph chart ![flamegraph](performance-starter/screenshots/optimized/toggle-column-flame-optimized.PNG)
+  - Ranked chart ![ranked](performance-starter/screenshots/optimized/toggle-column-ranked-optimized.PNG)
 
 ## Summary of Improvements
 
