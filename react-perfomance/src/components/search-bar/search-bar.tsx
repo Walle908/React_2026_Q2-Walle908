@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import styles from './search-bar.module.css';
 
 type SearchBarProps = {

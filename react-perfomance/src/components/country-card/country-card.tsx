@@ -20,9 +20,11 @@ const CountryCard = ({ country, selectedYear, selectedColumns }: CountryCardProp
   const yearDataMap = useMemo(() => {
     return createYearDataMap(country.data);
   }, [country.data]);
+
   const population = useMemo(() => {
     return getPopulationForYear(yearDataMap, selectedYear);
   }, [yearDataMap, selectedYear]);
+
   const co2 = useMemo(() => {
     return getCo2ForYear(yearDataMap, selectedYear);
   }, [yearDataMap, selectedYear]);
@@ -52,9 +54,11 @@ export const CountryCardMemo = memo(CountryCard, (prevProps, nextProps) => {
   if (prevProps.country !== nextProps.country) {
     return false;
   }
+
   if (prevProps.selectedYear !== nextProps.selectedYear) {
     return false;
   }
+
   if (prevProps.selectedColumns.length !== nextProps.selectedColumns.length) {
     return false;
   }

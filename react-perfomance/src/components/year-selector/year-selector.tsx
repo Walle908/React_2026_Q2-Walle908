@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import styles from './year-selector.module.css';
 
 type YearSelectorProps = {
