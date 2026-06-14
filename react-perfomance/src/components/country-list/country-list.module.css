@@ -1,0 +1,14 @@
+.countryList {
+  padding: 16px;
+}
+
+.virtualListContainer {
+  margin: 0 auto;
+  max-width: 1200px; /* или ваша ширина контента */
+  border-radius: 8px;
+}
+
+.noDataMessage {
+  display: flex;
+  justify-content: center;
+}
