@@ -2,8 +2,15 @@ import type { Country } from '../../types';
 import { CountryCardMemo } from '../country-card/country-card';
 import { getPopulationForYear, createYearDataMap } from '../../utils/data-transformers';
 import { useMemo, memo } from 'react';
+import { List, type RowComponentProps } from 'react-window';
 
 import styles from './country-list.module.css';
+
+interface ListSharedData {
+  filteredCountries: Country[];
+  selectedYear: number;
+  selectedColumns: string[];
+}
 
 type CountryListProps = {
   countries: Country[];
@@ -14,6 +21,29 @@ type CountryListProps = {
   sortField: 'name' | 'population';
   sortOrder: 'asc' | 'desc';
   onYearChange: (year: number) => void;
+};
+
+const CARD_HEIGHT = 280;
+
+const Row = ({
+  index,
+  style,
+  filteredCountries,
+  selectedYear,
+  selectedColumns,
+}: RowComponentProps<ListSharedData>): React.JSX.Element => {
+  const country = filteredCountries[index];
+
+  return (
+    <div style={style}>
+      <CountryCardMemo
+        key={country.id}
+        country={country}
+        selectedYear={selectedYear}
+        selectedColumns={selectedColumns}
+      />
+    </div>
+  );
 };
 
 const CountryList = ({
@@ -51,17 +81,28 @@ const CountryList = ({
     });
   }, [countries, searchQuery, selectedRegion, selectedYear, sortField, sortOrder]);
 
+  const rowSharedData = useMemo<ListSharedData>(
+    () => ({
+      filteredCountries,
+      selectedYear,
+      selectedColumns,
+    }),
+    [filteredCountries, selectedYear, selectedColumns]
+  );
+
+  if (filteredCountries.length === 0) {
+    return <div className={styles.noDataMessage}>No countries match filters</div>;
+  }
+
   return (
-    <div className={styles.countryList}>
-      {filteredCountries.map((country) => (
-        <CountryCardMemo
-          key={country.id}
-          country={country}
-          selectedYear={selectedYear}
-          selectedColumns={selectedColumns}
-        />
-      ))}
-    </div>
+    <List
+      rowCount={filteredCountries.length}
+      rowHeight={CARD_HEIGHT}
+      rowComponent={Row}
+      className={styles.virtualListContainer}
+      style={{ height: 560, width: '100%' }}
+      rowProps={rowSharedData}
+    />
   );
 };
 
