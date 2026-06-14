@@ -6,6 +6,7 @@ import {
   createYearDataMap,
 } from '../../utils/data-transformers';
 import { formatNumber } from '../../utils/format-utils';
+import { useMemo, memo } from 'react';
 
 import styles from './country-card.module.css';
 
@@ -15,10 +16,16 @@ type CountryCardProps = {
   selectedColumns: string[];
 };
 
-export const CountryCard = ({ country, selectedYear, selectedColumns }: CountryCardProps) => {
-  const yearDataMap = createYearDataMap(country.data);
-  const population = getPopulationForYear(yearDataMap, selectedYear);
-  const co2 = getCo2ForYear(yearDataMap, selectedYear);
+const CountryCard = ({ country, selectedYear, selectedColumns }: CountryCardProps) => {
+  const yearDataMap = useMemo(() => {
+    return createYearDataMap(country.data);
+  }, [country.data]);
+  const population = useMemo(() => {
+    return getPopulationForYear(yearDataMap, selectedYear);
+  }, [yearDataMap, selectedYear]);
+  const co2 = useMemo(() => {
+    return getCo2ForYear(yearDataMap, selectedYear);
+  }, [yearDataMap, selectedYear]);
 
   return (
     <div className={styles.card}>
@@ -40,3 +47,17 @@ export const CountryCard = ({ country, selectedYear, selectedColumns }: CountryC
     </div>
   );
 };
+
+export const CountryCardMemo = memo(CountryCard, (prevProps, nextProps) => {
+  if (prevProps.country !== nextProps.country) {
+    return false;
+  }
+  if (prevProps.selectedYear !== nextProps.selectedYear) {
+    return false;
+  }
+  if (prevProps.selectedColumns.length !== nextProps.selectedColumns.length) {
+    return false;
+  }
+
+  return prevProps.selectedColumns.every((col, index) => col === nextProps.selectedColumns[index]);
+});
