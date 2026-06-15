@@ -1,0 +1,55 @@
+.xxs {
+  font-size: 1rem;
+}
+
+.xs {
+  font-size: 1.2rem;
+}
+
+.sm {
+  font-size: 1.4rem;
+}
+
+.md {
+  font-size: 1.6rem;
+}
+
+.lg {
+  font-size: 2rem;
+}
+
+.xl {
+  font-size: 3rem;
+}
+
+.xxl {
+  font-size: 4rem;
+}
+
+.base {
+  color: var(--text);
+}
+
+.accent {
+  color: var(--accent);
+}
+
+.accent1 {
+  color: var(--accent1);
+}
+
+.error {
+  color: var(--error);
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.medium {
+  font-weight: 500;
+}
+
+.normal {
+  font-weight: 400;
+}

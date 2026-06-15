@@ -1,0 +1,114 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.row input {
+  order: -1;
+}
+
+.label {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.default {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: var(--light);
+  color: var(--text);
+  border-radius: 0.5rem;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  border: 0.2rem solid var(--additional);
+  font-size: 1.4rem;
+}
+
+.default:hover {
+  border-color: var(--hover);
+}
+.default:focus {
+  border-color: var(--primary);
+}
+
+.checkbox {
+  width: 1.6rem;
+  height: 1.6rem;
+  accent-color: var(--primary);
+  margin: 0;
+}
+
+.radio {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 0;
+  background-color: var(--light);
+  border: 0.2rem solid var(--primary);
+  border-radius: 50%;
+  outline: none;
+  transition: 0.2s all linear;
+}
+
+.radio:checked {
+  border: 0.4rem solid var(--additional);
+  background-color: var(--primary);
+}
+
+.file {
+  padding: 1rem;
+  background: var(--light);
+  border: 0.2rem solid var(--additional);
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.file::file-selector-button {
+  width: max-content;
+  height: 3.5rem;
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  margin-right: 1rem;
+  background-color: var(--primary);
+  color: var(--text);
+  font-size: 1.4rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.file::file-selector-button:hover {
+  background-color: var(--hover);
+}
+
+.default::-webkit-outer-spin-button,
+.default::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.default[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.error {
+  border-color: var(--error);
+}
+
+.errorText {
+  min-height: 1.4rem;
+  display: block;
+}

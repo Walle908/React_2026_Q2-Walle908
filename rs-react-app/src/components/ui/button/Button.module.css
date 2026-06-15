@@ -1,0 +1,59 @@
+.default {
+  min-width: max-content;
+  width: 10rem;
+  height: 3.5rem;
+  border-radius: 0.8rem;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.default:hover {
+  background-color: var(--hover);
+}
+
+.plain {
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s;
+}
+
+.plain:hover {
+  color: var(--hover);
+}
+
+.no {
+  background: none;
+  color: var(--accent1);
+}
+
+.base {
+  background-color: var(--primary);
+  color: var(--text);
+}
+
+.error {
+  background-color: var(--error);
+  color: var(--text);
+}
+
+.accent {
+  background-color: var(--accent);
+  color: var(--text);
+}
+
+.default:disabled,
+.plain:disabled {
+  background-color: var(--disabled-light);
+  color: var(--disabled-dark);
+  opacity: 0.6;
+  pointer-events: none;
+}
