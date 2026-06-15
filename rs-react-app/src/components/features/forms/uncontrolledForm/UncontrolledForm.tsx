@@ -63,7 +63,6 @@ export default function UncontrolledForm({ onClose }: UncontrolledFormProps): Re
       );
 
       form.reset();
-      setErrors({});
       setPasswordValue('');
       onClose();
     } catch (err) {
