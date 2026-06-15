@@ -22,9 +22,9 @@ export default function Text({
   ...props
 }: TextProps): ReactNode {
   const Tag = as;
-  const sizeClass = styles[size] || '';
-  const colorClass = styles[color] || '';
-  const weightClass = styles[weight] || '';
+  const sizeClass = styles[size];
+  const colorClass = styles[color];
+  const weightClass = styles[weight];
 
   const combinedClasses = classNames(sizeClass, colorClass, weightClass, className);
 

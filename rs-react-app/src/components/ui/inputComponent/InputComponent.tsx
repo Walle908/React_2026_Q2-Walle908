@@ -16,7 +16,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
     { className = '', variant = 'default', isRow = false, label, error, ...props },
     ref
   ): ReactNode => {
-    const variantClass = styles[variant] || '';
+    const variantClass = styles[variant];
     const errorClass = error ? styles.error : '';
     const combinedClasses = classNames(variantClass, errorClass, className);
 
