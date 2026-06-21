@@ -1,0 +1,24 @@
+.aboutWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+  margin: auto;
+}
+
+.aboutAuthor,
+.aboutCourse {
+  display: flex;
+  gap: 1rem;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.link:hover {
+  color: var(--hover);
+}

@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
-import styles from './AboutPage.module.css';
+import styles from '@/styles/aboutPage.module.css';
 
 export default function AboutPage(): ReactNode {
   return (
@@ -13,7 +13,11 @@ export default function AboutPage(): ReactNode {
         <Text as="span" size="md" weight="bold">
           Author:
         </Text>
-        <a className={styles.link} href="https://github.com/Walle908">
+        <a
+          className={styles.link}
+          href="https://github.com/Walle908"
+          rel="noreferrer"
+          target="_blank">
           Elena Valiullina
         </a>
       </Text>
@@ -22,7 +26,11 @@ export default function AboutPage(): ReactNode {
         <Text as="span" size="md" weight="bold">
           Link to the course:
         </Text>
-        <a className={styles.link} href="https://rs.school/courses/reactjs">
+        <a
+          className={styles.link}
+          href="https://rs.school/courses/reactjs"
+          rel="noreferrer"
+          target="_blank">
           RS School React course
         </a>
       </Text>
