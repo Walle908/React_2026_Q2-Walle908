@@ -21,7 +21,7 @@ function ThemeToggleRaw(): ReactNode {
 const ThemeToggle = dynamic(() => Promise.resolve(ThemeToggleRaw), {
   ssr: false,
   loading: () => (
-    <Button color="no" variant="plain" className={styles.switcher}>
+    <Button color="no" variant="plain">
       🌙
     </Button>
   ),
