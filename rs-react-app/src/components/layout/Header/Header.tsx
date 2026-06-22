@@ -12,7 +12,7 @@ function ThemeToggleRaw(): ReactNode {
   const { isDarkTheme, toggleTheme } = useTheme();
 
   return (
-    <Button color="no" onClick={toggleTheme} variant="plain">
+    <Button className={styles.switcher} variant="plain" color="no" onClick={toggleTheme}>
       {isDarkTheme ? '☀️' : '🌙'}
     </Button>
   );
@@ -21,7 +21,7 @@ function ThemeToggleRaw(): ReactNode {
 const ThemeToggle = dynamic(() => Promise.resolve(ThemeToggleRaw), {
   ssr: false,
   loading: () => (
-    <Button color="no" variant="plain">
+    <Button color="no" variant="plain" className={styles.switcher}>
       🌙
     </Button>
   ),
