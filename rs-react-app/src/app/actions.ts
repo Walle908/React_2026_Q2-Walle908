@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { type Character } from '@/types/types';
 
 export async function generateCsvAction(chars: Character[]) {
@@ -26,4 +27,8 @@ export async function generateCsvAction(chars: Character[]) {
     success: true,
     data: csvContent,
   };
+}
+
+export async function refreshData() {
+  revalidatePath('/');
 }

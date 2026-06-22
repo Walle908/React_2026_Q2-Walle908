@@ -1,3 +1,5 @@
+'use client';
+
 import Button from '@/components/ui/Button/Button';
 import Text from '@/components/ui/Text/Text';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';

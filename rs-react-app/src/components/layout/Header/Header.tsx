@@ -1,18 +1,36 @@
+'use client';
+
 import { type ReactNode } from 'react';
+import dynamic from 'next/dynamic';
 import ErrorButton from '@/components/features/error-handling/ErrorButton/ErrorButton';
 import Button from '@/components/ui/Button/Button';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import { useTheme } from '@/contexts/ThemeContext';
 import styles from './Header.module.css';
 
-export default function Header(): ReactNode {
+function ThemeToggleRaw(): ReactNode {
   const { isDarkTheme, toggleTheme } = useTheme();
 
   return (
+    <Button color="no" onClick={toggleTheme} variant="plain">
+      {isDarkTheme ? '☀️' : '🌙'}
+    </Button>
+  );
+}
+
+const ThemeToggle = dynamic(() => Promise.resolve(ThemeToggleRaw), {
+  ssr: false,
+  loading: () => (
+    <Button color="no" variant="plain">
+      🌙
+    </Button>
+  ),
+});
+
+export default function Header(): ReactNode {
+  return (
     <header className={styles.header}>
-      <Button className={styles.switcher} color="no" onClick={toggleTheme} variant="plain">
-        {isDarkTheme ? '☀️' : '🌙'}
-      </Button>
+      <ThemeToggle />
       <LinkComponent className={styles.aboutLink} href="/about">
         About
       </LinkComponent>

@@ -1,3 +1,5 @@
+'use client';
+
 import { type ReactNode, useState } from 'react';
 import Button from '@/components/ui/Button/Button';
 import { ErrorMessage } from '@/constants/constants';
