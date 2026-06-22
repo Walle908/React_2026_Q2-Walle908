@@ -19,3 +19,12 @@ export const enum SearchParams {
 }
 
 export const Delay = 500;
+
+export const ApiError = {
+  HTTP_404: 'HTTP_404',
+  HTTP_429: 'HTTP_429',
+  HTTP_500: 'HTTP_500',
+  HTTP_502: 'HTTP_502',
+  HTTP_503: 'HTTP_503',
+  NETWORK_ERROR: 'NETWORK_ERROR',
+} as const;

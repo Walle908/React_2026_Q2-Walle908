@@ -1,3 +1,5 @@
+'use client';
+
 import { type ReactNode } from 'react';
 import SearchForm from '@/components/features/search/SearchForm/SearchForm';
 import Text from '@/components/ui/Text/Text';

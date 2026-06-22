@@ -1,3 +1,5 @@
+'use client';
+
 import { type ChangeEvent, type ReactNode, type SubmitEvent, useState } from 'react';
 import Button from '@/components/ui/Button/Button';
 import Input from '@/components/ui/Input/Input';

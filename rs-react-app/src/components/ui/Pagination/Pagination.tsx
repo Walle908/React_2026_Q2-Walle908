@@ -1,20 +1,20 @@
 import { type ReactNode } from 'react';
-import { useSearchParams } from 'react-router';
 import Button from '@/components/ui/Button/Button';
 import Text from '@/components/ui/Text/Text';
-import { initialPage, SearchParams } from '@/constants/constants';
+import { initialPage } from '@/constants/constants';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
   onChange: (page: number) => void;
+  currentPage: number;
   totalPages: number;
 }
 
-export default function Pagination({ onChange, totalPages }: PaginationProps): ReactNode {
-  const [searchParams] = useSearchParams();
-
-  const currentPage = Number(searchParams.get(SearchParams.PAGE) || initialPage);
-
+export default function Pagination({
+  onChange,
+  currentPage,
+  totalPages,
+}: PaginationProps): ReactNode {
   return (
     <div className={styles.paginationWrapper}>
       <Button disabled={currentPage === initialPage} onClick={() => onChange(currentPage - 1)}>

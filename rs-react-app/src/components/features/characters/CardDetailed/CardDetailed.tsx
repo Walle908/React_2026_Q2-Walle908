@@ -1,45 +1,36 @@
 import { type ReactNode } from 'react';
-import { useSearchParams } from 'react-router';
 import CardDetailsContent from '@/components/features/characters/CardDetailedContent/CardDetailedContent';
 import Button from '@/components/ui/Button/Button';
-import Loader from '@/components/ui/Loader/Loader';
+import { type Character } from '@/types/types';
 import Text from '@/components/ui/Text/Text';
-import { SearchParams } from '@/constants/constants';
-import { useGetCharByIdQuery } from '@/services/apiSlice';
-import getErrorMessage from '@/utils/getErrorMessage';
+import { ErrorMessage } from '@/constants/constants';
 import styles from './CardDetailed.module.css';
 
-export default function CardDetailed(): ReactNode {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const id = searchParams.get(SearchParams.DETAILS);
+interface CardDetailedProps {
+  char: Character | null;
+  errorMessage: string;
+  onClose: () => void;
+}
 
-  const { data: char, error, isFetching, isLoading } = useGetCharByIdQuery(id ?? '', { skip: !id });
-
-  const errorMessage = getErrorMessage(error);
-
-  const closeCard = () => {
-    const newParams = new URLSearchParams(searchParams);
-    newParams.delete(SearchParams.DETAILS);
-    setSearchParams(newParams);
-  };
-
-  if (isLoading || isFetching) {
-    return <Loader />;
-  }
-
-  if (!id) {
-    return null;
-  }
-
-  if (!char) {
+export default function CardDetailed({
+  char,
+  errorMessage,
+  onClose,
+}: CardDetailedProps): ReactNode {
+  if (errorMessage !== ErrorMessage.NO_ERROR) {
     return (
       <div className={styles.errorWrapper}>
         <Text as="h2" className={styles.errorTitle} size="lg">
           {errorMessage}
         </Text>
-        <Button onClick={closeCard}>Close</Button>
+        <Button onClick={onClose}>Close</Button>
       </div>
     );
   }
-  return <CardDetailsContent character={char} onClose={closeCard} />;
+
+  if (!char) {
+    return null;
+  }
+
+  return <CardDetailsContent character={char} onClose={onClose} />;
 }

@@ -13,7 +13,7 @@ export default function Header(): ReactNode {
       <Button className={styles.switcher} color="no" onClick={toggleTheme} variant="plain">
         {isDarkTheme ? '☀️' : '🌙'}
       </Button>
-      <LinkComponent className={styles.aboutLink} to="/about">
+      <LinkComponent className={styles.aboutLink} href="/about">
         About
       </LinkComponent>
       <ErrorButton />

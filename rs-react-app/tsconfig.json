@@ -38,6 +38,6 @@
       }
     ]
   },
-  "include": ["src/**/*", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
+  "include": ["src/**/*", "next-env.d.ts", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],
   "exclude": ["./node_modules", "./next"]
 }

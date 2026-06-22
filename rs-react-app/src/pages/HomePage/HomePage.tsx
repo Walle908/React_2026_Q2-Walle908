@@ -117,13 +117,22 @@ export default function HomePage(): ReactNode {
               <div className={styles.resultsWrapper}>
                 {showPagination && (
                   <div className={styles.rowWrapper}>
-                    <Pagination onChange={handlePageChange} totalPages={totalPages} />
+                    <Pagination
+                      onChange={handlePageChange}
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                    />
                     <Button color={'accent'} disabled={isAnyLoading} onClick={handleRefresh}>
                       {isAnyLoading ? 'Updating...' : 'Refresh'}
                     </Button>
                   </div>
                 )}
-                <ResultBlock chars={chars} errorMessage={errorMessage} />
+                <ResultBlock
+                  chars={chars}
+                  errorMessage={errorMessage}
+                  currentPage={currentPage}
+                  currentQuery={query}
+                />
               </div>
             )}
           </div>
