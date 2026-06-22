@@ -32,6 +32,7 @@ export default function CardDetailsContent({
         src={character.image}
         width={200}
         height={200}
+        priority
       />
 
       <div className={styles.cardDescription}>

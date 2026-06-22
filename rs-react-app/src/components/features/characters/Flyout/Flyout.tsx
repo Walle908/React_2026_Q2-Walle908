@@ -3,6 +3,7 @@ import Text from '@/components/ui/Text/Text';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { unselectAll } from '@/store/reducers/selectedCharactersSlice';
 import { type Character } from '@/types/types';
+import { generateCsvAction } from '@/app/actions';
 import styles from './Flyout.module.css';
 
 export default function Flyout() {
@@ -11,34 +12,23 @@ export default function Flyout() {
 
   if (selectedChars.length === 0) return null;
 
-  const handleDownload = (chars: Character[]) => {
-    if (selectedChars.length === 0) return;
-    const headers = ['Name', 'Status', 'Species', 'Type', 'Gender', 'Origin', 'Location', 'URL'];
+  const handleDownload = async (chars: Character[]) => {
+    if (chars.length === 0) return;
+    const result = await generateCsvAction(chars);
 
-    const charsInfo = chars.map((c) => [
-      c.name,
-      c.status,
-      c.species,
-      c.type,
-      c.gender,
-      c.origin.name,
-      c.location.name,
-      c.url,
-    ]);
+    if (result.success && result.data) {
+      const blob = new Blob([result.data], { type: 'text/csv;charset=utf-8;' });
 
-    const csvContent = [headers, ...charsInfo].map((row) => row.join(',')).join('\n');
+      const url = URL.createObjectURL(blob);
 
-    const blob = new Blob([csvContent], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${chars.length}_items.csv`;
 
-    const url = URL.createObjectURL(blob);
+      a.click();
 
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${chars.length}_items.csv`;
-
-    a.click();
-
-    URL.revokeObjectURL(url);
+      URL.revokeObjectURL(url);
+    }
   };
 
   return (
