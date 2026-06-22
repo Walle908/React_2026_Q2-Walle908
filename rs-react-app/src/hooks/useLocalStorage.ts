@@ -5,6 +5,10 @@ export default function useLocalStorage<T>(
   initialValue: T = '' as unknown as T
 ): [T, React.Dispatch<React.SetStateAction<T>>] {
   const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
+
     try {
       const item = localStorage.getItem(key);
       return item ? (JSON.parse(item) as T) : initialValue;
