@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Providers } from './providers';
+import { type ReactNode } from 'react';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {
@@ -9,15 +10,7 @@ export const metadata: Metadata = {
   title: 'rs-react-app',
 };
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const themeInitializerScript = `
     (function() {
       try {
@@ -32,7 +25,7 @@ export default async function RootLayout({
   `;
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitializerScript }} />
       </head>
