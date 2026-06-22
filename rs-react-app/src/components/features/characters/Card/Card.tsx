@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import Image from 'next/image';
 import Input from '@/components/ui/Input/Input';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import Text from '@/components/ui/Text/Text';
@@ -12,14 +13,16 @@ interface CardProps {
   char: Character;
   currentPage: number;
   currentQuery: string;
+  index: number;
 }
 
-export default function Card({ char, currentPage, currentQuery }: CardProps): ReactNode {
+export default function Card({ char, index, currentPage, currentQuery }: CardProps): ReactNode {
   const dispatch = useAppDispatch();
   const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);
   const isSelected = selectedChars.some((item) => item.id === char.id);
 
   const href = buildUrl(currentPage, currentQuery, String(char.id));
+  const shouldPreload = index < 4;
 
   return (
     <LinkComponent href={href} variant="cardLink" scroll={false}>
@@ -31,7 +34,14 @@ export default function Card({ char, currentPage, currentQuery }: CardProps): Re
         type="checkbox"
         variant="checkbox"
       />
-      <img alt={char.name} className={styles.cardImg} src={char.image} />
+      <Image
+        alt={char.name}
+        className={styles.cardImg}
+        src={char.image}
+        width={200}
+        height={200}
+        preload={shouldPreload}
+      />
       <Text as="h2" className={styles.cardTitle} size="md">
         {char.name}
       </Text>

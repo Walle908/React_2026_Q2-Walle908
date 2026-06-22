@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+import Image from 'next/image';
 import Button from '@/components/ui/Button/Button';
 import Text from '@/components/ui/Text/Text';
 import { type Character } from '@/types/types';
@@ -24,11 +25,13 @@ export default function CardDetailsContent({
 
   return (
     <div className={styles.cardWrapper}>
-      <img
+      <Image
         alt={character.name}
         className={styles.cardImg}
         key={character.id}
         src={character.image}
+        width={200}
+        height={200}
       />
 
       <div className={styles.cardDescription}>

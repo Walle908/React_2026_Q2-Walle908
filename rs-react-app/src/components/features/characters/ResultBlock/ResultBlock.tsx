@@ -31,8 +31,14 @@ export default function ResultBlock({
   return (
     <div className={styles.resultBlock}>
       <div className={styles.cardsWrapper}>
-        {chars.map((char) => (
-          <Card char={char} key={char.id} currentPage={currentPage} currentQuery={currentQuery} />
+        {chars.map((char, index) => (
+          <Card
+            char={char}
+            index={index}
+            key={char.id}
+            currentPage={currentPage}
+            currentQuery={currentQuery}
+          />
         ))}
       </div>
     </div>

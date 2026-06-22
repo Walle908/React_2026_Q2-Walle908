@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic';
 
+import { Suspense } from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Flyout from './features/characters/Flyout/Flyout';
@@ -10,6 +11,7 @@ import Pagination from '@/components/ui/Pagination/Pagination';
 import Button from './ui/Button/Button';
 import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
 import CardDetailed from '@/components/features/characters/CardDetailed/CardDetailed';
+import Loader from './ui/Loader/Loader';
 import { initialPage } from '@/constants/constants';
 import mapError from '@/utils/mapError';
 import buildUrl from '@/utils/buildUrl';
@@ -102,22 +104,25 @@ export default function HomeClient({
                   </Button>
                 </div>
               )}
-
-              <ResultBlock
-                chars={chars}
-                errorMessage={listErrorMessage}
-                currentPage={currentPage}
-                currentQuery={currentQuery}
-              />
+              <Suspense fallback={<Loader />}>
+                <ResultBlock
+                  chars={chars}
+                  errorMessage={listErrorMessage}
+                  currentPage={currentPage}
+                  currentQuery={currentQuery}
+                />
+              </Suspense>
             </div>
           </div>
 
           {characterId && (
             <aside className={styles.rightPanelDetails} onClick={(e) => e.stopPropagation()}>
-              <CardDetailed
-                char={char}
-                errorMessage={charErrorMessage}
-                onClose={closeCard}></CardDetailed>
+              <Suspense fallback={<Loader />}>
+                <CardDetailed
+                  char={char}
+                  errorMessage={charErrorMessage}
+                  onClose={closeCard}></CardDetailed>
+              </Suspense>
             </aside>
           )}
         </section>
