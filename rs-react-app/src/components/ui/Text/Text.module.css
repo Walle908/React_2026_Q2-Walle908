@@ -34,6 +34,10 @@
   color: var(--error);
 }
 
+.additional {
+  color: var(--additional);
+}
+
 .medium {
   font-weight: 600;
 }

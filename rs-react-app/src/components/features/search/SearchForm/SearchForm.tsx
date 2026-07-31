@@ -1,7 +1,8 @@
 'use client';
 
 import { type ChangeEvent, type SubmitEvent, type ReactNode, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button/Button';
 import Input from '@/components/ui/Input/Input';
 import { localStorageKey, initialPage } from '@/constants/constants';
@@ -14,7 +15,15 @@ interface SearchProps {
 
 export default function SearchForm({ initialValue }: SearchProps): ReactNode {
   const [value, setValue] = useState(initialValue);
+  const [prevInitialValue, setPrevInitialValue] = useState(initialValue);
   const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations('Search');
+
+  if (initialValue !== prevInitialValue) {
+    setValue(initialValue);
+    setPrevInitialValue(initialValue);
+  }
 
   const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +36,10 @@ export default function SearchForm({ initialValue }: SearchProps): ReactNode {
     }
 
     setValue(trimmedValue);
-    router.push(buildUrl(initialPage, trimmedValue));
+
+    const queryObj = buildUrl(initialPage, trimmedValue);
+
+    router.push({ pathname, query: queryObj });
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,11 +51,11 @@ export default function SearchForm({ initialValue }: SearchProps): ReactNode {
   };
 
   return (
-    <form className={styles.searchForm} onSubmit={onSubmit} key={initialValue}>
+    <form className={styles.searchForm} onSubmit={onSubmit}>
       <div className={styles.searchWrapper}>
         <Input
           onChange={onChange}
-          placeholder="Search a character..."
+          placeholder={t('placeholder')}
           type="search"
           value={value}
           variant="search"
@@ -54,7 +66,7 @@ export default function SearchForm({ initialValue }: SearchProps): ReactNode {
           </Button>
         )}
       </div>
-      <Button type="submit">Search</Button>
+      <Button type="submit">{t('search')}</Button>
     </form>
   );
 }

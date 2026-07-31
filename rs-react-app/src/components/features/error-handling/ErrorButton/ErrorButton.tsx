@@ -1,10 +1,13 @@
 'use client';
 
 import { type ReactNode, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button/Button';
 import { ErrorMessage } from '@/constants/constants';
 
 export default function ErrorButton(): ReactNode {
+  const t = useTranslations('App');
+
   const [isError, setError] = useState(false);
 
   const onClick = () => {
@@ -17,7 +20,7 @@ export default function ErrorButton(): ReactNode {
 
   return (
     <Button color="error" onClick={onClick}>
-      Generate Error
+      {t('generateError')}
     </Button>
   );
 }

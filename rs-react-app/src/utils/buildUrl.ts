@@ -1,16 +1,20 @@
-export default function buildUrl(page: number, query?: string, details?: string | null) {
-  const params = new URLSearchParams();
+export type UrlQueryObj = {
+  page: string;
+  query?: string;
+  details?: string;
+};
 
-  params.set('page', String(page));
+export default function buildUrl(page: number, query?: string, details?: string | null) {
+  const params: UrlQueryObj = { page: String(page) };
 
   const trimmedQuery = query?.trim();
   if (trimmedQuery) {
-    params.set('query', trimmedQuery);
+    params.query = trimmedQuery;
   }
 
   if (details) {
-    params.set('details', details);
+    params.details = details;
   }
 
-  return `/?${params.toString()}`;
+  return params;
 }

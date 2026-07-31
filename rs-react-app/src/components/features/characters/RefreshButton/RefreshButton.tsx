@@ -2,6 +2,7 @@
 
 import { useTransition } from 'react';
 import { refreshData } from '@/app/actions';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button/Button';
 
 export default function RefreshButton() {
@@ -13,9 +14,11 @@ export default function RefreshButton() {
     });
   };
 
+  const t = useTranslations('App');
+
   return (
     <Button color={'accent'} onClick={handleRefresh} disabled={isPending}>
-      {isPending ? 'Updating...' : 'Refresh'}
+      {isPending ? t('updating') : t('refresh')}
     </Button>
   );
 }

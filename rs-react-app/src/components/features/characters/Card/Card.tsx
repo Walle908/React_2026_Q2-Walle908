@@ -1,6 +1,7 @@
 'use client';
 
 import { type ReactNode } from 'react';
+import { usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
 import Input from '@/components/ui/Input/Input';
 import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
@@ -20,14 +21,16 @@ interface CardProps {
 
 export default function Card({ char, index, currentPage, currentQuery }: CardProps): ReactNode {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
   const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);
   const isSelected = selectedChars.some((item) => item.id === char.id);
 
-  const href = buildUrl(currentPage, currentQuery, String(char.id));
+  const queryObj = buildUrl(currentPage, currentQuery, String(char.id));
+
   const shouldPreload = index < 4;
 
   return (
-    <LinkComponent href={href} variant="cardLink" scroll={false}>
+    <LinkComponent href={{ pathname, query: queryObj }} variant="cardLink" scroll={false}>
       <Input
         checked={isSelected}
         className={styles.inputCheckbox}

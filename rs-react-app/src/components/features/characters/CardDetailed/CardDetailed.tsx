@@ -1,7 +1,8 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 import buildUrl from '@/utils/buildUrl';
 import CardDetailsContent from '@/components/features/characters/CardDetailedContent/CardDetailedContent';
 import Button from '@/components/ui/Button/Button';
@@ -24,16 +25,19 @@ export default function CardDetailed({
   currentQuery,
 }: CardDetailedProps): ReactNode {
   const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations('App');
 
   const onClose = () => {
-    router.push(buildUrl(currentPage, currentQuery), { scroll: false });
+    const queryObj = buildUrl(currentPage, currentQuery, null);
+    router.push({ pathname, query: queryObj }, { scroll: false });
   };
 
   const handleAsideClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
   };
 
-  if (errorMessage !== ErrorMessage.NO_ERROR) {
+  if (errorMessage !== t(ErrorMessage.NO_ERROR)) {
     return (
       <aside className={styles.rightPanelDetails} onClick={handleAsideClick}>
         <div className={styles.errorWrapper}>

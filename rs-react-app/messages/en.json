@@ -1,0 +1,49 @@
+{
+  "App": {
+    "mainTitle": "Rick and Morty",
+    "aboutTitle": "About app",
+    "description": "This app allows you to find characters from the Rick and Morty universe and download data for the selected characters.",
+    "aboutLink": "About",
+    "mainPageLink": "Go to main page",
+    "author": "Author:",
+    "authorName": "Elena Valiullina",
+    "courseLink": "Link to the course:",
+    "rsSchool": "RS School React course",
+    "resetError": "Reset error",
+    "404Error": "Error 404",
+    "pageNotFound": "Page not found",
+    "generateError": "Generate error",
+    "refresh": "Refresh",
+    "updating": "Updating...",
+    "boundaryError": "Something went wrong...",
+    "networkError": "Network error. Please check your internet connection.",
+    "noError": "",
+    "notCharsFound": "No characters found",
+    "serverError": "Server error",
+    "tooManyRequests": "Too many requests. Please wait a minute before trying again."
+  },
+  "Search": {
+    "search": "Search",
+    "placeholder": "Search a character..."
+  },
+  "Pagination": {
+    "prev": "Prev",
+    "next": "Next",
+    "page": "Page",
+    "of": "of"
+  },
+  "Card": {
+    "close": "Close",
+    "status": "Status",
+    "species": "Species",
+    "type": "Type",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location"
+  },
+  "Flyout": {
+    "selectedItems": "{count, plural, one {# item selected} other {# items selected}}",
+    "unselect": "Unselect all",
+    "download": "Download"
+  }
+}

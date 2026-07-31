@@ -6,9 +6,11 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { unselectAll } from '@/store/reducers/selectedCharactersSlice';
 import { type Character } from '@/types/types';
 import { generateCsvAction } from '@/app/actions';
+import { useTranslations } from 'next-intl';
 import styles from './Flyout.module.css';
 
 export default function Flyout() {
+  const t = useTranslations('Flyout');
   const dispatch = useAppDispatch();
   const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);
 
@@ -36,12 +38,12 @@ export default function Flyout() {
   return (
     <div className={styles.flyout}>
       <Text as="span" size="md" weight="bold">
-        {selectedChars.length} items selected
+        {t('selectedItems', { count: selectedChars.length })}
       </Text>
 
-      <Button onClick={() => dispatch(unselectAll())}>Unselect all</Button>
+      <Button onClick={() => dispatch(unselectAll())}>{t('unselect')}</Button>
 
-      <Button onClick={() => handleDownload(selectedChars)}>Download</Button>
+      <Button onClick={() => handleDownload(selectedChars)}>{t('download')}</Button>
     </div>
   );
 }

@@ -5,6 +5,10 @@
   gap: 4rem;
   margin: auto;
 }
+.description {
+  width: 50%;
+  text-align: center;
+}
 
 .aboutAuthor,
 .aboutCourse {

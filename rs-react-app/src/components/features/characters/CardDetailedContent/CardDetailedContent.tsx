@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Button from '@/components/ui/Button/Button';
 import Text from '@/components/ui/Text/Text';
 import { type Character } from '@/types/types';
+import { useTranslations } from 'next-intl';
 import styles from './CardDetailedContent.module.css';
 
 interface CardDetailsContentProps {
@@ -14,13 +15,14 @@ export default function CardDetailsContent({
   character,
   onClose,
 }: CardDetailsContentProps): ReactNode {
+  const t = useTranslations('Card');
   const fields = [
-    { label: 'Status', value: character.status },
-    { label: 'Species', value: character.species },
-    { label: 'Type', value: character.type },
-    { label: 'Gender', value: character.gender },
-    { label: 'Origin', value: character.origin?.name },
-    { label: 'Location', value: character.location?.name },
+    { label: t('status'), value: character.status },
+    { label: t('species'), value: character.species },
+    { label: t('type'), value: character.type },
+    { label: t('gender'), value: character.gender },
+    { label: t('origin'), value: character.origin?.name },
+    { label: t('location'), value: character.location?.name },
   ];
 
   return (
@@ -49,7 +51,7 @@ export default function CardDetailsContent({
         </ul>
       </div>
       <Button className={styles.closeButton} onClick={onClose}>
-        Close
+        {t('close')}
       </Button>
     </div>
   );

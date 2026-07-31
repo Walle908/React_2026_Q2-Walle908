@@ -1,20 +1,13 @@
-import { type ReactNode } from 'react';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
-import Text from '@/components/ui/Text/Text';
-import styles from '@/styles/notFoundPage.module.css';
+'use client';
 
-export default function NotFoundPage(): ReactNode {
+import Error from 'next/error';
+
+export default function NotFound() {
   return (
-    <div className={styles.notFoundWrapper}>
-      <Text className={styles.errorPageSubTitle} size="xl" weight="bold">
-        Error 404
-      </Text>
-      <Text as="h1" color="error" size="xl">
-        Page not found
-      </Text>
-      <LinkComponent href="/" variant="buttonLink">
-        Go to main page
-      </LinkComponent>
-    </div>
+    <html lang="en">
+      <body>
+        <Error statusCode={404} />
+      </body>
+    </html>
   );
 }

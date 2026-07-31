@@ -3,11 +3,12 @@ import Card from '@/components/features/characters/Card/Card';
 import Text from '@/components/ui/Text/Text';
 import { ErrorMessage } from '@/constants/constants';
 import { type Character } from '@/types/types';
+import { useTranslations } from 'next-intl';
 import styles from './ResultBlock.module.css';
 
 interface ResultSectionProps {
   chars: Character[];
-  errorMessage: ErrorMessage;
+  errorMessage: string;
   currentPage: number;
   currentQuery: string;
 }
@@ -18,7 +19,9 @@ export default function ResultBlock({
   currentPage,
   currentQuery,
 }: ResultSectionProps): ReactNode {
-  if (errorMessage !== ErrorMessage.NO_ERROR) {
+  const t = useTranslations('App');
+
+  if (errorMessage !== t(ErrorMessage.NO_ERROR)) {
     return (
       <div className={styles.resultBlock}>
         <Text as="h2" className={styles.badResult} data-testid="bad-result" size="lg">
