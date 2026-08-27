@@ -60,6 +60,15 @@ h2 {
   text-align: center;
 }
 
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
+  gap: 2rem;
+}
+
 @media (max-width: 768px) {
   html {
     font-size: 7px;

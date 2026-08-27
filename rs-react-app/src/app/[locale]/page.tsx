@@ -1,7 +1,7 @@
 import { Suspense, type ReactNode } from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getChars, getOneChar } from '@/services/api';
-import Header from '@/components/layout/Header/Header';
+
 import SearchSection from '@/components/features/search/SearchSection/SearchSection';
 import Pagination from '@/components/ui/Pagination/Pagination';
 import RefreshButton from '@/components/features/characters/RefreshButton/RefreshButton';
@@ -9,6 +9,7 @@ import ResultBlock from '@/components/features/characters/ResultBlock/ResultBloc
 import CardDetailed from '@/components/features/characters/CardDetailed/CardDetailed';
 import Loader from '@/components/ui/Loader/Loader';
 import Flyout from '@/components/features/characters/Flyout/Flyout';
+import ErrorButton from '@/components/features/error-handling/ErrorButton/ErrorButton';
 import UrlInitializer from '@/components/features/search/UrlInitializer';
 import { initialPage, ErrorMessage } from '@/constants/constants';
 import mapError from '@/utils/mapError';
@@ -53,42 +54,40 @@ export default async function Page({ params, searchParams }: PageProps): Promise
   return (
     <>
       <UrlInitializer hasParams={hasParams} />
-      <Header />
 
-      <main className={styles.pageWrapper}>
-        <SearchSection initialValue={query} />
-        <section className={styles.mainWrapper}>
-          <div className={`${styles.leftPanel} ${id ? styles.split : ''}`} data-testid="left-panel">
-            <div className={styles.resultsWrapper}>
-              {showPagination && (
-                <div className={styles.rowWrapper}>
-                  <Pagination currentQuery={query} currentPage={page} totalPages={totalPages} />
-                  <RefreshButton />
-                </div>
-              )}
-              <Suspense key={`${page}:${query}`} fallback={<Loader />}>
-                <ResultBlock
-                  chars={chars}
-                  errorMessage={listErrorMessage}
-                  currentPage={page}
-                  currentQuery={query}
-                />
-              </Suspense>
-            </div>
-          </div>
-
-          {id && (
-            <Suspense fallback={<Loader />}>
-              <CardDetailed
-                char={char}
-                errorMessage={charErrorMessage}
+      <SearchSection initialValue={query} />
+      <section className={styles.mainWrapper}>
+        <div className={`${styles.leftPanel} ${id ? styles.split : ''}`} data-testid="left-panel">
+          <div className={styles.resultsWrapper}>
+            {showPagination && (
+              <div className={styles.rowWrapper}>
+                <Pagination currentQuery={query} currentPage={page} totalPages={totalPages} />
+                <RefreshButton />
+              </div>
+            )}
+            <ErrorButton />
+            <Suspense key={`${page}:${query}`} fallback={<Loader />}>
+              <ResultBlock
+                chars={chars}
+                errorMessage={listErrorMessage}
                 currentPage={page}
-                currentQuery={query}></CardDetailed>
+                currentQuery={query}
+              />
             </Suspense>
-          )}
-        </section>
-        <Flyout />
-      </main>
+          </div>
+        </div>
+
+        {id && (
+          <Suspense fallback={<Loader />}>
+            <CardDetailed
+              char={char}
+              errorMessage={charErrorMessage}
+              currentPage={page}
+              currentQuery={query}></CardDetailed>
+          </Suspense>
+        )}
+      </section>
+      <Flyout />
     </>
   );
 }

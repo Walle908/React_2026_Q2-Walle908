@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale, getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { Providers } from '../providers';
+import Header from '@/components/layout/Header/Header';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {
@@ -53,7 +54,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
       </head>
       <body suppressHydrationWarning>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>{children}</Providers>
+          <Providers>
+            <Header />
+            <main className="pageWrapper">{children}</main>
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

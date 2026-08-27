@@ -5,21 +5,22 @@ import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button/Button';
 import { ErrorMessage } from '@/constants/constants';
 
-export default function ErrorButton(): ReactNode {
+interface ErrorButtonProps {
+  className?: string;
+}
+
+export default function ErrorButton({ className }: ErrorButtonProps): ReactNode {
   const t = useTranslations('App');
 
-  const [isError, setError] = useState(false);
-
+  const [, setError] = useState(false);
   const onClick = () => {
-    setError(true);
+    setError(() => {
+      throw new Error(ErrorMessage.BOUNDARY_ERROR);
+    });
   };
 
-  if (isError) {
-    throw new Error(ErrorMessage.BOUNDARY_ERROR);
-  }
-
   return (
-    <Button color="error" onClick={onClick}>
+    <Button color="error" onClick={onClick} className={className}>
       {t('generateError')}
     </Button>
   );

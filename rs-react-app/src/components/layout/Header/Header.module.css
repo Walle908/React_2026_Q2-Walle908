@@ -4,9 +4,10 @@
   align-self: flex-end;
   justify-content: center;
   align-items: center;
+  padding: 2rem;
 }
 
-.aboutLink {
+.link {
   font-size: 2rem;
   font-weight: 600;
 }

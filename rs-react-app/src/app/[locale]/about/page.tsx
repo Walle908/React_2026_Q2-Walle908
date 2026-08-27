@@ -19,30 +19,19 @@ export default async function AboutPage(): Promise<ReactNode> {
         <Text as="span" size="md" weight="bold">
           {t('author')}
         </Text>
-        <a
-          className={styles.link}
-          href="https://github.com/Walle908"
-          rel="noreferrer"
-          target="_blank">
+        <LinkComponent href="https://github.com/Walle908" rel="noreferrer" target="_blank">
           {t('authorName')}
-        </a>
+        </LinkComponent>
       </Text>
 
       <Text className={styles.aboutCourse} size="md">
         <Text as="span" size="md" weight="bold">
           {t('courseLink')}
         </Text>
-        <a
-          className={styles.link}
-          href="https://rs.school/courses/reactjs"
-          rel="noreferrer"
-          target="_blank">
+        <LinkComponent href="https://rs.school/courses/reactjs" rel="noreferrer" target="_blank">
           {t('rsSchool')}
-        </a>
+        </LinkComponent>
       </Text>
-      <LinkComponent href="/" variant="buttonLink">
-        {t('mainPageLink')}
-      </LinkComponent>
     </div>
   );
 }
