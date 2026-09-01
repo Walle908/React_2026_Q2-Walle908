@@ -1,13 +1,13 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import { useRouter, usePathname } from '@/i18n/navigation';
+import { usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import buildUrl from '@/utils/buildUrl';
 import CardDetailsContent from '@/components/features/characters/CardDetailedContent/CardDetailedContent';
-import Button from '@/components/ui/Button/Button';
 import { type Character } from '@/types/types';
 import Text from '@/components/ui/Text/Text';
+import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import { ErrorMessage } from '@/constants/constants';
 import styles from './CardDetailed.module.css';
 
@@ -24,14 +24,19 @@ export default function CardDetailed({
   currentPage,
   currentQuery,
 }: CardDetailedProps): ReactNode {
-  const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations('App');
 
-  const onClose = () => {
-    const queryObj = buildUrl(currentPage, currentQuery, null);
-    router.push({ pathname, query: queryObj }, { scroll: false });
-  };
+  const closeQueryObj = buildUrl(currentPage, currentQuery, null);
+
+  const searchParams = new URLSearchParams();
+  Object.entries(closeQueryObj).forEach(([key, val]) => {
+    if (val !== undefined && val !== null) {
+      searchParams.set(key, String(val));
+    }
+  });
+
+  const closePath = `${pathname}?${searchParams.toString()}`;
 
   const handleAsideClick = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
@@ -44,7 +49,10 @@ export default function CardDetailed({
           <Text as="h2" className={styles.errorTitle} size="lg">
             {errorMessage}
           </Text>
-          <Button onClick={onClose}>Close</Button>
+
+          <LinkComponent variant="buttonLink" href={closePath} scroll={false}>
+            Close
+          </LinkComponent>
         </div>
       </aside>
     );
@@ -56,7 +64,7 @@ export default function CardDetailed({
 
   return (
     <aside className={styles.rightPanelDetails} onClick={handleAsideClick}>
-      <CardDetailsContent character={char} onClose={onClose} />
+      <CardDetailsContent character={char} path={closePath} />
     </aside>
   );
 }

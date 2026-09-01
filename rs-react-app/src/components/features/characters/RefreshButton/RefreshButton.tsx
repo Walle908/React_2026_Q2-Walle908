@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
-import { refreshData } from '@/app/actions';
+import { refreshData } from '@/actions/generate-cvs';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button/Button';
 

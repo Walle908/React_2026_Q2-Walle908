@@ -15,7 +15,7 @@
 .buttonLink {
   display: block;
   min-width: max-content;
-  width: 10rem;
+  width: 6.5rem;
   height: 4rem;
   background-color: var(--primary);
   border-radius: 0.8rem;

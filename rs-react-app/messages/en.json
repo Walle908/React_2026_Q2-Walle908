@@ -24,6 +24,7 @@
   },
   "Search": {
     "search": "Search",
+    "searching": "Searching...",
     "placeholder": "Search a character..."
   },
   "Pagination": {

@@ -6,6 +6,10 @@
   width: 100%;
 }
 
+.mainTitle {
+  padding: 1rem 0;
+}
+
 .leftPanel {
   flex: 1;
   height: 100%;

@@ -1,48 +1,57 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import { useRouter, usePathname } from '@/i18n/navigation';
+import { usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import buildUrl from '@/utils/buildUrl';
-import Button from '@/components/ui/Button/Button';
 import Text from '@/components/ui/Text/Text';
 import { initialPage } from '@/constants/constants';
+import LinkComponent from '../LinkComponent/LinkComponent';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
   currentPage: number;
   currentQuery: string;
   totalPages: number;
+  currentDetails?: string | null;
 }
 
 export default function Pagination({
   currentPage,
   currentQuery,
   totalPages,
+  currentDetails = null,
 }: PaginationProps): ReactNode {
-  const router = useRouter();
   const pathname = usePathname();
-
-  const onChange = (page: number) => {
-    const queryObj = buildUrl(page, currentQuery);
-    router.push({ pathname, query: queryObj }, { scroll: false });
-  };
-
   const t = useTranslations('Pagination');
+
+  const isPrevDisabled = currentPage === initialPage;
+  const isNextDisabled = currentPage === totalPages || totalPages === 0;
+
+  const prevQueryObj = buildUrl(currentPage - 1, currentQuery, currentDetails);
+  const nextQueryObj = buildUrl(currentPage + 1, currentQuery, currentDetails);
 
   return (
     <div className={styles.paginationWrapper}>
-      <Button disabled={currentPage === initialPage} onClick={() => onChange(currentPage - 1)}>
+      <LinkComponent
+        variant="buttonLink"
+        href={isPrevDisabled ? '#' : { pathname, query: prevQueryObj }}
+        scroll={false}
+        aria-disabled={isPrevDisabled}>
         {t('prev')}
-      </Button>
+      </LinkComponent>
+
       <Text size="md" weight="medium">
         {t('page')} {currentPage} {t('of')} {totalPages}
       </Text>
-      <Button
-        disabled={currentPage === totalPages || totalPages === 0}
-        onClick={() => onChange(currentPage + 1)}>
+
+      <LinkComponent
+        variant="buttonLink"
+        href={isNextDisabled ? '#' : { pathname, query: nextQueryObj }}
+        scroll={false}
+        aria-disabled={isNextDisabled}>
         {t('next')}
-      </Button>
+      </LinkComponent>
     </div>
   );
 }

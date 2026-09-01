@@ -5,7 +5,7 @@ import Text from '@/components/ui/Text/Text';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { unselectAll } from '@/store/reducers/selectedCharactersSlice';
 import { type Character } from '@/types/types';
-import { generateCsvAction } from '@/app/actions';
+import { generateCsvAction } from '@/actions/generate-cvs';
 import { useTranslations } from 'next-intl';
 import styles from './Flyout.module.css';
 

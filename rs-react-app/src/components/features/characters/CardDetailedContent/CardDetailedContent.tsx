@@ -1,19 +1,19 @@
 import { type ReactNode } from 'react';
 import Image from 'next/image';
-import Button from '@/components/ui/Button/Button';
 import Text from '@/components/ui/Text/Text';
+import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
 import { type Character } from '@/types/types';
 import { useTranslations } from 'next-intl';
 import styles from './CardDetailedContent.module.css';
 
 interface CardDetailsContentProps {
   character: Character;
-  onClose: () => void;
+  path: string;
 }
 
 export default function CardDetailsContent({
   character,
-  onClose,
+  path,
 }: CardDetailsContentProps): ReactNode {
   const t = useTranslations('Card');
   const fields = [
@@ -50,9 +50,9 @@ export default function CardDetailsContent({
           ))}
         </ul>
       </div>
-      <Button className={styles.closeButton} onClick={onClose}>
+      <LinkComponent variant="buttonLink" href={path} className={styles.closeButton}>
         {t('close')}
-      </Button>
+      </LinkComponent>
     </div>
   );
 }

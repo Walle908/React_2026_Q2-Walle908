@@ -2,17 +2,19 @@ import { Suspense, type ReactNode } from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getChars, getOneChar } from '@/services/api';
 
-import SearchSection from '@/components/features/search/SearchSection/SearchSection';
 import Pagination from '@/components/ui/Pagination/Pagination';
 import RefreshButton from '@/components/features/characters/RefreshButton/RefreshButton';
 import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
 import CardDetailed from '@/components/features/characters/CardDetailed/CardDetailed';
 import Loader from '@/components/ui/Loader/Loader';
 import Flyout from '@/components/features/characters/Flyout/Flyout';
+import Text from '@/components/ui/Text/Text';
+import SearchForm from '@/components/features/search/SearchForm/SearchForm';
 import ErrorButton from '@/components/features/error-handling/ErrorButton/ErrorButton';
 import UrlInitializer from '@/components/features/search/UrlInitializer';
 import { initialPage, ErrorMessage } from '@/constants/constants';
 import mapError from '@/utils/mapError';
+import { searchAction } from '../../actions/search';
 import styles from '@/styles/app.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -27,6 +29,12 @@ interface PageProps {
 }
 
 export default async function Page({ params, searchParams }: PageProps): Promise<ReactNode> {
+  const parsePage = (raw?: string): number => {
+    const page = parseInt(raw ?? '', 10);
+
+    return Number.isInteger(page) && page >= initialPage ? page : initialPage;
+  };
+
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations('App');
@@ -34,7 +42,7 @@ export default async function Page({ params, searchParams }: PageProps): Promise
   const sParams = await searchParams;
   const hasParams = Object.keys(sParams).length > 0;
 
-  const page = Number(sParams.page ?? initialPage);
+  const page = parsePage(sParams.page);
   const query = sParams.query ?? '';
   const id = sParams.details ?? null;
 
@@ -55,13 +63,21 @@ export default async function Page({ params, searchParams }: PageProps): Promise
     <>
       <UrlInitializer hasParams={hasParams} />
 
-      <SearchSection initialValue={query} />
+      <Text as="h1" className={styles.mainTitle} color="accent" size="xxl">
+        {t('mainTitle')}
+      </Text>
+      <SearchForm initialValue={query} searchAction={searchAction.bind(null, locale)} />
       <section className={styles.mainWrapper}>
         <div className={`${styles.leftPanel} ${id ? styles.split : ''}`} data-testid="left-panel">
           <div className={styles.resultsWrapper}>
             {showPagination && (
               <div className={styles.rowWrapper}>
-                <Pagination currentQuery={query} currentPage={page} totalPages={totalPages} />
+                <Pagination
+                  currentQuery={query}
+                  currentPage={page}
+                  totalPages={totalPages}
+                  currentDetails={id}
+                />
                 <RefreshButton />
               </div>
             )}

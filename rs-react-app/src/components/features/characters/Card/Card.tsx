@@ -22,6 +22,7 @@ interface CardProps {
 export default function Card({ char, index, currentPage, currentQuery }: CardProps): ReactNode {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
+
   const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);
   const isSelected = selectedChars.some((item) => item.id === char.id);
 
@@ -45,7 +46,7 @@ export default function Card({ char, index, currentPage, currentQuery }: CardPro
         src={char.image}
         width={200}
         height={200}
-        preload={shouldPreload}
+        priority={shouldPreload}
       />
       <Text as="h2" className={styles.cardTitle} size="md">
         {char.name}

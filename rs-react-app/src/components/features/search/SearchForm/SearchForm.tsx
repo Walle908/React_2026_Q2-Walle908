@@ -1,45 +1,42 @@
 'use client';
 
-import { type ChangeEvent, type SubmitEvent, type ReactNode, useState } from 'react';
-import { useRouter, usePathname } from '@/i18n/navigation';
+import { type ChangeEvent, type ReactNode, useState, useActionState } from 'react';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/ui/Button/Button';
 import Input from '@/components/ui/Input/Input';
-import { localStorageKey, initialPage } from '@/constants/constants';
-import buildUrl from '@/utils/buildUrl';
+import { localStorageKey } from '@/constants/constants';
 import styles from './SearchForm.module.css';
 
 interface SearchProps {
   initialValue: string;
+  searchAction: (state: unknown, formData: FormData) => Promise<void>;
 }
 
-export default function SearchForm({ initialValue }: SearchProps): ReactNode {
+export default function SearchForm({ initialValue, searchAction }: SearchProps): ReactNode {
+  const t = useTranslations('Search');
   const [value, setValue] = useState(initialValue);
   const [prevInitialValue, setPrevInitialValue] = useState(initialValue);
-  const router = useRouter();
-  const pathname = usePathname();
-  const t = useTranslations('Search');
+  const [, formAction, pending] = useActionState(searchAction, undefined);
 
   if (initialValue !== prevInitialValue) {
     setValue(initialValue);
     setPrevInitialValue(initialValue);
   }
 
-  const onSubmit = (e: SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (formData: FormData) => {
     const trimmedValue = value.trim();
-
-    if (trimmedValue) {
-      localStorage.setItem(localStorageKey, trimmedValue);
-    } else {
-      localStorage.removeItem(localStorageKey);
-    }
 
     setValue(trimmedValue);
 
-    const queryObj = buildUrl(initialPage, trimmedValue);
+    if (trimmedValue) {
+      localStorage.setItem(localStorageKey, trimmedValue);
+      formData.set('query', trimmedValue);
+    } else {
+      localStorage.removeItem(localStorageKey);
+      formData.set('query', '');
+    }
 
-    router.push({ pathname, query: queryObj });
+    formAction(formData);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +48,7 @@ export default function SearchForm({ initialValue }: SearchProps): ReactNode {
   };
 
   return (
-    <form className={styles.searchForm} onSubmit={onSubmit}>
+    <form action={handleSubmit} className={styles.searchForm}>
       <div className={styles.searchWrapper}>
         <Input
           onChange={onChange}
@@ -66,7 +63,9 @@ export default function SearchForm({ initialValue }: SearchProps): ReactNode {
           </Button>
         )}
       </div>
-      <Button type="submit">{t('search')}</Button>
+      <Button type="submit" disabled={pending}>
+        {pending ? t('searching') : t('search')}
+      </Button>
     </form>
   );
 }
