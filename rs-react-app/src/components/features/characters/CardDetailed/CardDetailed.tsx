@@ -1,8 +1,5 @@
-'use client';
-
 import { type ReactNode } from 'react';
-import { usePathname } from '@/i18n/navigation';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import buildUrl from '@/utils/buildUrl';
 import CardDetailsContent from '@/components/features/characters/CardDetailedContent/CardDetailedContent';
 import { type Character } from '@/types/types';
@@ -18,33 +15,21 @@ interface CardDetailedProps {
   currentQuery: string;
 }
 
-export default function CardDetailed({
+export default async function CardDetailed({
   char,
   errorMessage,
   currentPage,
   currentQuery,
-}: CardDetailedProps): ReactNode {
-  const pathname = usePathname();
-  const t = useTranslations('App');
+}: CardDetailedProps): Promise<ReactNode> {
+  const t = await getTranslations('App');
 
   const closeQueryObj = buildUrl(currentPage, currentQuery, null);
 
-  const searchParams = new URLSearchParams();
-  Object.entries(closeQueryObj).forEach(([key, val]) => {
-    if (val !== undefined && val !== null) {
-      searchParams.set(key, String(val));
-    }
-  });
-
-  const closePath = `${pathname}?${searchParams.toString()}`;
-
-  const handleAsideClick = (e: React.MouseEvent<HTMLElement>) => {
-    e.stopPropagation();
-  };
+  const closePath = `/?${new URLSearchParams(closeQueryObj).toString()}`;
 
   if (errorMessage !== t(ErrorMessage.NO_ERROR)) {
     return (
-      <aside className={styles.rightPanelDetails} onClick={handleAsideClick}>
+      <aside className={styles.rightPanelDetails}>
         <div className={styles.errorWrapper}>
           <Text as="h2" className={styles.errorTitle} size="lg">
             {errorMessage}
@@ -63,7 +48,7 @@ export default function CardDetailed({
   }
 
   return (
-    <aside className={styles.rightPanelDetails} onClick={handleAsideClick}>
+    <aside className={styles.rightPanelDetails}>
       <CardDetailsContent character={char} path={closePath} />
     </aside>
   );
