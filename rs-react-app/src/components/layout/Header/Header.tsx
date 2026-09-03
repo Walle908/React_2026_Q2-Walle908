@@ -1,22 +1,30 @@
+'use client';
+
 import { type ReactNode } from 'react';
-import ErrorButton from '@/components/features/error-handling/ErrorButton/ErrorButton';
-import Button from '@/components/ui/Button/Button';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
-import { useTheme } from '@/contexts/ThemeContext';
+import { LinkComponent } from '@/components/ui';
+import { LanguageSwitcher, ThemeSwitcher } from '@/components/features/switchers';
+import { useTranslations } from 'next-intl';
+import { usePathname } from '@/i18n/navigation';
 import styles from './Header.module.css';
 
-export default function Header(): ReactNode {
-  const { isDarkTheme, toggleTheme } = useTheme();
+export function Header(): ReactNode {
+  const t = useTranslations('App');
+  const pathname = usePathname();
+  const isAboutPage = pathname === '/about';
 
   return (
     <header className={styles.header}>
-      <Button className={styles.switcher} color="no" onClick={toggleTheme} variant="plain">
-        {isDarkTheme ? '☀️' : '🌙'}
-      </Button>
-      <LinkComponent className={styles.aboutLink} to="/about">
-        About
-      </LinkComponent>
-      <ErrorButton />
+      {isAboutPage ? (
+        <LinkComponent className={styles.link} href="/">
+          {t('mainPageLink')}
+        </LinkComponent>
+      ) : (
+        <LinkComponent className={styles.link} href="/about">
+          {t('aboutLink')}
+        </LinkComponent>
+      )}
+      <ThemeSwitcher />
+      <LanguageSwitcher />
     </header>
   );
 }

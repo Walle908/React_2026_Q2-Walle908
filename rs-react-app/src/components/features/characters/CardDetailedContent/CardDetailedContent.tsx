@@ -1,34 +1,35 @@
 import { type ReactNode } from 'react';
-import Button from '@/components/ui/Button/Button';
-import Text from '@/components/ui/Text/Text';
+import Image from 'next/image';
+import { Text } from '@/components/ui';
 import { type Character } from '@/types/types';
+import { useTranslations } from 'next-intl';
 import styles from './CardDetailedContent.module.css';
 
 interface CardDetailsContentProps {
   character: Character;
-  onClose: () => void;
 }
 
-export default function CardDetailsContent({
-  character,
-  onClose,
-}: CardDetailsContentProps): ReactNode {
+export function CardDetailsContent({ character }: CardDetailsContentProps): ReactNode {
+  const t = useTranslations('Card');
   const fields = [
-    { label: 'Status', value: character.status },
-    { label: 'Species', value: character.species },
-    { label: 'Type', value: character.type },
-    { label: 'Gender', value: character.gender },
-    { label: 'Origin', value: character.origin?.name },
-    { label: 'Location', value: character.location?.name },
+    { label: t('status'), value: character.status },
+    { label: t('species'), value: character.species },
+    { label: t('type'), value: character.type },
+    { label: t('gender'), value: character.gender },
+    { label: t('origin'), value: character.origin?.name },
+    { label: t('location'), value: character.location?.name },
   ];
 
   return (
     <div className={styles.cardWrapper}>
-      <img
+      <Image
         alt={character.name}
         className={styles.cardImg}
         key={character.id}
         src={character.image}
+        width={200}
+        height={200}
+        priority
       />
 
       <div className={styles.cardDescription}>
@@ -44,9 +45,6 @@ export default function CardDetailsContent({
           ))}
         </ul>
       </div>
-      <Button className={styles.closeButton} onClick={onClose}>
-        Close
-      </Button>
     </div>
   );
 }

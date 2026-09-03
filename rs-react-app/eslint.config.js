@@ -1,6 +1,5 @@
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
-import perfectionist from 'eslint-plugin-perfectionist';
 import reactPlugin from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
@@ -9,8 +8,7 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig([
-  globalIgnores(['dist/**', 'coverage/**', 'node_modules/**']),
-  perfectionist.configs['recommended-natural'],
+  globalIgnores(['dist/**', 'coverage/**', 'node_modules/**', '.next/**']),
   {
     extends: [
       js.configs.recommended,
@@ -24,7 +22,7 @@ export default defineConfig([
     files: ['**/*.{ts,tsx}'],
 
     languageOptions: {
-      globals: globals.browser,
+      globals: { ...globals.browser, ...globals.node },
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
@@ -38,30 +36,18 @@ export default defineConfig([
         },
       ],
       'no-unused-vars': 'off',
-      'perfectionist/sort-imports': [
-        'error',
-        {
-          groups: [
-            'type',
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-            'side-effect',
-          ],
-          ignoreCase: true,
-
-          internalPattern: ['^@.*'],
-          newlinesBetween: 0,
-          order: 'asc',
-          type: 'natural',
-        },
-      ],
     },
+
     settings: {
       react: {
         version: 'detect',
       },
+    },
+  },
+  {
+    files: ['src/app/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ]);

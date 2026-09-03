@@ -1,0 +1,46 @@
+.langContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+}
+
+.langLabel:first-child .customButton {
+  border-radius: 0.8rem 0 0 0.8rem;
+}
+
+.langLabel:last-child .customButton {
+  border-radius: 0 0.8rem 0.8rem 0;
+}
+
+.radioInput {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+.radioInput:checked + .customButton {
+  cursor: default;
+  background-color: var(--accent);
+  user-select: none;
+}
+
+.customButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 3rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--text);
+  background-color: var(--primary);
+  transition: all 0.3s ease-in-out;
+}
+
+.customButton:hover {
+  cursor: pointer;
+  background-color: var(--hover);
+}

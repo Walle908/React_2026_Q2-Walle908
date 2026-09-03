@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--accent);
+  padding: 2rem;
+  position: sticky;
+  top: 0rem;
+  animation: slideIn 0.4s ease-in-out;
+}

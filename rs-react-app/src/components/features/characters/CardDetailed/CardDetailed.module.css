@@ -13,3 +13,7 @@
   background-color: var(--accent);
   padding: 2rem;
 }
+
+.rightPanelDetails {
+  top: 5rem;
+}

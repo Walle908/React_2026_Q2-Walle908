@@ -1,0 +1,47 @@
+.mainWrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 3rem;
+  width: 100%;
+}
+
+.mainTitle {
+  padding: 1rem 0;
+}
+
+.leftPanel {
+  flex: 1;
+  height: 100%;
+  transition: flex 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.rightPanel {
+  padding-top: 17rem;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.resultsWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+}
+
+.rowWrapper {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+}
