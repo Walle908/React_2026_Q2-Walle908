@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import buildUrl from '@/utils/buildUrl';
 import { CardDetailsContent } from '@/components/features/characters';
 import { type Character } from '@/types/types';
-import { Text, LinkComponent } from '@/components/ui';
+import { Text, ModalCard } from '@/components/ui';
 import { ErrorMessage } from '@/constants/constants';
 import styles from './CardDetailed.module.css';
 
@@ -28,17 +28,13 @@ export async function CardDetailed({
 
   if (errorMessage !== t(ErrorMessage.NO_ERROR)) {
     return (
-      <aside className={styles.rightPanelDetails}>
+      <ModalCard className={styles.rightPanelDetails} closePath={closePath}>
         <div className={styles.errorWrapper}>
           <Text as="h2" className={styles.errorTitle} size="lg">
             {errorMessage}
           </Text>
-
-          <LinkComponent variant="button" href={closePath} scroll={false}>
-            Close
-          </LinkComponent>
         </div>
-      </aside>
+      </ModalCard>
     );
   }
 
@@ -47,8 +43,8 @@ export async function CardDetailed({
   }
 
   return (
-    <aside className={styles.rightPanelDetails}>
-      <CardDetailsContent character={char} path={closePath} />
-    </aside>
+    <ModalCard className={styles.rightPanelDetails} closePath={closePath}>
+      <CardDetailsContent character={char} />
+    </ModalCard>
   );
 }

@@ -40,7 +40,7 @@ export function Pagination({
         {t('prev')}
       </LinkComponent>
 
-      <Text size="md" weight="medium">
+      <Text size="sm" weight="medium">
         {t('page')} {currentPage} {t('of')} {totalPages}
       </Text>
 

@@ -1,16 +1,15 @@
 import { type ReactNode } from 'react';
 import Image from 'next/image';
-import { Text, LinkComponent } from '@/components/ui';
+import { Text } from '@/components/ui';
 import { type Character } from '@/types/types';
 import { useTranslations } from 'next-intl';
 import styles from './CardDetailedContent.module.css';
 
 interface CardDetailsContentProps {
   character: Character;
-  path: string;
 }
 
-export function CardDetailsContent({ character, path }: CardDetailsContentProps): ReactNode {
+export function CardDetailsContent({ character }: CardDetailsContentProps): ReactNode {
   const t = useTranslations('Card');
   const fields = [
     { label: t('status'), value: character.status },
@@ -46,9 +45,6 @@ export function CardDetailsContent({ character, path }: CardDetailsContentProps)
           ))}
         </ul>
       </div>
-      <LinkComponent variant="button" href={path} className={styles.closeButton}>
-        {t('close')}
-      </LinkComponent>
     </div>
   );
 }

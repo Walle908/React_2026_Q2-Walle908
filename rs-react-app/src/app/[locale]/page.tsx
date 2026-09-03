@@ -89,11 +89,13 @@ export default async function Page({ params, searchParams }: PageProps): Promise
 
         {id && (
           <Suspense fallback={<Loader />}>
-            <CardDetailed
-              char={char}
-              errorMessage={charErrorMessage}
-              currentPage={page}
-              currentQuery={query}></CardDetailed>
+            <div className={styles.rightPanel}>
+              <CardDetailed
+                char={char}
+                errorMessage={charErrorMessage}
+                currentPage={page}
+                currentQuery={query}></CardDetailed>
+            </div>
           </Suspense>
         )}
       </section>
