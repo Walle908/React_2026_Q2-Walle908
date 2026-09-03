@@ -1,4 +1,4 @@
-.baseLink {
+.base {
   text-decoration: none;
   color: var(--text);
   display: block;
@@ -8,11 +8,11 @@
   transition: 0.4s;
 }
 
-.baseLink:hover {
+.base:hover {
   color: var(--hover);
 }
 
-.buttonLink {
+.button {
   display: block;
   min-width: max-content;
   width: 6.5rem;
@@ -25,12 +25,12 @@
   font-weight: 600;
 }
 
-.buttonLink:hover {
+.button:hover {
   background-color: var(--hover);
   color: var(--text);
 }
 
-.cardLink {
+.card {
   display: flex;
   flex-direction: column;
   width: 24rem;
@@ -44,7 +44,7 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.cardLink:hover {
+.card:hover {
   transform: scale(1.05);
   color: var(--text);
 }

@@ -1,10 +1,9 @@
 import { type ReactNode } from 'react';
 import { getTranslations } from 'next-intl/server';
 import buildUrl from '@/utils/buildUrl';
-import CardDetailsContent from '@/components/features/characters/CardDetailedContent/CardDetailedContent';
+import { CardDetailsContent } from '@/components/features/characters';
 import { type Character } from '@/types/types';
-import Text from '@/components/ui/Text/Text';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
+import { Text, LinkComponent } from '@/components/ui';
 import { ErrorMessage } from '@/constants/constants';
 import styles from './CardDetailed.module.css';
 
@@ -15,7 +14,7 @@ interface CardDetailedProps {
   currentQuery: string;
 }
 
-export default async function CardDetailed({
+export async function CardDetailed({
   char,
   errorMessage,
   currentPage,
@@ -35,7 +34,7 @@ export default async function CardDetailed({
             {errorMessage}
           </Text>
 
-          <LinkComponent variant="buttonLink" href={closePath} scroll={false}>
+          <LinkComponent variant="button" href={closePath} scroll={false}>
             Close
           </LinkComponent>
         </div>

@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Button from '@/components/ui/Button/Button';
-import Text from '@/components/ui/Text/Text';
+import { Button, Text } from '@/components/ui';
 import { ErrorMessage } from '@/constants/constants';
 import { NextIntlClientProvider, useTranslations } from 'next-intl';
 import ruMessages from '../../messages/ru.json';
@@ -22,7 +21,7 @@ function ErrorContent({ reset }: Omit<GlobalErrorProps, 'error'>) {
       <Text as="h1" color="error" size="xl">
         {t(ErrorMessage.BOUNDARY_ERROR)}
       </Text>
-      <Button className={styles.resetButton} onClick={() => reset()}>
+      <Button className={styles.resetButton} onClick={reset}>
         {t('resetError')}
       </Button>
     </div>

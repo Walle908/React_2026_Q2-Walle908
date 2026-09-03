@@ -9,7 +9,7 @@ interface UrlInitializerProps {
   hasParams: boolean;
 }
 
-export default function UrlInitializer({ hasParams }: UrlInitializerProps): null {
+export function UrlInitializer({ hasParams }: UrlInitializerProps): null {
   const router = useRouter();
   const pathname = usePathname();
 

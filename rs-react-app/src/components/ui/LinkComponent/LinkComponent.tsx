@@ -6,17 +6,17 @@ import styles from './LinkComponent.module.css';
 type I18nLinkProps = ComponentPropsWithoutRef<typeof Link>;
 interface LinkComponentProps
   extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof I18nLinkProps>, I18nLinkProps {
-  variant?: 'baseLink' | 'buttonLink' | 'cardLink';
+  variant?: 'base' | 'button' | 'card';
 }
 
-export default function LinkComponent({
+export function LinkComponent({
   children,
   className = '',
   href,
-  variant = 'baseLink',
+  variant = 'base',
   ...props
 }: LinkComponentProps): ReactNode {
-  const baseClass = styles.baseLink ? styles.baseLink : '';
+  const baseClass = styles.base ? styles.base : '';
   const variantClass = styles[variant] ? styles[variant] : '';
 
   const combinedClasses = combineClasses(baseClass, variantClass, className);

@@ -3,9 +3,9 @@
 import { useTransition } from 'react';
 import { refreshData } from '@/actions/refresh';
 import { useTranslations } from 'next-intl';
-import Button from '@/components/ui/Button/Button';
+import { Button } from '@/components/ui';
 
-export default function RefreshButton() {
+export function RefreshButton() {
   const [isPending, startTransition] = useTransition();
 
   const handleRefresh = () => {

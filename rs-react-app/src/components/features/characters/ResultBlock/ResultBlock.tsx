@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
-import Card from '@/components/features/characters/Card/Card';
-import Text from '@/components/ui/Text/Text';
+import { Card } from '@/components/features/characters';
+import { Text } from '@/components/ui';
 import { ErrorMessage } from '@/constants/constants';
 import { type Character } from '@/types/types';
 import { getTranslations } from 'next-intl/server';
@@ -13,7 +13,7 @@ interface ResultSectionProps {
   currentQuery: string;
 }
 
-export default async function ResultBlock({
+export async function ResultBlock({
   chars,
   errorMessage,
   currentPage,

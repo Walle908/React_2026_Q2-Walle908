@@ -4,9 +4,8 @@ import { type ReactNode } from 'react';
 import { usePathname } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import buildUrl from '@/utils/buildUrl';
-import Text from '@/components/ui/Text/Text';
+import { Text, LinkComponent } from '@/components/ui';
 import { initialPage } from '@/constants/constants';
-import LinkComponent from '../LinkComponent/LinkComponent';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
@@ -16,7 +15,7 @@ interface PaginationProps {
   currentDetails?: string | null;
 }
 
-export default function Pagination({
+export function Pagination({
   currentPage,
   currentQuery,
   totalPages,
@@ -34,7 +33,7 @@ export default function Pagination({
   return (
     <div className={styles.paginationWrapper}>
       <LinkComponent
-        variant="buttonLink"
+        variant="button"
         href={isPrevDisabled ? '#' : { pathname, query: prevQueryObj }}
         scroll={false}
         aria-disabled={isPrevDisabled}>
@@ -46,7 +45,7 @@ export default function Pagination({
       </Text>
 
       <LinkComponent
-        variant="buttonLink"
+        variant="button"
         href={isNextDisabled ? '#' : { pathname, query: nextQueryObj }}
         scroll={false}
         aria-disabled={isNextDisabled}>

@@ -3,9 +3,7 @@
 import { type ReactNode } from 'react';
 import { usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
-import Input from '@/components/ui/Input/Input';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
-import Text from '@/components/ui/Text/Text';
+import { Input, LinkComponent, Text } from '@/components/ui/';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { toggleSelection } from '@/store/reducers/selectedCharactersSlice';
 import { type Character } from '@/types/types';
@@ -19,7 +17,7 @@ interface CardProps {
   index: number;
 }
 
-export default function Card({ char, index, currentPage, currentQuery }: CardProps): ReactNode {
+export function Card({ char, index, currentPage, currentQuery }: CardProps): ReactNode {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
 
@@ -31,7 +29,7 @@ export default function Card({ char, index, currentPage, currentQuery }: CardPro
   const shouldPreload = index < 4;
 
   return (
-    <LinkComponent href={{ pathname, query: queryObj }} variant="cardLink" scroll={false}>
+    <LinkComponent href={{ pathname, query: queryObj }} variant="card" scroll={false}>
       <Input
         checked={isSelected}
         className={styles.inputCheckbox}

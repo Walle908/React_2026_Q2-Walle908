@@ -1,13 +1,12 @@
 'use client';
 
-import Button from '@/components/ui/Button/Button';
-import Text from '@/components/ui/Text/Text';
+import { Button, Text } from '@/components/ui';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { unselectAll } from '@/store/reducers/selectedCharactersSlice';
 import { useTranslations } from 'next-intl';
 import styles from './Flyout.module.css';
 
-export default function Flyout() {
+export function Flyout() {
   const t = useTranslations('Flyout');
   const dispatch = useAppDispatch();
   const selectedChars = useAppSelector((state) => state.selectedCharacters.selectedChars);

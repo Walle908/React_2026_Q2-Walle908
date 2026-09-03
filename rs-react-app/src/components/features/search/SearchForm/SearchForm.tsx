@@ -2,8 +2,7 @@
 
 import { type ChangeEvent, type ReactNode, useState, useActionState } from 'react';
 import { useTranslations } from 'next-intl';
-import Button from '@/components/ui/Button/Button';
-import Input from '@/components/ui/Input/Input';
+import { Button, Input } from '@/components/ui';
 import { localStorageKey } from '@/constants/constants';
 import styles from './SearchForm.module.css';
 
@@ -12,7 +11,7 @@ interface SearchProps {
   searchAction: (state: unknown, formData: FormData) => Promise<void>;
 }
 
-export default function SearchForm({ initialValue, searchAction }: SearchProps): ReactNode {
+export function SearchForm({ initialValue, searchAction }: SearchProps): ReactNode {
   const t = useTranslations('Search');
   const [value, setValue] = useState(initialValue);
   const [prevInitialValue, setPrevInitialValue] = useState(initialValue);

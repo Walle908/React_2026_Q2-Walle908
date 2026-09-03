@@ -1,6 +1,5 @@
 import { type ReactNode } from 'react';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
-import Text from '@/components/ui/Text/Text';
+import { LinkComponent, Text } from '@/components/ui';
 import { useTranslations } from 'next-intl';
 import styles from '@/styles/notFoundPage.module.css';
 
@@ -15,7 +14,7 @@ export default function NotFoundPage(): ReactNode {
       <Text as="h1" color="error" size="xl">
         {t('pageNotFound')}
       </Text>
-      <LinkComponent href="/" variant="buttonLink">
+      <LinkComponent href="/" variant="button">
         {t('mainPageLink')}
       </LinkComponent>
     </div>

@@ -12,7 +12,7 @@ const languages = [
   { code: 'ru', label: 'RU' },
 ];
 
-export default function LanguageSwitcher() {
+export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();

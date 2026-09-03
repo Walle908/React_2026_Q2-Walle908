@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale, getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { Providers } from '../providers';
-import Header from '@/components/layout/Header/Header';
+import { Header } from '@/components/layout';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {

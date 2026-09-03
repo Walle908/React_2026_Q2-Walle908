@@ -1,17 +1,10 @@
 import { Suspense, type ReactNode } from 'react';
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getChars, getOneChar } from '@/services/api';
-
-import Pagination from '@/components/ui/Pagination/Pagination';
-import RefreshButton from '@/components/features/characters/RefreshButton/RefreshButton';
-import ResultBlock from '@/components/features/characters/ResultBlock/ResultBlock';
-import CardDetailed from '@/components/features/characters/CardDetailed/CardDetailed';
-import Loader from '@/components/ui/Loader/Loader';
-import Flyout from '@/components/features/characters/Flyout/Flyout';
-import Text from '@/components/ui/Text/Text';
-import SearchForm from '@/components/features/search/SearchForm/SearchForm';
-import ErrorButton from '@/components/features/error-handling/ErrorButton/ErrorButton';
-import UrlInitializer from '@/components/features/search/UrlInitializer';
+import { Pagination, Loader, Text } from '@/components/ui';
+import { RefreshButton, ResultBlock, CardDetailed, Flyout } from '@/components/features/characters';
+import { SearchForm, UrlInitializer } from '@/components/features/search';
+import { ErrorButton } from '@/components/features/error-handling';
 import { initialPage, ErrorMessage } from '@/constants/constants';
 import mapError from '@/utils/mapError';
 import { searchAction } from '../../actions/search';
@@ -54,6 +47,7 @@ export default async function Page({ params, searchParams }: PageProps): Promise
   const chars = listResult?.data?.results ?? [];
   const totalPages = listResult?.data?.pages ?? 0;
   const listErrorMessage = t(mapError(listResult?.error));
+
   const char = detailResult?.data ?? null;
   const charErrorMessage = t(mapError(detailResult?.error));
 

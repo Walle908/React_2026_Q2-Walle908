@@ -1,6 +1,5 @@
 import { type ReactNode } from 'react';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
-import Text from '@/components/ui/Text/Text';
+import { Text, LinkComponent } from '@/components/ui';
 import { getTranslations } from 'next-intl/server';
 import styles from '@/styles/aboutPage.module.css';
 

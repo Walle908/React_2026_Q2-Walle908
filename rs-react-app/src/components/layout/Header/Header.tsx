@@ -1,14 +1,13 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
-import LanguageSwitcher from '@/components/features/languageSwitcher/LanguageSwitcher';
-import ThemeSwitcher from '@/components/features/themeSwitcher/ThemeSwitcher';
+import { LinkComponent } from '@/components/ui';
+import { LanguageSwitcher, ThemeSwitcher } from '@/components/features/switchers';
 import { useTranslations } from 'next-intl';
 import { usePathname } from '@/i18n/navigation';
 import styles from './Header.module.css';
 
-export default function Header(): ReactNode {
+export function Header(): ReactNode {
   const t = useTranslations('App');
   const pathname = usePathname();
   const isAboutPage = pathname === '/about';

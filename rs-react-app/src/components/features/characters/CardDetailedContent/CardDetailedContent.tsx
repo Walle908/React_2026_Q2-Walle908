@@ -1,7 +1,6 @@
 import { type ReactNode } from 'react';
 import Image from 'next/image';
-import Text from '@/components/ui/Text/Text';
-import LinkComponent from '@/components/ui/LinkComponent/LinkComponent';
+import { Text, LinkComponent } from '@/components/ui';
 import { type Character } from '@/types/types';
 import { useTranslations } from 'next-intl';
 import styles from './CardDetailedContent.module.css';
@@ -11,10 +10,7 @@ interface CardDetailsContentProps {
   path: string;
 }
 
-export default function CardDetailsContent({
-  character,
-  path,
-}: CardDetailsContentProps): ReactNode {
+export function CardDetailsContent({ character, path }: CardDetailsContentProps): ReactNode {
   const t = useTranslations('Card');
   const fields = [
     { label: t('status'), value: character.status },
@@ -50,7 +46,7 @@ export default function CardDetailsContent({
           ))}
         </ul>
       </div>
-      <LinkComponent variant="buttonLink" href={path} className={styles.closeButton}>
+      <LinkComponent variant="button" href={path} className={styles.closeButton}>
         {t('close')}
       </LinkComponent>
     </div>

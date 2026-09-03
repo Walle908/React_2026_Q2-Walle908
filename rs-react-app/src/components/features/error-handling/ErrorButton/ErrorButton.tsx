@@ -2,14 +2,14 @@
 
 import { type ReactNode, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import Button from '@/components/ui/Button/Button';
+import { Button } from '@/components/ui';
 import { ErrorMessage } from '@/constants/constants';
 
 interface ErrorButtonProps {
   className?: string;
 }
 
-export default function ErrorButton({ className }: ErrorButtonProps): ReactNode {
+export function ErrorButton({ className }: ErrorButtonProps): ReactNode {
   const t = useTranslations('App');
 
   const [, setError] = useState(false);

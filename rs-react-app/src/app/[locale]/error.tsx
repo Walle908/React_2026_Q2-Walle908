@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import Button from '@/components/ui/Button/Button';
-import Text from '@/components/ui/Text/Text';
+import { Button, Text } from '@/components/ui';
 import { ErrorMessage } from '@/constants/constants';
 import { useTranslations } from 'next-intl';
 import styles from '@/styles/error.module.css';
